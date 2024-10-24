@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     faFacebook,
     faSquareInstagram,
@@ -17,6 +18,8 @@ import Tooltip from '~/components/Tooltip';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
+
+    const navigate = useNavigate();
 
     const hotSearch = [
         {
@@ -110,12 +113,12 @@ function Header() {
                         <div className="flex gap-2">
                             <div>Kết nối</div>
                             <div>
-                                <a href="/" title='Kết nối facebook'>
+                                <a href="/" title="Kết nối facebook">
                                     <FontAwesomeIcon icon={faFacebook} />
                                 </a>
                             </div>
                             <div>
-                                <a href="/" title='Kết nối Instargram'>
+                                <a href="/" title="Kết nối Instargram">
                                     <FontAwesomeIcon icon={faSquareInstagram} />
                                 </a>
                             </div>
@@ -136,12 +139,22 @@ function Header() {
                                             Đăng nhập để xem thông báo
                                         </div>
                                         <div className="w-full flex justify-between items-center">
-                                            <button className="border-none outline-none w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary">
+                                            <div
+                                                className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary"
+                                                onClick={() =>
+                                                    navigate('/sign-up')
+                                                }
+                                            >
                                                 Đăng ký
-                                            </button>
-                                            <button className="border-none outline-none w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary">
+                                            </div>
+                                            <div
+                                                className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary"
+                                                onClick={(e) => 
+                                                    navigate('/sign-in')
+                                                }
+                                            >
                                                 Đăng nhập
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
                                 )}
@@ -191,13 +204,13 @@ function Header() {
                             </Tooltip>
                         </div>
                         <div className="flex gap-2">
-                            <a className="hover:opacity-50" href="/">
+                            <Link className="hover:opacity-50" to="/sign-up">
                                 Đăng kí
-                            </a>
+                            </Link>
                             <span className="opacity-30">|</span>
-                            <a className="hover:opacity-50" href="/">
+                            <Link className="hover:opacity-50" to="/sign-in">
                                 Đăng nhập
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

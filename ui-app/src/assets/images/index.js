@@ -16,6 +16,8 @@ const images = {
     currentEvent: require('~/assets/images/currentEvent.png'),
     product: require('~/assets/images/product.webp'),
     delivery: require('~/assets/images/delivery.png'),
+    logoColor: require('~/assets/images/logoColor.png'),
+    bgAccesLayout: require('~/assets/images/bgAccesLayout.png'),
 };
 
 export default images;

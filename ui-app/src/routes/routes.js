@@ -1,3 +1,4 @@
+import AccessLayout from "~/components/AccessLayout";
 import DefaultLayout from "~/components/DefaultLayout";
 import HomePage from "~/pages/HomePage";
 import NotFoundPage from "~/pages/NotFoundPage";
@@ -7,8 +8,8 @@ import SignUpPage from "~/pages/SignUpPage";
 
 export const routes = [
     { path: '/', component: HomePage, layout: DefaultLayout },
-    { path: '/sign-in', component: SignInPage, layout: null },
-    { path: '/sign-up', component: SignUpPage, layout: null },
+    { path: '/sign-in', component: SignInPage, layout: AccessLayout },
+    { path: '/sign-up', component: SignUpPage, layout: AccessLayout },
     { path: '/details-order/:id', component: ProductDetailPage },
     { path: '*', component: NotFoundPage },
 ];

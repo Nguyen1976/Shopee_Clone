@@ -1,10 +1,12 @@
-import Header from "../Header";
+import Footer from '../Footer';
+import Header from '../Header';
 
 function DefaultLayout({ children }) {
-    return (  
+    return (
         <>
             <Header />
             {children}
+            <Footer />
         </>
     );
 }
