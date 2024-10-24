@@ -13,6 +13,9 @@ const images = {
     slider5: require('~/assets/images/slider5.jpg'),
     banner1: require('~/assets/images/banner1.jpg'),
     banner2: require('~/assets/images/banner2.jpg'),
+    currentEvent: require('~/assets/images/currentEvent.png'),
+    product: require('~/assets/images/product.webp'),
+    delivery: require('~/assets/images/delivery.png'),
 };
 
 export default images;

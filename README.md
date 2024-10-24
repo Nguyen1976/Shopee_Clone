@@ -2,3 +2,4 @@
 + React-redux
 + Tailwind
 + React-query
++ Swiper

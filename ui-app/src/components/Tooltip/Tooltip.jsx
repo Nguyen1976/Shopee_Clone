@@ -24,7 +24,7 @@ function Tooltip({
     width = width + 'px';
 
     return (
-        <div className="relative">
+        <div className="relative z-50">
             <span
                 className='group'
                 onMouseEnter={() => setIsShow(true)}

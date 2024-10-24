@@ -54,8 +54,8 @@ function Header() {
     ];
 
     return (
-        <div className="bg-header py-2">
-            <div className="text-white container mx-auto sm:px-6 md:px-8 lg:px-40">
+        <div className="bg-header py-2 sticky top-0 z-50">
+            <div className="text-white container-custom">
                 <div className="flex justify-between text-sm">
                     <div className="flex gap-2 items-center">
                         <div className="hover:opacity-50">
@@ -110,12 +110,12 @@ function Header() {
                         <div className="flex gap-2">
                             <div>Kết nối</div>
                             <div>
-                                <a href="/">
+                                <a href="/" title='Kết nối facebook'>
                                     <FontAwesomeIcon icon={faFacebook} />
                                 </a>
                             </div>
                             <div>
-                                <a href="/">
+                                <a href="/" title='Kết nối Instargram'>
                                     <FontAwesomeIcon icon={faSquareInstagram} />
                                 </a>
                             </div>
