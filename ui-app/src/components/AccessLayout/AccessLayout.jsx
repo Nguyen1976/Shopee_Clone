@@ -11,7 +11,7 @@ function AccessLayout({ children }) {
     return (
         <FooterLayout>
             <div className="bg-white">
-                <div clasName="container-custom">
+                <div className="container-custom">
                     <div className="flex py-5 items-center justify-between">
                         <div className="max-w-72 flex items-center justify-between gap-3">
                             <Link to={'/'} className="w-1/2">
