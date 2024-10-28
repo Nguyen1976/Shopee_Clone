@@ -1,30 +1,123 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { isValidEmail, isValidPassword } from '~/utils/validate';
+import * as UserService from '~/services/UserService';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '~/redux/slices/UserSlice';
+import { jwtDecode } from 'jwt-decode';
 
 function SignInPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const handleValidEmail = () => {
+        setIsEmailValid(isValidEmail(email));
+    };
+
+    const handleValidPassword = () => {
+        setIsPasswordValid(isValidPassword(password));
+    };
+
+    const handleSubmit = async () => {
+        setIsLoading(true);
+        if (isEmailValid && isPasswordValid) {
+            try {
+                const data = await UserService.signInUser({
+                    email,
+                    password,
+                });
+
+                localStorage.setItem(
+                    'access_token',
+                    JSON.stringify(data.access_token)
+                );
+
+                const decoded = jwtDecode(data.access_token);
+                if (decoded && decoded.id) {
+                    await loadUserIntoStore(decoded.id, data.access_token);
+                    navigate('/');
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    const loadUserIntoStore = async (id, token) => {
+        try {
+            const res = await UserService.getDetailsUser(id, token);
+            if (res && res.data) {
+                dispatch(updateUser({ ...res.data, access_token: token }));
+            } else {
+                console.error('Không tìm thấy dữ liệu người dùng');
+            }
+        } catch (error) {
+            console.error('Lỗi khi lấy chi tiết người dùng:', error);
+        }
+    };
+
     return (
         <div className="flex justify-end">
             <div className="bg-white p-5 w-96">
                 <div className="text-xl font-normal">Đăng nhập</div>
-                <div className="border-[#f3f3f3] border-2 mt-8">
+                <div id="email" className="mt-4 h-14">
                     <input
-                        className="p-2 w-full"
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full border-[#f3f3f3] border-2 p-2"
                         type="text"
-                        placeholder="Email/Số điện thoại/Tên đăng nhập"
+                        placeholder="Email"
+                        onBlur={handleValidEmail}
                     />
+                    {!isEmailValid && (
+                        <span className="text-xs text-[#f33a58] ml-2">
+                            Email không hợp lệ
+                        </span>
+                    )}
                 </div>
-                <div className="border-[#f3f3f3] border-2 mt-6">
+                <div id="password" className="mt-4 h-14">
                     <input
-                        className="p-2 w-full"
-                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full border-[#f3f3f3] border-2 p-2"
+                        type="text"
                         placeholder="Mật khẩu"
+                        onBlur={handleValidPassword}
                     />
+                    {!isPasswordValid && (
+                        <span className="text-xs text-[#f33a58] ml-2">
+                            Mật khẩu không hợp lệ
+                        </span>
+                    )}
                 </div>
-                <button
-                    className="mt-7 bg-primary w-full text-white p-2"
-                    type="submit"
-                >
-                    Đăng nhập
-                </button>
+                <div className="relative mt-7 flex">
+                    {isLoading && (
+                        <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffffaf] flex items-center justify-center">
+                            <FontAwesomeIcon
+                                className="animate-spin text-primary text-xl"
+                                icon={faSpinner}
+                            />
+                        </div>
+                    )}
+                    <button
+                        className=" bg-primary w-full text-white p-2"
+                        onClick={handleSubmit}
+                    >
+                        Đăng nhập
+                    </button>
+                </div>
                 <div className="flex mt-6 mx-auto items-center">
                     <div className="bg-[#dbdbdb] h-[1px] w-2/5"></div>
                     <span className="w-1/5 text-center text-[#dbdbdb] text-sm">

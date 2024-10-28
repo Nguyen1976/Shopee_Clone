@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     isPasswordMatch,
     isValidEmail,
     isValidName,
     isValidPassword,
 } from '~/utils/validate';
+import * as UserService from '~/services/UserService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 function SignUpPage() {
     const [name, setName] = useState('');
@@ -13,40 +16,60 @@ function SignUpPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     // Thêm trạng thái để quản lý tính hợp lệ
     const [isNameValid, setIsNameValid] = useState(true);
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
 
-    const handleValidateEmail = () => {
+    const navigate = useNavigate();
+
+    const handleValidEmail = () => {
         setIsEmailValid(isValidEmail(email));
     };
 
-    const handleValidateName = () => {
+    const handleValidName = () => {
         setIsNameValid(isValidName(name));
     };
 
-    const handleValidatePassword = () => {
+    const handleValidPassword = () => {
         setIsPasswordValid(isValidPassword(password));
     };
 
-    const handleValidateConfirmPassword = () => {
+    const handleValidConfirmPassword = () => {
         setIsConfirmPasswordValid(isPasswordMatch(password, confirmPassword));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    
 
-        if (isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
-            console.log('Đăng ký thành công!');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true); // Bắt đầu trạng thái loading
+
+        if (
+            isNameValid &&
+            isEmailValid &&
+            isPasswordValid &&
+            isConfirmPasswordValid
+        ) {
+            try {
+                await UserService.signUpUser({ name, email, password, confirmPassword });
+                navigate('/sign-in');  // Điều hướng khi đăng ký thành công
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setLoading(false);  // Kết thúc trạng thái loading
+            }
         }
     };
 
     return (
         <div className="flex justify-end">
             <div className="bg-white p-5 w-96">
-                <form action="" method="POST" onSubmit={handleSubmit}>
+                <div>
                     <div className="text-xl font-normal">Đăng ký</div>
                     <div id="name" className="mt-4 h-14">
                         <input
@@ -54,7 +77,7 @@ function SignUpPage() {
                             className="w-full border-[#f3f3f3] border-2 p-2"
                             type="text"
                             placeholder="Tên đăng nhập"
-                            onBlur={handleValidateName}
+                            onBlur={handleValidName}
                         />
                         {!isNameValid && (
                             <span className="text-xs text-[#f33a58] ml-2">
@@ -68,7 +91,7 @@ function SignUpPage() {
                             className="w-full border-[#f3f3f3] border-2 p-2"
                             type="text"
                             placeholder="Email"
-                            onBlur={handleValidateEmail}
+                            onBlur={handleValidEmail}
                         />
                         {!isEmailValid && (
                             <span className="text-xs text-[#f33a58] ml-2">
@@ -82,7 +105,7 @@ function SignUpPage() {
                             className="w-full border-[#f3f3f3] border-2 p-2"
                             type="text"
                             placeholder="Mật khẩu"
-                            onBlur={handleValidatePassword}
+                            onBlur={handleValidPassword}
                         />
                         {!isPasswordValid && (
                             <span className="text-xs text-[#f33a58] ml-2">
@@ -96,7 +119,7 @@ function SignUpPage() {
                             className="w-full border-[#f3f3f3] border-2 p-2"
                             type="text"
                             placeholder="Xác nhận mật khẩu"
-                            onBlur={handleValidateConfirmPassword}
+                            onBlur={handleValidConfirmPassword}
                         />
                         {!isConfirmPasswordValid && (
                             <span className="text-xs text-[#f33a58] ml-2">
@@ -104,10 +127,23 @@ function SignUpPage() {
                             </span>
                         )}
                     </div>
-                    <button className="mt-7 bg-primary w-full text-white p-2">
-                        Tiếp theo
-                    </button>
-                </form>
+                    <div className="relative mt-7 flex">
+                        {loading && (
+                            <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffffaf] flex items-center justify-center">
+                                <FontAwesomeIcon
+                                    className="animate-spin text-primary text-xl"
+                                    icon={faSpinner}
+                                />
+                            </div>
+                        )}
+                        <button
+                            className=" bg-primary w-full text-white p-2"
+                            onClick={handleSubmit}
+                        >
+                            Tiếp theo
+                        </button>
+                    </div>
+                </div>
                 <div className="flex mt-6 mx-auto items-center">
                     <div className="bg-[#dbdbdb] h-[1px] w-2/5"></div>
                     <span className="w-1/5 text-center text-[#dbdbdb] text-sm">

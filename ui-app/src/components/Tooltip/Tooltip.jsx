@@ -24,7 +24,7 @@ function Tooltip({
     width = width + 'px';
 
     return (
-        <div className="relative z-50">
+        <div className="relative">
             <span
                 className='group'
                 onMouseEnter={() => setIsShow(true)}
@@ -34,6 +34,7 @@ function Tooltip({
                 {isShow && (
                     <div
                         className={`
+                            z-40
                             absolute 
                             ${afterArrow ? 'after-arrow' : ''} 
                             bg-white 

@@ -557,6 +557,14 @@ video {
   position: sticky;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
+.left-0 {
+  left: 0px;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -583,6 +591,14 @@ video {
 
 .z-50 {
   z-index: 50;
+}
+
+.z-40 {
+  z-index: 40;
+}
+
+.z-auto {
+  z-index: auto;
 }
 
 .mx-auto {
@@ -626,10 +642,6 @@ video {
   margin-top: 1.75rem;
 }
 
-.mt-8 {
-  margin-top: 2rem;
-}
-
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -649,12 +661,20 @@ video {
   height: 2.75rem;
 }
 
+.h-14 {
+  height: 3.5rem;
+}
+
 .h-5\/6 {
   height: 83.333333%;
 }
 
 .h-72 {
   height: 18rem;
+}
+
+.h-9 {
+  height: 2.25rem;
 }
 
 .h-\[1px\] {
@@ -669,36 +689,16 @@ video {
   height: 100%;
 }
 
-.h-6 {
-  height: 1.5rem;
-}
-
-.h-7 {
-  height: 1.75rem;
-}
-
 .h-8 {
   height: 2rem;
 }
 
-.h-9 {
-  height: 2.25rem;
+.h-6 {
+  height: 1.5rem;
 }
 
-.h-10 {
-  height: 2.5rem;
-}
-
-.h-20 {
-  height: 5rem;
-}
-
-.h-16 {
-  height: 4rem;
-}
-
-.h-14 {
-  height: 3.5rem;
+.h-5 {
+  height: 1.25rem;
 }
 
 .max-h-12 {
@@ -812,6 +812,20 @@ video {
   animation: scaleTopRight 0.3s ease-in-out forwards;
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .grid-cols-5 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
@@ -872,6 +886,10 @@ video {
   white-space: nowrap;
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .rounded-sm {
   border-radius: 0.125rem;
 }
@@ -919,6 +937,10 @@ video {
 .bg-\[\#feeeea\] {
   --tw-bg-opacity: 1;
   background-color: rgb(254 238 234 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#ffffffaf\] {
+  background-color: #ffffffaf;
 }
 
 .bg-primary {
@@ -1080,6 +1102,11 @@ video {
   color: rgb(219 219 219 / var(--tw-text-opacity));
 }
 
+.text-\[\#f33a58\] {
+  --tw-text-opacity: 1;
+  color: rgb(243 58 88 / var(--tw-text-opacity));
+}
+
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -1095,25 +1122,20 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-\[\] {
-  color: ;
-}
-
-.text-\[\#\] {
-  color: #;
-}
-
-.text-\[\#f33a58\] {
-  --tw-text-opacity: 1;
-  color: rgb(243 58 88 / var(--tw-text-opacity));
-}
-
 .opacity-0 {
   opacity: 0;
 }
 
 .opacity-30 {
   opacity: 0.3;
+}
+
+.opacity-60 {
+  opacity: 0.6;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .shadow-lg {

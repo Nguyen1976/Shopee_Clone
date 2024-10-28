@@ -8,6 +8,7 @@ import SignUpPage from "~/pages/SignUpPage";
 
 export const routes = [
     { path: '/', component: HomePage, layout: DefaultLayout },
+    { path: '/profile', component: HomePage, layout: DefaultLayout },
     { path: '/sign-in', component: SignInPage, layout: AccessLayout },
     { path: '/sign-up', component: SignUpPage, layout: AccessLayout },
     { path: '/details-order/:id', component: ProductDetailPage },

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     faFacebook,
@@ -12,14 +12,60 @@ import {
     faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch, useSelector } from 'react-redux';
 
 import images from '~/assets/images';
 import Tooltip from '~/components/Tooltip';
+import { updateUser } from '~/redux/slices/UserSlice';
+
+import * as UserService from '~/services/UserService';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
+    const [name, setName] = useState('');
+
+    const userInfo = useSelector((state) => state.user);
+
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
+    
+    const loadUserIntoStore = async (id, token) => {
+        try {
+            const res = await UserService.getDetailsUser(id, token);
+            if (res && res.data) {
+                dispatch(
+                    updateUser({ ...res.data, access_token: res.access_token })
+                );
+            } else {
+                console.error('Không tìm thấy dữ liệu người dùng');
+            }
+        } catch (error) {}
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        dispatch(updateUser({}));
+        navigate('/sign-in');
+    }
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('access_token');
+
+        if(accessToken) {
+            const decoded = jwtDecode(accessToken);
+            if (decoded.id) {
+                loadUserIntoStore(decoded.id, accessToken);
+            }
+        }
+
+    }, []);
+
+    
+    useEffect(() => {
+        setName(userInfo.name);
+    }, [userInfo]);
 
     const hotSearch = [
         {
@@ -149,7 +195,7 @@ function Header() {
                                             </div>
                                             <div
                                                 className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary"
-                                                onClick={(e) => 
+                                                onClick={(e) =>
                                                     navigate('/sign-in')
                                                 }
                                             >
@@ -179,7 +225,7 @@ function Header() {
                         <div>
                             <Tooltip
                                 funcRender={() => (
-                                    <div className="w-full">
+                                    <div className="w-full z-auto">
                                         <div className="text-black hover:text-primary p-2 text-sm">
                                             Tiếng việt
                                         </div>
@@ -188,7 +234,7 @@ function Header() {
                                         </div>
                                     </div>
                                 )}
-                                top={25}
+                                top={20}
                                 right={0}
                                 width={150}
                                 afterArrow={true}
@@ -203,15 +249,57 @@ function Header() {
                                 </a>
                             </Tooltip>
                         </div>
-                        <div className="flex gap-2">
-                            <Link className="hover:opacity-50" to="/sign-up">
-                                Đăng kí
-                            </Link>
-                            <span className="opacity-30">|</span>
-                            <Link className="hover:opacity-50" to="/sign-in">
-                                Đăng nhập
-                            </Link>
-                        </div>
+                        {name ? (
+                            <Tooltip
+                                funcRender={() => (
+                                    <div className="w-full">
+                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer">
+                                            Tài khoản của tôi
+                                        </div>
+                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer">
+                                            Đơn mua
+                                        </div>
+                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                            onClick={handleLogout}
+                                        >
+                                            Đăng xuất
+                                        </div>
+                                    </div>
+                                )}
+                                top={25}
+                                right={0}
+                                width={150}
+                                afterArrow={true}
+                                scaleTop={true}
+                            >
+                                <div className="flex">
+                                    <div className="h-5 bg-white rounded-full">
+                                        <img
+                                            className="h-full opacity-50"
+                                            src="https://img.icons8.com/?size=100&id=114064&format=png&color=000000"
+                                            alt="avatar-none"
+                                        />
+                                    </div>
+                                    <div className='ml-1 text-md'>{name}</div>
+                                </div>
+                            </Tooltip>
+                        ) : (
+                            <div className="flex gap-2">
+                                <Link
+                                    className="hover:opacity-50"
+                                    to="/sign-up"
+                                >
+                                    Đăng kí
+                                </Link>
+                                <span className="opacity-30">|</span>
+                                <Link
+                                    className="hover:opacity-50"
+                                    to="/sign-in"
+                                >
+                                    Đăng nhập
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="flex justify-between items-center mt-6">
