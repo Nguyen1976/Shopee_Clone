@@ -253,7 +253,9 @@ function Header() {
                             <Tooltip
                                 funcRender={() => (
                                     <div className="w-full">
-                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer">
+                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                            onClick={() => navigate('/profile')}
+                                        >
                                             Tài khoản của tôi
                                         </div>
                                         <div className="text-black hover:text-primary p-2 text-sm cursor-pointer">
