@@ -15,11 +15,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 
-import images from '~/assets/images';
 import Tooltip from '~/components/Tooltip';
 import { updateUser } from '~/redux/slices/UserSlice';
-
-import * as UserService from '~/services/UserService';
+import loadUserIntoStore from '~/utils/loadUserIntoStore';
+import images from '~/assets/images';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
@@ -30,39 +29,24 @@ function Header() {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-    
-    const loadUserIntoStore = async (id, token) => {
-        try {
-            const res = await UserService.getDetailsUser(id, token);
-            if (res && res.data) {
-                dispatch(
-                    updateUser({ ...res.data, access_token: res.access_token })
-                );
-            } else {
-                console.error('Không tìm thấy dữ liệu người dùng');
-            }
-        } catch (error) {}
-    };
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');
         dispatch(updateUser({}));
         navigate('/sign-in');
-    }
+    };
 
     useEffect(() => {
         const accessToken = localStorage.getItem('access_token');
 
-        if(accessToken) {
+        if (accessToken) {
             const decoded = jwtDecode(accessToken);
             if (decoded.id) {
-                loadUserIntoStore(decoded.id, accessToken);
+                loadUserIntoStore(dispatch, decoded.id, accessToken);
             }
         }
+    }, [dispatch]);
 
-    }, []);
-
-    
     useEffect(() => {
         setName(userInfo.name);
     }, [userInfo]);
@@ -253,15 +237,19 @@ function Header() {
                             <Tooltip
                                 funcRender={() => (
                                     <div className="w-full">
-                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer"
-                                            onClick={() => navigate('/profile')}
+                                        <div
+                                            className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                            onClick={() =>
+                                                navigate('/user/profile')
+                                            }
                                         >
                                             Tài khoản của tôi
                                         </div>
                                         <div className="text-black hover:text-primary p-2 text-sm cursor-pointer">
                                             Đơn mua
                                         </div>
-                                        <div className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                        <div
+                                            className="text-black hover:text-primary p-2 text-sm cursor-pointer"
                                             onClick={handleLogout}
                                         >
                                             Đăng xuất
@@ -282,7 +270,7 @@ function Header() {
                                             alt="avatar-none"
                                         />
                                     </div>
-                                    <div className='ml-1 text-md'>{name}</div>
+                                    <div className="ml-1 text-md">{name}</div>
                                 </div>
                             </Tooltip>
                         ) : (

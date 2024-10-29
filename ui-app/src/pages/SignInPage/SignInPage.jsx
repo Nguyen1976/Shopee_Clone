@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
 
 import { isValidEmail, isValidPassword } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
-import { useDispatch } from 'react-redux';
-import { updateUser } from '~/redux/slices/UserSlice';
-import { jwtDecode } from 'jwt-decode';
+import loadUserIntoStore from '~/utils/loadUserIntoStore';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -46,7 +46,7 @@ function SignInPage() {
 
                 const decoded = jwtDecode(data.access_token);
                 if (decoded && decoded.id) {
-                    await loadUserIntoStore(decoded.id, data.access_token);
+                    await loadUserIntoStore(dispatch, decoded.id, data.access_token);
                     navigate('/');
                 }
             } catch (error) {
@@ -54,19 +54,6 @@ function SignInPage() {
             } finally {
                 setIsLoading(false);
             }
-        }
-    };
-
-    const loadUserIntoStore = async (id, token) => {
-        try {
-            const res = await UserService.getDetailsUser(id, token);
-            if (res && res.data) {
-                dispatch(updateUser({ ...res.data, access_token: token }));
-            } else {
-                console.error('Không tìm thấy dữ liệu người dùng');
-            }
-        } catch (error) {
-            console.error('Lỗi khi lấy chi tiết người dùng:', error);
         }
     };
 
