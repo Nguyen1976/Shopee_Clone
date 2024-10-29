@@ -14,7 +14,7 @@ function UserLayout({ children }) {
     const location = useLocation();
 
     useEffect(() => {
-        setName(userInfo.name);
+        setName(userInfo.name)
     }, [userInfo]);
     return (
         <DefaultLayout>
