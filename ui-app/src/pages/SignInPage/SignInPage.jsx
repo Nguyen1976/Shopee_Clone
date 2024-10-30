@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 
 import { isValidEmail, isValidPassword } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
 import loadUserIntoStore from '~/utils/loadUserIntoStore';
+import Loading from '~/components/Loading';
+import ToastMessage from '~/components/ToastMessage/ToastMessage';
+import useToast from '~/hooks/useToast';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -17,6 +18,8 @@ function SignInPage() {
     const [isPasswordValid, setIsPasswordValid] = useState(true);
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const { toast, showToast, setToast } = useToast(3000);
 
     const navigate = useNavigate();
 
@@ -46,19 +49,27 @@ function SignInPage() {
 
                 const decoded = jwtDecode(data.access_token);
                 if (decoded && decoded.id) {
-                    await loadUserIntoStore(dispatch, decoded.id, data.access_token);
+                    await loadUserIntoStore(
+                        dispatch,
+                        decoded.id,
+                        data.access_token
+                    );
                     navigate('/');
                 }
             } catch (error) {
                 console.error(error);
             } finally {
                 setIsLoading(false);
+                showToast('Đăng nhập thành công');
             }
         }
     };
 
     return (
         <div className="flex justify-end">
+            {toast && (
+                <ToastMessage message={toast} onClose={() => setToast('')} />
+            )}
             <div className="bg-white p-5 w-96">
                 <div className="text-xl font-normal">Đăng nhập</div>
                 <div id="email" className="mt-4 h-14">
@@ -89,22 +100,14 @@ function SignInPage() {
                         </span>
                     )}
                 </div>
-                <div className="relative mt-7 flex">
-                    {isLoading && (
-                        <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffffaf] flex items-center justify-center">
-                            <FontAwesomeIcon
-                                className="animate-spin text-primary text-xl"
-                                icon={faSpinner}
-                            />
-                        </div>
-                    )}
+                <Loading isLoading={isLoading}>
                     <button
                         className=" bg-primary w-full text-white p-2"
                         onClick={handleSubmit}
                     >
                         Đăng nhập
                     </button>
-                </div>
+                </Loading>
                 <div className="flex mt-6 mx-auto items-center">
                     <div className="bg-[#dbdbdb] h-[1px] w-2/5"></div>
                     <span className="w-1/5 text-center text-[#dbdbdb] text-sm">

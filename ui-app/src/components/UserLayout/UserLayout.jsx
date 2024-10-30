@@ -89,7 +89,7 @@ function UserLayout({ children }) {
                         </ul>
                     </div>
                 </div>
-                <div className="w-4/5 bg-white">{children}</div>
+                <div className="w-4/5 bg-white p-5">{children}</div>
             </div>
         </DefaultLayout>
     );

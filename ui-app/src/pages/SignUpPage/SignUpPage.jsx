@@ -7,8 +7,7 @@ import {
     isValidPassword,
 } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Loading from '~/components/Loading';
 
 function SignUpPage() {
     const [name, setName] = useState('');
@@ -16,7 +15,7 @@ function SignUpPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Thêm trạng thái để quản lý tính hợp lệ
     const [isNameValid, setIsNameValid] = useState(true);
@@ -42,12 +41,9 @@ function SignUpPage() {
         setIsConfirmPasswordValid(isPasswordMatch(password, confirmPassword));
     };
 
-    
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Bắt đầu trạng thái loading
+        setIsLoading(true); // Bắt đầu trạng thái loading
 
         if (
             isNameValid &&
@@ -56,12 +52,17 @@ function SignUpPage() {
             isConfirmPasswordValid
         ) {
             try {
-                await UserService.signUpUser({ name, email, password, confirmPassword });
-                navigate('/sign-in');  // Điều hướng khi đăng ký thành công
+                await UserService.signUpUser({
+                    name,
+                    email,
+                    password,
+                    confirmPassword,
+                });
+                navigate('/sign-in'); // Điều hướng khi đăng ký thành công
             } catch (error) {
-                console.error(error)
+                console.error(error);
             } finally {
-                setLoading(false);  // Kết thúc trạng thái loading
+                setIsLoading(false); // Kết thúc trạng thái loading
             }
         }
     };
@@ -127,22 +128,16 @@ function SignUpPage() {
                             </span>
                         )}
                     </div>
-                    <div className="relative mt-7 flex">
-                        {loading && (
-                            <div className="absolute top-0 left-0 bottom-0 right-0 bg-[#ffffffaf] flex items-center justify-center">
-                                <FontAwesomeIcon
-                                    className="animate-spin text-primary text-xl"
-                                    icon={faSpinner}
-                                />
-                            </div>
-                        )}
+                    <Loading
+                        isLoading={isLoading}
+                    >
                         <button
                             className=" bg-primary w-full text-white p-2"
                             onClick={handleSubmit}
                         >
-                            Tiếp theo
+                            Đăng ký
                         </button>
-                    </div>
+                    </Loading>
                 </div>
                 <div className="flex mt-6 mx-auto items-center">
                     <div className="bg-[#dbdbdb] h-[1px] w-2/5"></div>
