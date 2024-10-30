@@ -5,6 +5,7 @@ const initialState = {
     email: '',
     phone: '',
     address: '',
+    avatar: '',
     access_token: '',
     id: '',
 };
@@ -19,6 +20,7 @@ export const UserSlice = createSlice({
                 email = '',
                 phone = '',
                 address = '',
+                avatar = '',
                 access_token = '',
                 _id = '',
             } = action.payload;
@@ -26,6 +28,7 @@ export const UserSlice = createSlice({
             state.email = email;
             state.phone = phone;
             state.address = address;
+            state.avatar = avatar;
             state.access_token = access_token;
             state.id = _id;
         },

@@ -23,6 +23,7 @@ import images from '~/assets/images';
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
     const [name, setName] = useState('');
+    const [avatar, setAvatar] = useState('');
 
     const userInfo = useSelector((state) => state.user);
 
@@ -49,6 +50,7 @@ function Header() {
 
     useEffect(() => {
         setName(userInfo.name);
+        setAvatar(userInfo.avatar);
     }, [userInfo]);
 
     const hotSearch = [
@@ -170,7 +172,7 @@ function Header() {
                                         </div>
                                         <div className="w-full flex justify-between items-center">
                                             <div
-                                                className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary"
+                                                className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
                                                 onClick={() =>
                                                     navigate('/sign-up')
                                                 }
@@ -178,7 +180,7 @@ function Header() {
                                                 Đăng ký
                                             </div>
                                             <div
-                                                className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary"
+                                                className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
                                                 onClick={(e) =>
                                                     navigate('/sign-in')
                                                 }
@@ -256,19 +258,27 @@ function Header() {
                                         </div>
                                     </div>
                                 )}
-                                top={25}
+                                top={20}
                                 right={0}
                                 width={150}
                                 afterArrow={true}
                                 scaleTop={true}
                             >
                                 <div className="flex">
-                                    <div className="h-5 bg-white rounded-full">
-                                        <img
-                                            className="h-full opacity-50"
-                                            src="https://img.icons8.com/?size=100&id=114064&format=png&color=000000"
-                                            alt="avatar-none"
-                                        />
+                                    <div className="h-5 w-5 bg-white rounded-full overflow-hidden">
+                                        {avatar ? (
+                                            <img
+                                                className="h-full w-full object-cover"
+                                                src={avatar}
+                                                alt="avatar"
+                                            />
+                                        ) : (
+                                            <img
+                                                className="h-full opacity-50"
+                                                src="https://img.icons8.com/?size=100&id=114064&format=png&color=000000"
+                                                alt="avatar-none"
+                                            />
+                                        )}
                                     </div>
                                     <div className="ml-1 text-md">{name}</div>
                                 </div>
@@ -294,11 +304,13 @@ function Header() {
                 </div>
                 <div className="flex justify-between items-center mt-6">
                     <div className="w-2/12">
-                        <img
-                            className="object-cover"
-                            src={images.logo}
-                            alt="logo"
-                        />
+                        <Link to={'/'}>
+                            <img
+                                className="object-cover"
+                                src={images.logo}
+                                alt="logo"
+                            />
+                        </Link>
                     </div>
                     <div className="w-2/3 relative">
                         <label className="bg-white text-black flex items-center gap-2 rounded-sm px-1 h-11">
