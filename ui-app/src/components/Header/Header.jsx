@@ -19,11 +19,16 @@ import Tooltip from '~/components/Tooltip';
 import { updateUser } from '~/redux/slices/UserSlice';
 import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import images from '~/assets/images';
+import useDebounce from '~/hooks/useDebounce';
+import * as ProductService from '~/services/ProductService';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
     const [name, setName] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [valueSearch, setValueSearch] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    const debouncedValueSearch = useDebounce(valueSearch, 500);
 
     const userInfo = useSelector((state) => state.user);
 
@@ -52,6 +57,24 @@ function Header() {
         setName(userInfo.name);
         setAvatar(userInfo.avatar);
     }, [userInfo]);
+
+    useEffect(() => {
+        const fetchDataSearch = async () => {
+            try {
+                const res = await ProductService.getAllProducts(
+                    debouncedValueSearch,
+                    5
+                );
+                setSearchResult(res.data);
+            } catch (err) {
+                console.error('Error fetching product data:', err);
+            }
+            if(!debouncedValueSearch) {
+                setSearchResult([]);
+            }
+        };
+        fetchDataSearch();
+    }, [debouncedValueSearch]);
 
     const hotSearch = [
         {
@@ -129,7 +152,7 @@ function Header() {
                                     </div>
                                 </div>
                             )}
-                            top={28}
+                            top={20}
                             left={0}
                             width={208}
                             afterArrow={false}
@@ -320,6 +343,7 @@ function Header() {
                                 placeholder="Shoppe bao ship 0Đ - Đăng ký ngay!"
                                 onFocus={() => setIsInputFocus(true)}
                                 onBlur={() => setIsInputFocus(false)}
+                                onChange={(e) => setValueSearch(e.target.value)}
                             />
                             <button className="bg-primary border-none outline-none h-5/6 w-1/12 text-white">
                                 <FontAwesomeIcon icon={faSearch} />
@@ -329,7 +353,7 @@ function Header() {
                             {hotSearch.map((item, index) => (
                                 <a
                                     className="whitespace-nowrap"
-                                    key={index}
+                                    key={`key-hot-search-${index}`}
                                     href={item.path}
                                 >
                                     {item.title}
@@ -341,6 +365,14 @@ function Header() {
                                 <li className="px-2 py-3 text-black hover:bg-[#fafafa]">
                                     Shoppe bao ship 0Đ - Đăng ký ngay!
                                 </li>
+                                {searchResult.map((item, index) => (
+                                    <li
+                                        className="px-2 py-3 text-black hover:bg-[#fafafa]"
+                                        key={`key-search-${item._id || index}`}
+                                    >
+                                        {item.name}
+                                    </li>
+                                ))}
                             </ul>
                         )}
                     </div>

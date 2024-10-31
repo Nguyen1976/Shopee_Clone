@@ -13,6 +13,6 @@ export const routes = [
     { path: '/user/profile', component: ProfilePage, layout: UserLayout },
     { path: '/sign-in', component: SignInPage, layout: AccessLayout },
     { path: '/sign-up', component: SignUpPage, layout: AccessLayout },
-    { path: '/details-order/:id', component: ProductDetailPage },
+    { path: '/product-detail/:id', component: ProductDetailPage, layout: DefaultLayout },
     { path: '*', component: NotFoundPage },
 ];

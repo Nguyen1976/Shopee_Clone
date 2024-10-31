@@ -48,7 +48,7 @@ function Slider() {
                 loop={true}
             >
                 {listSlide.map((item, index) => (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide key={`key-slider-${index}`}>
                         <img src={item.image} alt={`Image-${index}`} />
                     </SwiperSlide>
                 ))}

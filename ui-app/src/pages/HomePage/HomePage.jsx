@@ -1,9 +1,24 @@
 import Slider from '~/components/Slider';
 import images from '~/assets/images';
 import CardProduct from '~/components/CardProduct';
-
+import { useEffect, useState } from 'react';
+import * as ProductService from '~/services/ProductService';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
+    const [allProduct, setAllProduct] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await ProductService.getAllProducts();
+                setAllProduct(res.data);
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+            }
+        };
+
+        fetchData(); // Gọi hàm fetchData để lấy dữ liệu
+    }, []);
 
     return (
         <>
@@ -28,34 +43,22 @@ function HomePage() {
                 </div>
                 <div className="container-custom mt-5">
                     <div className="grid grid-cols-6 gap-4">
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
-                        <CardProduct />
+                        {allProduct.map((item, index) => (
+                            <Link
+                                to={`/product-detail/${item._id}`}
+                                key={item._id || `key-hot-search-${index}`}
+                            >
+                                <CardProduct
+                                    countInStock={item.countInStock}
+                                    price={item.price}
+                                    image={item.image}
+                                    name={item.name}
+                                    discount={item?.discount}
+                                />
+                            </Link>
+                        ))}
                     </div>
-                    <div className="text-center">
+                    <div className="text-center mt-5">
                         <button className="w-24 bg-white p-2 shadow-sm">
                             Xem thêm
                         </button>
