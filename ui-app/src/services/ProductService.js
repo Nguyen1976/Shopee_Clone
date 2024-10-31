@@ -13,3 +13,10 @@ export const getAllProducts = async (search, limit) => {
     }
     return res.data;
 };
+
+export const getDetailProduct = async (id) => {
+    const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/product/get-details/${id}`
+    );
+    return res.data;
+};

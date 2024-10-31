@@ -1,7 +1,7 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper } from 'swiper/react';
 import 'swiper/css';
 
-import images from '~/assets/images';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faChevronLeft,
@@ -9,28 +9,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 
-function Slider() {
+function Slider({ children, spaceBetween, slidesPerView, loop }) {
     const swiperRef = useRef(null);
     const [isShowNav, setIsShowNav] = useState(false);
 
-    const listSlide = [
-        {
-            image: images.slider1
-        },
-        {
-            image: images.slider2
-        },
-        {
-            image: images.slider3
-        },
-        {
-            image: images.slider4
-        },
-        {
-            image: images.slider5
-        },
-    ]
-
+   
     return (
         <div
             className="w-full h-full mx-auto relative"
@@ -43,15 +26,11 @@ function Slider() {
                 onSwiper={(swiper) => {
                     swiperRef.current = swiper;
                 }}
-                spaceBetween={50}
-                slidesPerView={1}
-                loop={true}
+                spaceBetween={spaceBetween || 1}
+                slidesPerView={slidesPerView || 1}
+                loop={loop}
             >
-                {listSlide.map((item, index) => (
-                    <SwiperSlide key={`key-slider-${index}`}>
-                        <img src={item.image} alt={`Image-${index}`} />
-                    </SwiperSlide>
-                ))}
+                {children}
                 {isShowNav && (
                     <>
                         <div

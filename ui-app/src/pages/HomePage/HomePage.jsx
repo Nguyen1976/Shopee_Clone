@@ -1,9 +1,11 @@
-import Slider from '~/components/Slider';
-import images from '~/assets/images';
 import CardProduct from '~/components/CardProduct';
 import { useEffect, useState } from 'react';
-import * as ProductService from '~/services/ProductService';
 import { Link } from 'react-router-dom';
+import { SwiperSlide } from 'swiper/react';
+
+import Slider from '~/components/Slider';
+import images from '~/assets/images';
+import * as ProductService from '~/services/ProductService';
 
 function HomePage() {
     const [allProduct, setAllProduct] = useState([]);
@@ -20,11 +22,38 @@ function HomePage() {
         fetchData(); // Gọi hàm fetchData để lấy dữ liệu
     }, []);
 
+    const listSlide = [
+        {
+            image: images.slider1,
+        },
+        {
+            image: images.slider2,
+        },
+        {
+            image: images.slider3,
+        },
+        {
+            image: images.slider4,
+        },
+        {
+            image: images.slider5,
+        },
+    ];
+
     return (
         <>
             <div className="container-custom mt-7 flex gap-1 pb-7">
                 <div className="w-2/3">
-                    <Slider />
+                    <Slider
+                        slidesPerView={1}
+                        loop={true}
+                    >
+                        {listSlide.map((item, index) => (
+                            <SwiperSlide key={`key-slider-${index}`}>
+                                <img src={item.image} alt={`Image-${index}`} />
+                            </SwiperSlide>
+                        ))}
+                    </Slider>
                 </div>
                 <div className="w-1/3 flex flex-col gap-1">
                     <div>
@@ -51,7 +80,7 @@ function HomePage() {
                                 <CardProduct
                                     countInStock={item.countInStock}
                                     price={item.price}
-                                    image={item.image}
+                                    image={item.image[0] || ''}
                                     name={item.name}
                                     discount={item?.discount}
                                 />
