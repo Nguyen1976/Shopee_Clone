@@ -52,6 +52,10 @@
         width: 6px;
         left: -4px;
     }
+
+    .border-1 {
+        border-width: 1px;
+    }
 }
 
 .container-custom {

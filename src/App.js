@@ -1,22 +1,38 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+} from 'react-router-dom';
 import { routes } from '~/routes';
-import DefaultLayout from './components/DefaultLayout';
+import DefaultLayout from './layouts/DefaultLayout';
+import { useSelector } from 'react-redux';
 
 function App() {
+    const userInfo = useSelector((state) => state.user);
+
     return (
         <div>
             <Router>
                 <Routes>
                     {routes.map((route, index) => {
-                        const Page = route.component;
+                        let Page = route.component;
 
                         let Layout = route.layout || DefaultLayout;
 
-                        if (route.layout === null) {
-                            Layout = Fragment;  // Không sử dụng layout
+                        if (route.isAdmin && userInfo && !userInfo?.isAdmin) {
+                            // Chuyển hướng về trang chủ nếu người dùng không phải admin
+                            return (
+                                <Route
+                                    key={index}
+                                />
+                            );
                         }
-    
+
+                        if (route.layout === null) {
+                            Layout = Fragment; // Không sử dụng layout
+                        }
 
                         return (
                             <Route

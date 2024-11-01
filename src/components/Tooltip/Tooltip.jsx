@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
 function Tooltip({
     funcRender,
@@ -10,7 +11,8 @@ function Tooltip({
     afterArrow,
     scaleTopRight,
     fadeIn,
-    scaleTop
+    scaleTop,
+    hideDefault
 }) {
     const [isShow, setIsShow] = useState(false);
 
@@ -26,7 +28,7 @@ function Tooltip({
     return (
         <div className="relative">
             <span
-                className='group'
+                className="group"
                 onMouseEnter={() => setIsShow(true)}
                 onMouseLeave={() => setIsShow(false)}
             >
@@ -43,12 +45,13 @@ function Tooltip({
                             ${scaleTopRight ? 'animate-scale-top-right' : ''} 
                             ${fadeIn ? 'animate-fade-in' : ''}
                             ${scaleTop ? 'animate-scale-top' : ''}
+                            ${hideDefault ? 'opacity-100' : ''}
                         `}
                         style={{
                             left: left,
                             right: right,
                             top: top,
-                            width: width
+                            width: width,
                         }}
                     >
                         {funcRender()}
@@ -59,4 +62,18 @@ function Tooltip({
     );
 }
 
-export default Tooltip;
+Tooltip.propTypes = {
+    funcRender: PropTypes.func,
+    children: PropTypes.node.isRequired,
+    width: PropTypes.number,
+    top: PropTypes.number,
+    left: PropTypes.number,
+    right: PropTypes.number,
+    afterArrow: PropTypes.bool,
+    scaleTopRight: PropTypes.bool,
+    fadeIn: PropTypes.bool,
+    scaleTop: PropTypes.bool,
+    hideDefault: PropTypes.bool,
+};
+
+export default React.memo(Tooltip);

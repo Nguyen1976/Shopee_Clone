@@ -1,10 +1,10 @@
 import { faBell, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faClipboardList, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import DefaultLayout from '../DefaultLayout';
+import DefaultLayout from '~/layouts/DefaultLayout';
 
 function UserLayout({ children }) {
     const userInfo = useSelector((state) => state.user);
@@ -14,14 +14,14 @@ function UserLayout({ children }) {
     const location = useLocation();
 
     useEffect(() => {
-        setName(userInfo.name)
+        setName(userInfo.name);
     }, [userInfo]);
     return (
         <DefaultLayout>
             <div className="container-custom flex bg-[#f5f5f5] border-primary border-b-4 py-8">
                 <div className="w-1/5 p-3 px-5">
                     <div className="flex justify-center items-center gap-3 py-5 border-b-2 border-[#eeeeee]">
-                        <div className="h-12 w-12 bg-transparent border-2 rounded-full">
+                        <div className="h-12 w-12 bg-transparent border-1 rounded-full">
                             <img
                                 className="h-full opacity-50"
                                 src="https://img.icons8.com/?size=100&id=114064&format=png&color=000000"
@@ -95,4 +95,4 @@ function UserLayout({ children }) {
     );
 }
 
-export default UserLayout;
+export default React.memo(UserLayout);

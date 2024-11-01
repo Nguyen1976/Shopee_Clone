@@ -7,7 +7,8 @@ import {
     faChevronLeft,
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 function Slider({ children, spaceBetween, slidesPerView, loop }) {
     const swiperRef = useRef(null);
@@ -56,4 +57,11 @@ function Slider({ children, spaceBetween, slidesPerView, loop }) {
     );
 }
 
-export default Slider;
+Slider.propTypes = {
+    children: PropTypes.node.isRequired,
+    spaceBetween: PropTypes.number,
+    slidesPerView: PropTypes.number,
+    loop: PropTypes.bool,
+}
+
+export default React.memo(Slider);

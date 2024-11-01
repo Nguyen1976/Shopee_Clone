@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 
 function ToastMessage({ message }) {
@@ -66,4 +67,8 @@ function ToastMessage({ message }) {
     );
 }
 
-export default ToastMessage;
+ToastMessage.propTypes = {
+    message: PropTypes.string.isRequired,
+}
+
+export default React.memo(ToastMessage);

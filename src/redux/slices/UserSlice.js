@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+    id: '',
     name: '',
     email: '',
     phone: '',
     address: '',
     avatar: '',
+    isAdmin: false,
     access_token: '',
-    id: '',
 };
 
 export const UserSlice = createSlice({
@@ -16,21 +17,23 @@ export const UserSlice = createSlice({
     reducers: {
         updateUser: (state, action) => {
             const {
+                _id = '',
                 name = '',
                 email = '',
                 phone = '',
                 address = '',
                 avatar = '',
+                isAdmin = false,
                 access_token = '',
-                _id = '',
             } = action.payload;
+            state.id = _id;
             state.name = name;
             state.email = email;
             state.phone = phone;
             state.address = address;
             state.avatar = avatar;
+            state.isAdmin = isAdmin;
             state.access_token = access_token;
-            state.id = _id;
         },
     },
 });

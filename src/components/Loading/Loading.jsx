@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,4 +19,9 @@ function Loading({ isLoading, children }) {
     );
 }
 
-export default Loading;
+Loading.propTypes = {
+    isLoading: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+}
+
+export default React.memo(Loading);

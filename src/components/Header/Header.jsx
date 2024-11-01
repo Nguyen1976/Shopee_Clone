@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
     faFacebook,
@@ -112,7 +112,7 @@ function Header() {
     ];
 
     return (
-        <div className="bg-header py-2 sticky top-0 z-50">
+        <header className="bg-header py-2 sticky top-0 z-50">
             <div className="text-white container-custom">
                 <div className="flex justify-between text-sm">
                     <div className="flex gap-2 items-center">
@@ -405,8 +405,8 @@ function Header() {
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
     );
 }
 
-export default Header;
+export default React.memo(Header);

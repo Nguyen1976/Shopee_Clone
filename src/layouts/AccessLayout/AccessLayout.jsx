@@ -1,7 +1,9 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 
 import images from '~/assets/images';
-import FooterLayout from '~/components/FooterLayout';
+import FooterLayout from '~/layouts/FooterLayout';
 
 function AccessLayout({ children }) {
     const location = useLocation();
@@ -53,4 +55,8 @@ function AccessLayout({ children }) {
     );
 }
 
-export default AccessLayout;
+AccessLayout.propTypes = {
+    children: PropTypes.node.isRequired,
+}
+
+export default React.memo(AccessLayout);

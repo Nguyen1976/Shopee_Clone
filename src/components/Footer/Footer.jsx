@@ -4,13 +4,14 @@ import {
     faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 
 import images from '~/assets/images';
 
 function Footer() {
     
     return (
-        <div className="bg-[#f5f5f5] py-12">
+        <footer className="bg-[#f5f5f5] py-12">
             <div className="container-custom grid grid-cols-5 gap-5">
                 <div>
                     <div className="font-bold text-sm">CHĂM SÓC KHÁCH HÀNG</div>
@@ -105,8 +106,8 @@ function Footer() {
                     <img className="mt-2" src={images.qrcode} alt="qrcode" />
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }
 
-export default Footer;
+export default React.memo(Footer);
