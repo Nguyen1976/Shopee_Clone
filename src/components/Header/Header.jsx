@@ -21,6 +21,7 @@ import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import images from '~/assets/images';
 import useDebounce from '~/hooks/useDebounce';
 import * as ProductService from '~/services/ProductService';
+import config from '~/configs';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
@@ -39,7 +40,7 @@ function Header() {
     const handleLogout = () => {
         localStorage.removeItem('access_token');
         dispatch(updateUser({}));
-        navigate('/sign-in');
+        navigate(config.routes.signIn);
     };
 
     useEffect(() => {
@@ -197,7 +198,7 @@ function Header() {
                                             <div
                                                 className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
                                                 onClick={() =>
-                                                    navigate('/sign-up')
+                                                    navigate(config.routes.signUp)
                                                 }
                                             >
                                                 Đăng ký
@@ -205,7 +206,7 @@ function Header() {
                                             <div
                                                 className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
                                                 onClick={(e) =>
-                                                    navigate('/sign-in')
+                                                    navigate(config.routes.signIn)
                                                 }
                                             >
                                                 Đăng nhập
@@ -327,7 +328,7 @@ function Header() {
                 </div>
                 <div className="flex justify-between items-center mt-6">
                     <div className="w-2/12">
-                        <Link to={'/'}>
+                        <Link to={config.routes.home}>
                             <img
                                 className="object-cover"
                                 src={images.logo}

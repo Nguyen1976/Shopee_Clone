@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import config from '~/configs';
 import DefaultLayout from '~/layouts/DefaultLayout';
 
 function UserLayout({ children }) {
@@ -56,7 +57,7 @@ function UserLayout({ children }) {
                                     <li
                                         className={`hover:text-primary mt-2 ${
                                             location.pathname ===
-                                            '/user/profile'
+                                            config.routes.profile
                                                 ? 'text-primary'
                                                 : ''
                                         }`}

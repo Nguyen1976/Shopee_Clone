@@ -3,6 +3,7 @@ import { useState } from 'react';
 const useToast = (duration = 3000) => {
     const [toast, setToast] = useState('');
 
+
     const showToast = (message) => {
         setToast(message);
         

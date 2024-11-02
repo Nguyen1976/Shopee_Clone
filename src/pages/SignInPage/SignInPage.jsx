@@ -9,6 +9,7 @@ import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import Loading from '~/components/Loading';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
 import useToast from '~/hooks/useToast';
+import config from '~/configs';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ function SignInPage() {
     const [isPasswordValid, setIsPasswordValid] = useState(true);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isErrorToast, setIsErrorToast] = useState(false);
 
     const { toast, showToast, setToast } = useToast(3000);
 
@@ -54,13 +56,23 @@ function SignInPage() {
                         decoded.id,
                         data.access_token
                     );
-                    navigate('/');
+                    if (data.isAdmin) {
+                        navigate(config.routes.adminUser);
+                    } else {
+                        navigate(config.routes.home);
+                    }
                 }
+                setIsErrorToast(false);
             } catch (error) {
                 console.error(error);
+                setIsErrorToast(true);
             } finally {
                 setIsLoading(false);
-                showToast('Đăng nhập thành công');
+                if (isErrorToast) {
+                    showToast('Đăng nhập thất bại');
+                } else {
+                    showToast('Đăng nhập thành công');
+                }
             }
         }
     };
@@ -68,7 +80,7 @@ function SignInPage() {
     return (
         <div className="flex justify-end">
             {toast && (
-                <ToastMessage message={toast} onClose={() => setToast('')} />
+                <ToastMessage isError={isErrorToast} message={toast} onClose={() => setToast('')} />
             )}
             <div className="bg-white p-5 w-96">
                 <div className="text-xl font-normal">Đăng nhập</div>
@@ -121,7 +133,7 @@ function SignInPage() {
                 </div>
                 <div className="text-center text-sm mt-5 text-[#8b8b8b]">
                     Bạn mới biết đến Shopee?{' '}
-                    <Link className="text-primary" to={'/sign-up'}>
+                    <Link className="text-primary" to={config.routes.signUp}>
                         {' '}
                         Đăng ký
                     </Link>

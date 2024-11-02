@@ -15,6 +15,7 @@ function ProfilePage() {
     const [address, setAddress] = useState('');
     const [base64Image, setBase64Image] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isErrorToast, setIsErrorToast] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -51,11 +52,17 @@ function ProfilePage() {
                 });
                 dispatch(updateUser({ ...res.data }));
             }
+            setIsErrorToast(false);
         } catch (err) {
             console.error(err);
+            setIsErrorToast(true);
         } finally {
             setIsLoading(false);
-            showToast('Cập nhật thông tin người dùng thành công');
+            if (isErrorToast) {
+                showToast('Cập nhật thông tin người dùng không thành công');
+            } else {
+                showToast('Cập nhật thông tin người dùng thành công');
+            }
         }
     };
 
@@ -93,7 +100,11 @@ function ProfilePage() {
     return (
         <Loading isLoading={isLoading}>
             {toast && (
-                <ToastMessage message={toast} onClose={() => setToast('')} />
+                <ToastMessage
+                    isError={isErrorToast}
+                    message={toast}
+                    onClose={() => setToast('')}
+                />
             )}
             <div className="pb-4 border-b-2 border-[#f5f5f5]">
                 <div className="text-lg">Hồ Sơ Của Tôi</div>

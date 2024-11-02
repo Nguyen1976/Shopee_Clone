@@ -9,6 +9,7 @@ import {
 } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
 import Loading from '~/components/Loading';
+import config from '~/configs';
 
 function SignUpPage() {
     const [name, setName] = useState('');
@@ -59,7 +60,7 @@ function SignUpPage() {
                     password,
                     confirmPassword,
                 });
-                navigate('/sign-in'); // Điều hướng khi đăng ký thành công
+                navigate(config.routes.signIn); // Điều hướng khi đăng ký thành công
             } catch (error) {
                 console.error(error);
             } finally {
@@ -163,7 +164,7 @@ function SignUpPage() {
                 </div>
                 <div className="text-center text-sm mt-5 text-[#8b8b8b]">
                     Bạn đã có tài khoản?{' '}
-                    <Link className="text-primary" to={'/sign-in'}>
+                    <Link className="text-primary" to={config.routes.signIn}>
                         {' '}
                         Đăng nhập
                     </Link>

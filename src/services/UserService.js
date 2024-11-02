@@ -23,3 +23,8 @@ export const getDetailsUser = async (id, access_token) => {
     });
     return res.data;
 }
+
+export const getAllUsers = async () => {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/user/getAll`);
+    return res.data;
+}
