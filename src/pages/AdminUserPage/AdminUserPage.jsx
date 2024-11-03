@@ -4,6 +4,7 @@ import * as UserService from '~/services/UserService';
 
 function AdminUserPage() {
     const [listUsers, setListUsers] = useState([]);
+    const [listUsersDelete, setListUsersDelete] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             const res = await UserService.getAllUsers();
@@ -12,6 +13,18 @@ function AdminUserPage() {
 
         fetchData();
     }, []);
+    useEffect(() => {
+        console.log(listUsersDelete)
+    }, [listUsersDelete])
+
+    const handleDeleteUsers = async () => {
+        try {
+            const res = await UserService.deleteManyUsers(listUsersDelete);
+            console.log(res);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
         <div className="h-96">
@@ -20,16 +33,43 @@ function AdminUserPage() {
                     if (!user.isAdmin) {
                         return (
                             <li
-                                className="pb-3 sm:pb-4"
+                                className="pb-3 sm:pb-4 flex items-center"
                                 key={`user-admin-page-${index}`}
                             >
-                                <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                                <input
+                                    id={`link-checkbox-${index}`}
+                                    type="checkbox"
+                                    value=""
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setListUsersDelete([
+                                                ...listUsersDelete,
+                                                user._id,
+                                            ]);
+                                        } else {
+                                            setListUsersDelete(listUsersDelete.filter(id => id !== user._id));
+                                        }
+                                    }}
+                                ></input>
+                                <label
+                                    htmlFor={`link-checkbox-${index}`}
+                                    className="flex items-center space-x-4 rtl:space-x-reverse"
+                                >
                                     <div className="flex-shrink-0">
-                                        <img
-                                            className="w-8 h-8 rounded-full"
-                                            src={user.avatar}
-                                            alt={`user-${index}`}
-                                        />
+                                        {user.avatar ? (
+                                            <img
+                                                className="w-8 h-8 rounded-full"
+                                                src={user.avatar}
+                                                alt={`user-${index}`}
+                                            />
+                                        ) : (
+                                            <img
+                                                className="w-8 h-8 opacity-50"
+                                                src="https://img.icons8.com/?size=100&id=114064&format=png&color=000000"
+                                                alt="avatar-none"
+                                            />
+                                        )}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
@@ -39,7 +79,7 @@ function AdminUserPage() {
                                             {user.email}
                                         </p>
                                     </div>
-                                </div>
+                                </label>
                             </li>
                         );
                     } else {
@@ -47,6 +87,7 @@ function AdminUserPage() {
                     }
                 })}
             </ul>
+            <button onClick={handleDeleteUsers}>delete</button>
         </div>
     );
 }
