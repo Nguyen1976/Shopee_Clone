@@ -10,6 +10,7 @@ import {
 import * as UserService from '~/services/UserService';
 import Loading from '~/components/Loading';
 import config from '~/configs';
+import InputForm from '~/components/InputForm';
 
 function SignUpPage() {
     const [name, setName] = useState('');
@@ -75,64 +76,50 @@ function SignUpPage() {
                 <div>
                     <div className="text-xl font-normal">Đăng ký</div>
                     <div id="name" className="mt-4 h-14">
-                        <input
+                        <InputForm
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full border-[#f3f3f3] border-2 p-2"
-                            type="text"
-                            placeholder="Tên đăng nhập"
+                            isError={isNameValid}
                             onBlur={handleValidName}
+                            placeholder={'Name'}
+                            message={name ? 'Tên không hợp lệ' : 'Hãy nhập tên'}
                         />
-                        {!isNameValid && (
-                            <span className="text-xs text-[#f33a58] ml-2">
-                                Tên đăng nhập không hợp lệ
-                            </span>
-                        )}
                     </div>
                     <div id="email" className="mt-4 h-14">
-                        <input
+                        <InputForm
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full border-[#f3f3f3] border-2 p-2"
-                            type="text"
-                            placeholder="Email"
+                            isError={isEmailValid}
                             onBlur={handleValidEmail}
+                            placeholder={'Email'}
+                            message={
+                                email ? 'Email không hợp lệ' : 'Hãy nhập email'
+                            }
                         />
-                        {!isEmailValid && (
-                            <span className="text-xs text-[#f33a58] ml-2">
-                                Email không hợp lệ
-                            </span>
-                        )}
                     </div>
                     <div id="password" className="mt-4 h-14">
-                        <input
+                        <InputForm
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full border-[#f3f3f3] border-2 p-2"
-                            type="text"
-                            placeholder="Mật khẩu"
+                            isError={isPasswordValid}
                             onBlur={handleValidPassword}
+                            type='password'
+                            placeholder={'Mật khẩu'}
+                            message={
+                                password
+                                    ? 'Mật khẩu không hợp lệ'
+                                    : 'Hãy nhập mật khẩu'
+                            }
                         />
-                        {!isPasswordValid && (
-                            <span className="text-xs text-[#f33a58] ml-2">
-                                Mật khẩu không hợp lệ
-                            </span>
-                        )}
                     </div>
                     <div id="confirm-password" className="mt-4 h-14">
-                        <input
+                        <InputForm
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="w-full border-[#f3f3f3] border-2 p-2"
-                            type="text"
-                            placeholder="Xác nhận mật khẩu"
+                            isError={isConfirmPasswordValid}
                             onBlur={handleValidConfirmPassword}
+                            type='password'
+                            placeholder="Xác nhận mật khẩu"
+                            message={'Mật khẩu không khớp'}
                         />
-                        {!isConfirmPasswordValid && (
-                            <span className="text-xs text-[#f33a58] ml-2">
-                                Mật khẩu phải giống với mật khẩu trên
-                            </span>
-                        )}
                     </div>
-                    <Loading
-                        isLoading={isLoading}
-                    >
+                    <Loading isLoading={isLoading}>
                         <button
                             className=" bg-primary w-full text-white p-2"
                             onClick={handleSubmit}

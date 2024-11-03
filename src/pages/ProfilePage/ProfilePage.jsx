@@ -7,6 +7,7 @@ import { updateUser } from '~/redux/slices/UserSlice';
 import Loading from '~/components/Loading';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
 import useToast from '~/hooks/useToast';
+import InputForm from '~/components/InputForm';
 
 function ProfilePage() {
     const [name, setName] = useState('');
@@ -125,11 +126,9 @@ function ProfilePage() {
                             <div className="text-[#555555cc] pb-8 w-1/5">
                                 Email
                             </div>
-                            <div className="pl-5 text-[#333] pb-8 flex-1">
-                                <input
+                            <div className="pl-5 text-[#333] flex-1">
+                                <InputForm
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full border-[#f3f3f3] border-2 p-1"
-                                    type="text"
                                     placeholder="Email"
                                     value={email}
                                 />
@@ -139,11 +138,9 @@ function ProfilePage() {
                             <div className="text-[#555555cc] pb-8 w-1/5">
                                 Số điện thoại
                             </div>
-                            <div className="pl-5 text-[#333] pb-8 flex-1">
-                                <input
+                            <div className="pl-5 text-[#333] flex-1">
+                                <InputForm
                                     onChange={(e) => setPhone(e.target.value)}
-                                    className="w-full border-[#f3f3f3] border-2 p-1"
-                                    type="text"
                                     placeholder="Số điện thoại"
                                     value={phone}
                                 />
@@ -154,10 +151,8 @@ function ProfilePage() {
                                 Địa chỉ
                             </div>
                             <div className="pl-5 text-[#333] pb-8 flex-1">
-                                <input
+                                <InputForm
                                     onChange={(e) => setAddress(e.target.value)}
-                                    className="w-full border-[#f3f3f3] border-2 p-1"
-                                    type="text"
                                     placeholder="Địa chỉ"
                                     value={address}
                                 />

@@ -10,6 +10,7 @@ import Loading from '~/components/Loading';
 import ToastMessage from '~/components/ToastMessage/ToastMessage';
 import useToast from '~/hooks/useToast';
 import config from '~/configs';
+import InputForm from '~/components/InputForm';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -37,7 +38,7 @@ function SignInPage() {
 
     const handleSubmit = async () => {
         setIsLoading(true);
-        if (isEmailValid && isPasswordValid) {
+        if (isEmailValid && isPasswordValid && email && password) {
             try {
                 const data = await UserService.signInUser({
                     email,
@@ -66,6 +67,7 @@ function SignInPage() {
             } catch (error) {
                 console.error(error);
                 setIsErrorToast(true);
+                setIsLoading(false);
             } finally {
                 setIsLoading(false);
                 if (isErrorToast) {
@@ -74,47 +76,50 @@ function SignInPage() {
                     showToast('Đăng nhập thành công');
                 }
             }
+        } else {
+            showToast('Đăng nhập thất bại');
+            setIsErrorToast(true);
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="flex justify-end">
             {toast && (
-                <ToastMessage isError={isErrorToast} message={toast} onClose={() => setToast('')} />
+                <ToastMessage
+                    isError={isErrorToast}
+                    message={toast}
+                    onClose={() => setToast('')}
+                />
             )}
             <div className="bg-white p-5 w-96">
                 <div className="text-xl font-normal">Đăng nhập</div>
                 <div id="email" className="mt-4 h-14">
-                    <input
+                    <InputForm
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full border-[#f3f3f3] border-2 p-2"
-                        type="text"
-                        placeholder="Email"
+                        isError={isEmailValid}
                         onBlur={handleValidEmail}
+                        placeholder={'Email'}
+                        message={
+                            email ? 'Email không hợp lệ' : 'Hãy nhập email'
+                        }
                     />
-                    {!isEmailValid && (
-                        <span className="text-xs text-[#f33a58] ml-2">
-                            Email không hợp lệ
-                        </span>
-                    )}
                 </div>
                 <div id="password" className="mt-4 h-14">
-                    <input
+                    <InputForm
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full border-[#f3f3f3] border-2 p-2"
-                        type="text"
-                        placeholder="Mật khẩu"
+                        isError={isPasswordValid}
                         onBlur={handleValidPassword}
+                        type='password'
+                        placeholder={'Mật khẩu'}
+                        message={
+                            password ? 'Mật khẩu không hợp lệ' : 'Hãy nhập mật khẩu'
+                        }
                     />
-                    {!isPasswordValid && (
-                        <span className="text-xs text-[#f33a58] ml-2">
-                            Mật khẩu không hợp lệ
-                        </span>
-                    )}
                 </div>
                 <Loading isLoading={isLoading}>
                     <button
-                        className=" bg-primary w-full text-white p-2"
+                        className=" bg-primary w-full text-white p-2 select-none"
                         onClick={handleSubmit}
                     >
                         Đăng nhập
