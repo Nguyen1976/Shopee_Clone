@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { LineChart } from '@mui/x-charts/LineChart';
 
 import * as UserService from '~/services/UserService';
 
@@ -14,8 +15,8 @@ function AdminUserPage() {
         fetchData();
     }, []);
     useEffect(() => {
-        console.log(listUsersDelete)
-    }, [listUsersDelete])
+        console.log(listUsersDelete);
+    }, [listUsersDelete]);
 
     const handleDeleteUsers = async () => {
         try {
@@ -24,11 +25,11 @@ function AdminUserPage() {
         } catch (err) {
             console.error(err);
         }
-    }
+    };
 
     return (
-        <div className="h-96">
-            <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="h-96 flex gap-6">
+            <ul className="w-1/3 divide-y divide-gray-200 dark:divide-gray-700">
                 {listUsers.map((user, index) => {
                     if (!user.isAdmin) {
                         return (
@@ -48,10 +49,14 @@ function AdminUserPage() {
                                                 user._id,
                                             ]);
                                         } else {
-                                            setListUsersDelete(listUsersDelete.filter(id => id !== user._id));
+                                            setListUsersDelete(
+                                                listUsersDelete.filter(
+                                                    (id) => id !== user._id
+                                                )
+                                            );
                                         }
                                     }}
-                                ></input>
+                                />
                                 <label
                                     htmlFor={`link-checkbox-${index}`}
                                     className="flex items-center space-x-4 rtl:space-x-reverse"
@@ -86,8 +91,20 @@ function AdminUserPage() {
                         return null;
                     }
                 })}
+                <button onClick={handleDeleteUsers}>delete</button>
             </ul>
-            <button onClick={handleDeleteUsers}>delete</button>
+            <div className="flex-1">
+                <LineChart
+                    xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                    series={[
+                        {
+                            data: [2, 5.5, 2, 8.5, 1.5, 5],
+                        },
+                    ]}
+                    width={500}
+                    height={300}
+                />
+            </div>
         </div>
     );
 }
