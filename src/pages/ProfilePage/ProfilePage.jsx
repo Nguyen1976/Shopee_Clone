@@ -5,7 +5,7 @@ import { isValidEmail, isValidPhoneNumber } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
 import { updateUser } from '~/redux/slices/UserSlice';
 import Loading from '~/components/Loading';
-import ToastMessage from '~/components/ToastMessage/ToastMessage';
+import ToastMessage from '~/components/ToastMessage';
 import useToast from '~/hooks/useToast';
 import InputForm from '~/components/InputForm';
 

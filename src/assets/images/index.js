@@ -19,6 +19,7 @@ const images = {
     logoColor: require('~/assets/images/logoColor.png'),
     bgAccesLayout: require('~/assets/images/bgAccesLayout.png'),
     freeShip: require('~/assets/images/freeShip.png'),
+    noAvatar: require('~/assets/images/noAvatar.png'),
 };
 
 export default images;

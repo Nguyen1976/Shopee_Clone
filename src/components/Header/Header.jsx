@@ -22,6 +22,7 @@ import images from '~/assets/images';
 import useDebounce from '~/hooks/useDebounce';
 import * as ProductService from '~/services/ProductService';
 import config from '~/configs';
+import Image from '~/components/Image';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
@@ -66,11 +67,13 @@ function Header() {
                     debouncedValueSearch,
                     5
                 );
-                setSearchResult(res.data);
+                if (res.data) {
+                    setSearchResult(res.data);
+                }
             } catch (err) {
                 console.error('Error fetching product data:', err);
             }
-            if(!debouncedValueSearch) {
+            if (!debouncedValueSearch) {
                 setSearchResult([]);
             }
         };
@@ -198,7 +201,9 @@ function Header() {
                                             <div
                                                 className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
                                                 onClick={() =>
-                                                    navigate(config.routes.signUp)
+                                                    navigate(
+                                                        config.routes.signUp
+                                                    )
                                                 }
                                             >
                                                 Đăng ký
@@ -206,7 +211,9 @@ function Header() {
                                             <div
                                                 className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
                                                 onClick={(e) =>
-                                                    navigate(config.routes.signIn)
+                                                    navigate(
+                                                        config.routes.signIn
+                                                    )
                                                 }
                                             >
                                                 Đăng nhập
@@ -289,20 +296,8 @@ function Header() {
                                 scaleTop={true}
                             >
                                 <div className="flex">
-                                    <div className="h-5 w-5 bg-white rounded-full overflow-hidden">
-                                        {avatar ? (
-                                            <img
-                                                className="h-full w-full object-cover"
-                                                src={avatar}
-                                                alt="avatar"
-                                            />
-                                        ) : (
-                                            <img
-                                                className="h-full opacity-50"
-                                                src="https://img.icons8.com/?size=100&id=114064&format=png&color=000000"
-                                                alt="avatar-none"
-                                            />
-                                        )}
+                                    <div className="h-5 w-5 flex-shrink-0 ">
+                                        <Image src={avatar} alt={`avartar`} />
                                     </div>
                                     <div className="ml-1 text-md">{name}</div>
                                 </div>

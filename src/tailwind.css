@@ -56,6 +56,24 @@
     .border-1 {
         border-width: 1px;
     }
+
+    .scrollbar {
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: #4b5563 #e5e7eb; /* thumb color, track color */
+    }
+
+    .scrollbar::-webkit-scrollbar {
+        width: 3px; /* Width of the scrollbar */
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        background: #e5e7eb; /* Track color */
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background-color: #4b5563; /* Thumb color */
+        border-radius: 10px; /* Rounded corners */
+    }
 }
 
 .container-custom {
