@@ -21,4 +21,9 @@ export const getDetailProduct = async (id) => {
     return res.data;
 };
 
-
+export const getProductNavigation = async (page, limit) => {
+    const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/product/get-all?page=${page}&limit=${limit}`
+    );
+    return res.data;
+};

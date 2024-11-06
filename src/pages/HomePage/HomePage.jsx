@@ -17,16 +17,16 @@ function HomePage() {
     const [allProduct, setAllProduct] = useState([]);
     const pages = [1, 2, 3, 4, 5];
 
-    const [pageNumber, setPageNumber] = useState(1);
-    console.log(pageNumber)
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const pageNumberQuerry = parseInt(query.get('pageNumber')) || 1;
 
+    const [pageNumber, setPageNumber] = useState(pageNumberQuerry);
 
     const fetchData = async (page) => {
         try {
-            console.log('Bên trong hàm',page)
-            const res = await ProductService.getAllProducts(page-1, 10);
+            const res = await ProductService.getProductNavigation(page - 1, 10);
             setAllProduct(res.data);
-            console.log(res);
         } catch (error) {
             console.error('Error fetching product data:', error);
         }
@@ -53,8 +53,6 @@ function HomePage() {
             image: images.slider5,
         },
     ];
-
-    
 
     return (
         <>
@@ -106,10 +104,20 @@ function HomePage() {
                                 <FontAwesomeIcon icon={faChevronLeft} />
                             </li>
                             {pages.map((page, index) => (
-                                <li key={index} className={pageNumber === page ? 'bg-primary px-2 text-white' : ''}
+                                <li
+                                    key={index}
+                                    className={
+                                        pageNumberQuerry === page
+                                            ? 'bg-primary px-2 text-white'
+                                            : ''
+                                    }
                                     onClick={() => setPageNumber(page)}
                                 >
-                                    <Link to={`${config.routes.home}?pageNumber=${page}`}>{page}</Link>
+                                    <Link
+                                        to={`${config.routes.home}?pageNumber=${page}`}
+                                    >
+                                        {page}
+                                    </Link>
                                 </li>
                             ))}
                             <li>...</li>
