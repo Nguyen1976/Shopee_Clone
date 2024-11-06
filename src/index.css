@@ -1037,6 +1037,10 @@ input[type="range"]::-ms-fill-lower {
   margin-left: 0.25rem;
 }
 
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
 .ml-16 {
   margin-left: 4rem;
 }
@@ -1121,12 +1125,8 @@ input[type="range"]::-ms-fill-lower {
   margin-top: 2rem;
 }
 
-.mr-10 {
-  margin-right: 2.5rem;
-}
-
-.ml-10 {
-  margin-left: 2.5rem;
+.ms-0 {
+  margin-inline-start: 0px;
 }
 
 .line-clamp-1 {
@@ -1239,6 +1239,18 @@ input[type="range"]::-ms-fill-lower {
   height: 100%;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-2\.5 {
+  height: 0.625rem;
+}
+
+.h-3 {
+  height: 0.75rem;
+}
+
 .min-h-8 {
   min-height: 2rem;
 }
@@ -1325,6 +1337,14 @@ input[type="range"]::-ms-fill-lower {
 
 .w-max {
   width: max-content;
+}
+
+.w-2\.5 {
+  width: 0.625rem;
+}
+
+.w-3 {
+  width: 0.75rem;
 }
 
 .min-w-0 {
@@ -1523,10 +1543,20 @@ input[type="range"]::-ms-fill-lower {
   gap: 1.5rem;
 }
 
+.gap-10 {
+  gap: 2.5rem;
+}
+
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.-space-x-px > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(-1px * var(--tw-space-x-reverse));
+  margin-left: calc(-1px * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -1598,6 +1628,10 @@ input[type="range"]::-ms-fill-lower {
   border-width: 2px;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-x-2 {
   border-left-width: 2px;
   border-right-width: 2px;
@@ -1622,6 +1656,10 @@ input[type="range"]::-ms-fill-lower {
 
 .border-t-2 {
   border-top-width: 2px;
+}
+
+.border-e-0 {
+  border-inline-end-width: 0px;
 }
 
 .border-none {
@@ -1666,6 +1704,11 @@ input[type="range"]::-ms-fill-lower {
 .border-zinc-300 {
   --tw-border-opacity: 1;
   border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.border-blue-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(164 202 254 / var(--tw-border-opacity));
 }
 
 .\!bg-gray-50 {
@@ -1747,6 +1790,11 @@ input[type="range"]::-ms-fill-lower {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-blue-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(235 245 255 / var(--tw-bg-opacity));
 }
 
 .bg-header {
@@ -1929,6 +1977,11 @@ input[type="range"]::-ms-fill-lower {
   line-height: 1rem;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -1955,6 +2008,10 @@ input[type="range"]::-ms-fill-lower {
 
 .leading-none {
   line-height: 1;
+}
+
+.leading-tight {
+  line-height: 1.25;
 }
 
 .text-\[\#0f4fb0\] {
@@ -2257,6 +2314,11 @@ input[type="range"]::-ms-fill-lower {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-blue-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(225 239 254 / var(--tw-bg-opacity));
+}
+
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -2265,6 +2327,16 @@ input[type="range"]::-ms-fill-lower {
 .hover\:text-primary:hover {
   --tw-text-opacity: 1;
   color: rgb(251 85 51 / var(--tw-text-opacity));
+}
+
+.hover\:text-blue-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(26 86 219 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .hover\:opacity-50:hover {
@@ -2295,6 +2367,11 @@ input[type="range"]::-ms-fill-lower {
 .dark\:border-gray-600:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
+.dark\:border-gray-700:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity));
 }
 
 .dark\:\!bg-gray-700:is(.dark *) {
@@ -2375,6 +2452,11 @@ input[type="range"]::-ms-fill-lower {
   .sm\:pb-4 {
     padding-bottom: 1rem;
   }
+}
+
+.rtl\:rotate-180:where([dir="rtl"], [dir="rtl"] *) {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .rtl\:space-x-reverse:where([dir="rtl"], [dir="rtl"] *) > :not([hidden]) ~ :not([hidden]) {

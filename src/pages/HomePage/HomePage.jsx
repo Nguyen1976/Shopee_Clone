@@ -1,26 +1,40 @@
 import CardProduct from '~/components/CardProduct';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { SwiperSlide } from 'swiper/react';
 
 import Slider from '~/components/Slider';
 import images from '~/assets/images';
 import * as ProductService from '~/services/ProductService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faChevronLeft,
+    faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+import config from '~/configs';
 
 function HomePage() {
     const [allProduct, setAllProduct] = useState([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await ProductService.getAllProducts();
-                setAllProduct(res.data);
-            } catch (error) {
-                console.error('Error fetching product data:', error);
-            }
-        };
+    const pages = [1, 2, 3, 4, 5];
 
-        fetchData(); // Gọi hàm fetchData để lấy dữ liệu
-    }, []);
+    const [pageNumber, setPageNumber] = useState(1);
+    console.log(pageNumber)
+
+
+    const fetchData = async (page) => {
+        try {
+            console.log('Bên trong hàm',page)
+            const res = await ProductService.getAllProducts(page-1, 10);
+            setAllProduct(res.data);
+            console.log(res);
+        } catch (error) {
+            console.error('Error fetching product data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData(pageNumber); // Gọi hàm fetchData để lấy dữ liệu
+    }, [pageNumber]);
 
     const listSlide = [
         {
@@ -40,14 +54,13 @@ function HomePage() {
         },
     ];
 
+    
+
     return (
         <>
             <div className="container-custom mt-7 flex gap-1 pb-7">
                 <div className="w-2/3">
-                    <Slider
-                        slidesPerView={1}
-                        loop={true}
-                    >
+                    <Slider slidesPerView={1} loop={true}>
                         {listSlide.map((item, index) => (
                             <SwiperSlide key={`key-slider-${index}`}>
                                 <img src={item.image} alt={`Image-${index}`} />
@@ -87,11 +100,24 @@ function HomePage() {
                             </Link>
                         ))}
                     </div>
-                    <div className="text-center mt-5">
-                        <button className="w-24 bg-white p-2 shadow-sm">
-                            Xem thêm
-                        </button>
-                    </div>
+                    <nav className="text-center mt-10 text-zinc-400 ">
+                        <ul className="inline-flex -space-x-px text-2xl gap-10">
+                            <li>
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                            </li>
+                            {pages.map((page, index) => (
+                                <li key={index} className={pageNumber === page ? 'bg-primary px-2 text-white' : ''}
+                                    onClick={() => setPageNumber(page)}
+                                >
+                                    <Link to={`${config.routes.home}?pageNumber=${page}`}>{page}</Link>
+                                </li>
+                            ))}
+                            <li>...</li>
+                            <li>
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div className="bg-white border-primary border-t-2 py-12">

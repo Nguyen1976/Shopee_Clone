@@ -8,7 +8,7 @@ export const getAllProducts = async (search, limit) => {
         );
     } else {
         res = await axios.get(
-            `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
+            `${process.env.REACT_APP_API_URL}/product/get-all?&limit=${limit}`
         );
     }
     return res.data;
@@ -20,3 +20,5 @@ export const getDetailProduct = async (id) => {
     );
     return res.data;
 };
+
+

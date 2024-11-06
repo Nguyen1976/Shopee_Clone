@@ -8,6 +8,7 @@ import Loading from '~/components/Loading';
 import ToastMessage from '~/components/ToastMessage';
 import useToast from '~/hooks/useToast';
 import InputForm from '~/components/InputForm';
+import { imageToBase64 } from '~/utils/imageToBase64';
 
 function ProfilePage() {
     const [name, setName] = useState('');
@@ -26,7 +27,6 @@ function ProfilePage() {
 
     const userInfo = useSelector((state) => state.user);
 
-    const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
 
     useEffect(() => {
         setName(userInfo.name);
@@ -67,31 +67,11 @@ function ProfilePage() {
         }
     };
 
-    const handleFileChange = (e) => {
-        console.log(e.target.files[0]);
+    const handleFileChange = async (e) => {
         const file = e.target.files[0];
+        const base64 = await imageToBase64(file).then(res => res)
+        setBase64Image(base64)
 
-        if (!file) return;
-
-        // Kiểm tra định dạng file
-        const validFileTypes = ['image/jpeg', 'image/png'];
-        if (!validFileTypes.includes(file.type)) {
-            alert('Chỉ chấp nhận các định dạng .JPEG, .PNG');
-            return;
-        }
-
-        // Kiểm tra kích thước file
-        if (file.size > MAX_FILE_SIZE) {
-            alert('Dung lượng file tối đa là 1 MB');
-            return;
-        }
-
-        // Chuyển đổi ảnh sang base64
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setBase64Image(reader.result);
-        };
-        reader.readAsDataURL(file);
     };
 
     const handleButtonClick = () => {
