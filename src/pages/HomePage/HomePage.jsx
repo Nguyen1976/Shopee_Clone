@@ -1,6 +1,6 @@
 import CardProduct from '~/components/CardProduct';
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SwiperSlide } from 'swiper/react';
 
 import Slider from '~/components/Slider';
@@ -12,28 +12,37 @@ import {
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import config from '~/configs';
+import Loading from '~/components/Loading';
 
 function HomePage() {
     const [allProduct, setAllProduct] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const pages = [1, 2, 3, 4, 5];
 
+    const navigate = useNavigate();
+
     const location = useLocation();
-    const query = new URLSearchParams(location.search);
+
+    let query = new URLSearchParams(location.search);
     const pageNumberQuerry = parseInt(query.get('pageNumber')) || 1;
 
     const [pageNumber, setPageNumber] = useState(pageNumberQuerry);
 
-    const fetchData = async (page) => {
+    const fetchDataProduct = async (page) => {
         try {
+            setIsLoading(true)
+            setAllProduct([])
             const res = await ProductService.getProductNavigation(page - 1, 10);
             setAllProduct(res.data);
         } catch (error) {
             console.error('Error fetching product data:', error);
+        } finally {
+            setIsLoading(false)
         }
     };
 
     useEffect(() => {
-        fetchData(pageNumber); // Gọi hàm fetchData để lấy dữ liệu
+        fetchDataProduct(pageNumber); // Gọi hàm fetchData để lấy dữ liệu
     }, [pageNumber]);
 
     const listSlide = [
@@ -53,6 +62,23 @@ function HomePage() {
             image: images.slider5,
         },
     ];
+
+    const handlePagePrev = () => {
+        setPageNumber((prevPageNumber) => {
+            const newPageNumber = prevPageNumber - 1;
+            query.set('pageNumber', newPageNumber);
+            return newPageNumber;
+        });
+        navigate(`/?pageNumber=${pageNumber - 1}`);
+    };
+    const handlePageNext = () => {
+        setPageNumber((prevPageNumber) => {
+            const newPageNumber = prevPageNumber + 1;
+            query.set('pageNumber', newPageNumber);
+            return newPageNumber;
+        });
+        navigate(`/?pageNumber=${pageNumber + 1}`);
+    };
 
     return (
         <>
@@ -82,32 +108,36 @@ function HomePage() {
                     </div>
                 </div>
                 <div className="container-custom mt-5">
-                    <div className="grid grid-cols-6 gap-4">
-                        {allProduct.map((item, index) => (
-                            <Link
-                                to={`/product-detail/${item._id}`}
-                                key={item._id || `key-hot-search-${index}`}
-                            >
-                                <CardProduct
-                                    countInStock={item.countInStock}
-                                    price={item.price}
-                                    image={item.image[0] || ''}
-                                    name={item.name}
-                                    discount={item?.discount}
-                                />
-                            </Link>
-                        ))}
-                    </div>
+                    <Loading
+                        isLoading={isLoading}
+                    >
+                        <div className="grid grid-cols-6 gap-4 min-h-7">
+                            {allProduct.map((item, index) => (
+                                <Link
+                                    to={`/product-detail/${item._id}`}
+                                    key={item._id || `key-hot-search-${index}`}
+                                >
+                                    <CardProduct
+                                        countInStock={item.countInStock}
+                                        price={item.price}
+                                        image={item.image[0] || ''}
+                                        name={item.name}
+                                        discount={item?.discount}
+                                    />
+                                </Link>
+                            ))}
+                        </div>
+                    </Loading>
                     <nav className="text-center mt-10 text-zinc-400 ">
                         <ul className="inline-flex -space-x-px text-2xl gap-10">
-                            <li>
+                            <li onClick={handlePagePrev}>
                                 <FontAwesomeIcon icon={faChevronLeft} />
                             </li>
                             {pages.map((page, index) => (
                                 <li
                                     key={index}
                                     className={
-                                        pageNumberQuerry === page
+                                        pageNumber === page
                                             ? 'bg-primary px-2 text-white'
                                             : ''
                                     }
@@ -121,7 +151,7 @@ function HomePage() {
                                 </li>
                             ))}
                             <li>...</li>
-                            <li>
+                            <li onClick={handlePageNext}>
                                 <FontAwesomeIcon icon={faChevronRight} />
                             </li>
                         </ul>

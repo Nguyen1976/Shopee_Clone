@@ -52,3 +52,8 @@ export const deleteManyUsers = async (ids) => {
     );
     return res.data;
 };
+
+export const searchUsers = async (name) => {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/user/search-users?name=${name}`);
+    return res.data;
+}

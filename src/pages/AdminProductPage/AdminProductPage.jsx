@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { imageToBase64 } from '~/utils/imageToBase64';
 
@@ -13,9 +13,9 @@ function AdminProductPage() {
     };
     return (  
         <div>
-
+            
         </div>
     );
 }
 
-export default AdminProductPage;
+export default React.memo(AdminProductPage);

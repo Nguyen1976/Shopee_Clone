@@ -273,7 +273,7 @@ function Header() {
                                         <div
                                             className="text-black hover:text-primary p-2 text-sm cursor-pointer"
                                             onClick={() =>
-                                                navigate('/user/profile')
+                                                navigate(config.routes.profile)
                                             }
                                         >
                                             Tài khoản của tôi
@@ -306,14 +306,14 @@ function Header() {
                             <div className="flex gap-2">
                                 <Link
                                     className="hover:opacity-50"
-                                    to="/sign-up"
+                                    to={config.routes.signUp}
                                 >
                                     Đăng kí
                                 </Link>
                                 <span className="opacity-30">|</span>
                                 <Link
                                     className="hover:opacity-50"
-                                    to="/sign-in"
+                                    to={config.routes.signIn}
                                 >
                                     Đăng nhập
                                 </Link>

@@ -11,7 +11,7 @@ function AdminLayout({ children }) {
 
     const navigate = useNavigate();
 
-    const locationCurrent = location.pathname;
+    const locationCurrent = location.pathname.replace(/\/repair\/[\w-]+$/, '/repair');
 
     return (
         <DefaultLayout>
@@ -52,6 +52,18 @@ function AdminLayout({ children }) {
                                 >
                                     Người dùng
                                 </span>
+                                <ul className="ml-7 text-sm">
+                                    <li
+                                        className={`hover:text-primary mt-2 ${
+                                            locationCurrent ===
+                                            config.routes.adminUserRepair.replace('/:id', '')
+                                                ? 'text-primary'
+                                                : ''
+                                        }`}
+                                    >
+                                        Hồ sơ
+                                    </li>
+                                </ul>
                             </li>
                             <li className="ml-2 mt-3">
                                 <FontAwesomeIcon

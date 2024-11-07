@@ -11,6 +11,7 @@ import ProfilePage from '~/pages/ProfilePage';
 import SignInPage from '~/pages/SignInPage';
 import SignUpPage from '~/pages/SignUpPage';
 import config from '~/configs';
+import AdminUserRepairPage from '~/pages/AdminUserRepairPage';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
@@ -24,5 +25,6 @@ export const routes = [
     },
     { path: config.routes.adminProduct, component: AdminProductPage, layout: AdminLayout, isAdmin: true },
     { path: config.routes.adminUser, component: AdminUserPage, layout: AdminLayout, isAdmin: true },
+    { path: config.routes.adminUserRepair, component: AdminUserRepairPage, layout: AdminLayout, isAdmin: true },
     { path: '*', component: NotFoundPage },
 ];
