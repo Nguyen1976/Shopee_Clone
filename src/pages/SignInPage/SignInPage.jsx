@@ -74,6 +74,7 @@ function SignInPage() {
                     showToast('Đăng nhập thất bại');
                 } else {
                     showToast('Đăng nhập thành công');
+                    navigate(config.routes.home);
                 }
             }
         } else {

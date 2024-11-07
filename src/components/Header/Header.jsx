@@ -34,6 +34,9 @@ function Header() {
 
     const userInfo = useSelector((state) => state.user);
 
+    const listOrder = useSelector((state) => state.order);
+    console.log(listOrder.orderItems);
+
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -374,22 +377,83 @@ function Header() {
                     </div>
                     <div className="mr-24">
                         <Tooltip
-                            funcRender={() => (
-                                <div className="w-full flex flex-col justify-center items-center py-12">
-                                    <div className="w-1/3">
-                                        <img
-                                            src={images.notProduct}
-                                            alt="not product"
-                                        />
-                                    </div>
-                                    <div className="text-sm text-black py-1">
-                                        Chưa có sản phẩm
-                                    </div>
-                                </div>
-                            )}
+                            funcRender={() => {
+                                if (listOrder.orderItems.length === 0) {
+                                    return (
+                                        <div className="w-full flex flex-col justify-center items-center py-12">
+                                            <div className="w-1/3">
+                                                <img
+                                                    src={images.notProduct}
+                                                    alt="not product"
+                                                />
+                                            </div>
+                                            <div className="text-sm text-black py-1">
+                                                Chưa có sản phẩm
+                                            </div>
+                                        </div>
+                                    );
+                                } else {
+                                    return (
+                                        <div className="w-full">
+                                            <ul className="p-2">
+                                                <li className="text-zinc-500 text-sm py-2">
+                                                    Sản phẩm mới thêm...
+                                                </li>
+                                                {listOrder.orderItems
+                                                    .slice(0, 5)
+                                                    .map((item, index) => {
+                                                        return (
+                                                            <li
+                                                                className="flex justify-between p-2"
+                                                                key={index}
+                                                            >
+                                                                <div className="flex ml-2">
+                                                                    <img
+                                                                        className="object-cover h-12 border-1"
+                                                                        src={
+                                                                            item
+                                                                                .image[0]
+                                                                        }
+                                                                        alt=""
+                                                                    />
+                                                                    <div className="w-60 h- line-clamp-1 truncate text-black ml-2">
+                                                                        {
+                                                                            item.name
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                                <div className="text-primary text-sm">
+                                                                    {item.price}
+                                                                    đ
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    })}
+                                                <li className="text-black text-sm p-2 flex items-center justify-between">
+                                                    <div>
+                                                        {listOrder.orderItems
+                                                            .length - 5}{' '}
+                                                        Thêm hàng vào sản phẩm
+                                                    </div>
+                                                    <button
+                                                        className="bg-primary text-white py-2 px-6"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                config.routes.order
+                                                            )
+                                                        }
+                                                    >
+                                                        Xem giỏ hàng
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    );
+                                }
+                            }}
                             top={20}
                             right={0}
-                            width={340}
+                            width={400}
                             afterArrow={true}
                             scaleTopRight={true}
                         >

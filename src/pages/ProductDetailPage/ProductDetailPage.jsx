@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SwiperSlide } from 'swiper/react';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Slider from '~/components/Slider';
 import * as ProductService from '~/services/ProductService';
 import images from '~/assets/images';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     faCar,
     faCartShopping,
@@ -16,8 +16,9 @@ import {
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '~/components/Tooltip';
+import { addOrderProduct } from '~/redux/slices/OrderSlice';
 
-function ProducDetailPage() {
+function ProductDetailPage() {
     const [product, setProduct] = useState({});
     const [listImages, setListImages] = useState([]);
     const [detailImage, setDetailImage] = useState('');
@@ -25,7 +26,13 @@ function ProducDetailPage() {
     const [addressUser, setAddressUser] = useState('');
     const [quantity, setQuantity] = useState(1);
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
+
     const useInfo = useSelector((state) => state.user);
+
+    const order = useSelector((state) => state.order);
 
     const imageRef = useRef();
 
@@ -53,6 +60,35 @@ function ProducDetailPage() {
     useEffect(() => {
         setAddressUser(useInfo?.address);
     }, [useInfo]);
+
+    const handleAddOrderProduct = () => {
+        if (!useInfo?.id) {
+            navigate('/sign-in', { state: location?.pathname });
+        } else {
+            const orderRedux = order?.orderItems?.find(
+                (item) => item.product === product?._id
+            );
+            if (
+                orderRedux?.amount + quantity <= orderRedux?.countInstock ||
+                (!orderRedux && product?.countInStock > 0)
+            ) {
+                dispatch(
+                    addOrderProduct({
+                        orderItem: {
+                            name: product?.name,
+                            amount: quantity,
+                            image: product?.image,
+                            price: product?.price,
+                            product: product?._id,
+                            discount: product?.discount,
+                            countInstock: product?.countInStock,
+                        },
+                    })
+                );
+            } else {
+            }
+        }
+    };
 
     return (
         <div className="bg-[#f5f5f5] pt-5">
@@ -242,7 +278,9 @@ function ProducDetailPage() {
                                     <button
                                         className="h-full pr-1 mr-1"
                                         onClick={() => {
-                                            setQuantity((prev) => (prev === 1) ? prev : (prev -= 1) );
+                                            setQuantity((prev) =>
+                                                prev === 1 ? prev : (prev -= 1)
+                                            );
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faMinus} />
@@ -264,12 +302,20 @@ function ProducDetailPage() {
                                 </div>
                             </li>
                         </ul>
-                        <div className='flex items-center mt-10 gap-5'>
-                            <button className='p-3 bg-[#d0011b14] border-[#d0011b] border-1'>
-                                <FontAwesomeIcon className='mr-3' icon={faCartShopping} />
+                        <div className="flex items-center mt-10 gap-5">
+                            <button
+                                className="p-3 bg-[#d0011b14] border-[#d0011b] border-1"
+                                onClick={handleAddOrderProduct}
+                            >
+                                <FontAwesomeIcon
+                                    className="mr-3"
+                                    icon={faCartShopping}
+                                />
                                 Thêm vào giỏ hàng
                             </button>
-                            <button className='text-white bg-[#d0011b] py-3 px-10 border-[#d0011b] border-1'>Mua Ngay</button>
+                            <button className="text-white bg-[#d0011b] py-3 px-10 border-[#d0011b] border-1">
+                                Mua Ngay
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -278,4 +324,4 @@ function ProducDetailPage() {
     );
 }
 
-export default ProducDetailPage;
+export default ProductDetailPage;
