@@ -38,12 +38,48 @@ export const OrderSlice = createSlice({
                 state.orderItems.push(orderItem);
             }
         },
+        increaseAmount: (state, action) => {
+            const { idProduct } = action.payload;
+            const itemOrder = state?.orderItems?.find(
+                (item) => item?.product === idProduct
+            );
+            const itemOrderSelected = state?.orderItemsSlected?.find(
+                (item) => item?.product === idProduct
+            );
+            itemOrder.amount++;
+            if (itemOrderSelected) {
+                itemOrderSelected.amount++;
+            }
+        },
+        decreaseAmount: (state, action) => {
+            const { idProduct } = action.payload;
+            const itemOrder = state?.orderItems?.find(
+                (item) => item?.product === idProduct
+            );
+            const itemOrderSelected = state?.orderItemsSlected?.find(
+                (item) => item?.product === idProduct
+            );
+            itemOrder.amount--;
+            if (itemOrderSelected) {
+                itemOrderSelected.amount--;
+            }
+        },
+        removeOrderProduct: (state, action) => {
+            const { idProduct } = action.payload;
+
+            const itemOrder = state?.orderItems?.filter(
+                (item) => item?.product !== idProduct
+            );
+            const itemOrderSeleted = state?.orderItemsSlected?.filter(
+                (item) => item?.product !== idProduct
+            );
+
+            state.orderItems = itemOrder;
+            state.orderItemsSlected = itemOrderSeleted;
+        },
     },
 });
 
-// Action creators are generated for each case reducer function
-export const {
-    addOrderProduct,
-} = OrderSlice.actions;
+export const { addOrderProduct, decreaseAmount, removeOrderProduct, increaseAmount } = OrderSlice.actions;
 
 export default OrderSlice.reducer;

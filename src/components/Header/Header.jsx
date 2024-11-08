@@ -20,9 +20,10 @@ import { updateUser } from '~/redux/slices/UserSlice';
 import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import images from '~/assets/images';
 import useDebounce from '~/hooks/useDebounce';
-import * as ProductService from '~/services/ProductService';
 import config from '~/configs';
 import Image from '~/components/Image';
+import * as ProductService from '~/services/ProductService';
+import * as CartService from '~/services/CartService';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
@@ -34,8 +35,7 @@ function Header() {
 
     const userInfo = useSelector((state) => state.user);
 
-    const listOrder = useSelector((state) => state.order);
-    console.log(listOrder.orderItems);
+    const listOrderProduct = useSelector((state) => state.order);
 
     const dispatch = useDispatch();
 
@@ -82,6 +82,22 @@ function Header() {
         };
         fetchDataSearch();
     }, [debouncedValueSearch]);
+
+    useEffect(() => {
+        const fetchDataCart = async () => {
+            try {
+                console.log(userInfo.id);
+                if (userInfo.id) {
+                    const res = await CartService.getProductToCart(userInfo.id);
+                    console.log(res);
+                }
+            } catch (err) {
+                console.error('Error fetching cart data:', err);
+            }
+        };
+        fetchDataCart();
+    }, [userInfo]);
+
 
     const hotSearch = [
         {
@@ -378,7 +394,7 @@ function Header() {
                     <div className="mr-24">
                         <Tooltip
                             funcRender={() => {
-                                if (listOrder.orderItems.length === 0) {
+                                if (listOrderProduct.orderItems.length === 0) {
                                     return (
                                         <div className="w-full flex flex-col justify-center items-center py-12">
                                             <div className="w-1/3">
@@ -399,7 +415,7 @@ function Header() {
                                                 <li className="text-zinc-500 text-sm py-2">
                                                     Sản phẩm mới thêm...
                                                 </li>
-                                                {listOrder.orderItems
+                                                {listOrderProduct.orderItems
                                                     .slice(0, 5)
                                                     .map((item, index) => {
                                                         return (
@@ -431,15 +447,17 @@ function Header() {
                                                     })}
                                                 <li className="text-black text-sm p-2 flex items-center justify-between">
                                                     <div>
-                                                        {listOrder.orderItems
-                                                            .length - 5}{' '}
+                                                        {listOrderProduct
+                                                            .orderItems.length -
+                                                            5}{' '}
                                                         Thêm hàng vào sản phẩm
                                                     </div>
                                                     <button
                                                         className="bg-primary text-white py-2 px-6"
                                                         onClick={() =>
                                                             navigate(
-                                                                config.routes.order
+                                                                config.routes
+                                                                    .order
                                                             )
                                                         }
                                                     >

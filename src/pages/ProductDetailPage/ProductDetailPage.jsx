@@ -17,6 +17,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '~/components/Tooltip';
 import { addOrderProduct } from '~/redux/slices/OrderSlice';
+import useToast from '~/hooks/useToast';
+import ToastMessage from '~/components/ToastMessage';
+import * as CartService from '~/services/CartService';
 
 function ProductDetailPage() {
     const [product, setProduct] = useState({});
@@ -25,10 +28,13 @@ function ProductDetailPage() {
     const [indexImage, setIndexImage] = useState('');
     const [addressUser, setAddressUser] = useState('');
     const [quantity, setQuantity] = useState(1);
+    const [isError, setIsError] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
+
+    const { toast, showToast, setToast } = useToast(3000);
 
     const useInfo = useSelector((state) => state.user);
 
@@ -68,30 +74,51 @@ function ProductDetailPage() {
             const orderRedux = order?.orderItems?.find(
                 (item) => item.product === product?._id
             );
-            if (
-                orderRedux?.amount + quantity <= orderRedux?.countInstock ||
-                (!orderRedux && product?.countInStock > 0)
-            ) {
-                dispatch(
-                    addOrderProduct({
-                        orderItem: {
-                            name: product?.name,
-                            amount: quantity,
-                            image: product?.image,
-                            price: product?.price,
-                            product: product?._id,
-                            discount: product?.discount,
-                            countInstock: product?.countInStock,
-                        },
-                    })
-                );
+            // Kiểm tra điều kiện để thêm sản phẩm vào giỏ hàng
+            const isStockSufficient =
+                orderRedux?.amount + quantity <= orderRedux?.countInstock;
+            const isProductInStock = !orderRedux && product?.countInStock > 0;
+            if (isStockSufficient || isProductInStock) {
+                // dispatch(
+                //     addOrderProduct({
+                //         orderItem: {
+                //             name: product?.name,
+                //             amount: quantity,
+                //             image: product?.image,
+                //             price: product?.price,
+                //             product: product?._id,
+                //             discount: product?.discount,
+                //             countInstock: product?.countInStock,
+                //         },
+                //     })
+                // );
+                if (product) {
+                    addProductToCart('671b76bc6811587a21662c45', product._id, quantity, product.price);
+                }
+                setIsError(false);
+                showToast('Thêm vào giỏ hàng thành công');
             } else {
+                setIsError(true);
+                showToast('Không đủ số lượng sản phẩm trong kho');
             }
         }
     };
+    const addProductToCart = async (userId, productId, quantity, Price) => {
+        console.log(productId, quantity, Price, userId)
+        const res = await CartService.addProductToCart(userId, productId, quantity, Price);
+        console.log(res)
+    };
+    
 
     return (
         <div className="bg-[#f5f5f5] pt-5">
+            {toast && (
+                <ToastMessage
+                    isError={isError}
+                    message={toast}
+                    onClose={() => setToast('')}
+                />
+            )}
             <div className="container-custom mt-5">
                 <div className="bg-white flex p-3 gap-4">
                     <div className="w-2/5 py-3">
