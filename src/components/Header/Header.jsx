@@ -23,7 +23,6 @@ import useDebounce from '~/hooks/useDebounce';
 import config from '~/configs';
 import Image from '~/components/Image';
 import * as ProductService from '~/services/ProductService';
-import * as CartService from '~/services/CartService';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
@@ -83,20 +82,6 @@ function Header() {
         fetchDataSearch();
     }, [debouncedValueSearch]);
 
-    useEffect(() => {
-        const fetchDataCart = async () => {
-            try {
-                console.log(userInfo.id);
-                if (userInfo.id) {
-                    const res = await CartService.getProductToCart(userInfo.id);
-                    console.log(res);
-                }
-            } catch (err) {
-                console.error('Error fetching cart data:', err);
-            }
-        };
-        fetchDataCart();
-    }, [userInfo]);
 
 
     const hotSearch = [
@@ -421,7 +406,7 @@ function Header() {
                                                         return (
                                                             <li
                                                                 className="flex justify-between p-2"
-                                                                key={index}
+                                                                key={`cart-${index}`}
                                                             >
                                                                 <div className="flex ml-2">
                                                                     <img

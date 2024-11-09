@@ -30,6 +30,7 @@ function OrderPage() {
                             {listOrderProduct.map((item, index) => (
                                 <ProductItem
                                     item={item}
+                                    key={index}
                                 />
                             ))}
                         </ul>

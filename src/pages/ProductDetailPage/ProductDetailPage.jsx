@@ -19,7 +19,6 @@ import Tooltip from '~/components/Tooltip';
 import { addOrderProduct } from '~/redux/slices/OrderSlice';
 import useToast from '~/hooks/useToast';
 import ToastMessage from '~/components/ToastMessage';
-import * as CartService from '~/services/CartService';
 
 function ProductDetailPage() {
     const [product, setProduct] = useState({});
@@ -79,22 +78,19 @@ function ProductDetailPage() {
                 orderRedux?.amount + quantity <= orderRedux?.countInstock;
             const isProductInStock = !orderRedux && product?.countInStock > 0;
             if (isStockSufficient || isProductInStock) {
-                // dispatch(
-                //     addOrderProduct({
-                //         orderItem: {
-                //             name: product?.name,
-                //             amount: quantity,
-                //             image: product?.image,
-                //             price: product?.price,
-                //             product: product?._id,
-                //             discount: product?.discount,
-                //             countInstock: product?.countInStock,
-                //         },
-                //     })
-                // );
-                if (product) {
-                    addProductToCart('671b76bc6811587a21662c45', product._id, quantity, product.price);
-                }
+                dispatch(
+                    addOrderProduct({
+                        orderItem: {
+                            name: product?.name,
+                            amount: quantity,
+                            image: product?.image,
+                            price: product?.price,
+                            product: product?._id,
+                            discount: product?.discount,
+                            countInstock: product?.countInStock,
+                        },
+                    })
+                );
                 setIsError(false);
                 showToast('Thêm vào giỏ hàng thành công');
             } else {
@@ -103,12 +99,6 @@ function ProductDetailPage() {
             }
         }
     };
-    const addProductToCart = async (userId, productId, quantity, Price) => {
-        console.log(productId, quantity, Price, userId)
-        const res = await CartService.addProductToCart(userId, productId, quantity, Price);
-        console.log(res)
-    };
-    
 
     return (
         <div className="bg-[#f5f5f5] pt-5">
