@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     orderItems: [],
-    orderItemsSlected: [],
+    orderItemsSelected: [],
     shippingAddress: {},
     paymentMethod: '',
     itemsPrice: 0,
@@ -66,20 +66,80 @@ export const OrderSlice = createSlice({
         },
         removeOrderProduct: (state, action) => {
             const { idProduct } = action.payload;
+            // Kiểm tra `orderItems` và `orderItemsSelected` có phải là mảng trước khi gọi `.filter()`
+            state.orderItems = Array.isArray(state.orderItems)
+                ? state.orderItems.filter((item) => item?.product !== idProduct)
+                : [];
+            state.orderItemsSelected = Array.isArray(state.orderItemsSelected)
+                ? state.orderItemsSelected.filter(
+                      (item) => item?.product !== idProduct
+                  )
+                : [];
+        },
 
-            const itemOrder = state?.orderItems?.filter(
-                (item) => item?.product !== idProduct
-            );
-            const itemOrderSeleted = state?.orderItemsSlected?.filter(
-                (item) => item?.product !== idProduct
+        selectedAllOrder: (state, action) => {
+            const { listChecked } = action.payload;
+
+            // Kiểm tra xem listChecked có phải là mảng không
+            if (Array.isArray(listChecked)) {
+                state.orderItemsSelected = state.orderItems.filter((order) =>
+                    listChecked.includes(order.product)
+                );
+            } else {
+                // Nếu không phải mảng, gán mảng rỗng
+                state.orderItemsSelected = [];
+                console.error(
+                    'listChecked is not an array or is undefined:',
+                    listChecked
+                );
+            }
+        },
+
+        selectedOrder: (state, action) => {
+            const { idProduct } = action.payload;
+            const productToAdd = state.orderItems.find(
+                (item) => item.product === idProduct
             );
 
-            state.orderItems = itemOrder;
-            state.orderItemsSlected = itemOrderSeleted;
+            if (Array.isArray(state.orderItemsSelected)) {
+                if (
+                    !state.orderItemsSelected.some(
+                        (item) => item.product === idProduct
+                    )
+                ) {
+                    state.orderItemsSelected.push(productToAdd);
+                }
+            }
+        },
+
+        removeOrderProductSelected: (state, action) => {
+            const { idProduct } = action.payload;
+
+            // Kiểm tra xem orderItemsSelected có phải là mảng không trước khi gọi filter
+            if (Array.isArray(state.orderItemsSelected)) {
+                state.orderItemsSelected = state.orderItemsSelected.filter(
+                    (item) => item.product !== idProduct
+                );
+            }
+        },
+        removeAllOrderItemsSelected: (state) => {
+            // Kiểm tra xem orderItemsSelected có phải là mảng không
+            if (Array.isArray(state.orderItemsSelected)) {
+                state.orderItemsSelected = [];
+            }
         },
     },
 });
 
-export const { addOrderProduct, decreaseAmount, removeOrderProduct, increaseAmount } = OrderSlice.actions;
+export const {
+    addOrderProduct,
+    decreaseAmount,
+    removeOrderProduct,
+    increaseAmount,
+    selectedAllOrder,
+    removeOrderProductSelected,
+    selectedOrder,
+    removeAllOrderItemsSelected,
+} = OrderSlice.actions;
 
 export default OrderSlice.reducer;

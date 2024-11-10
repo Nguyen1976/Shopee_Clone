@@ -1,21 +1,57 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ProductItem from './components/ProductItem';
+import React, { useEffect, useState } from 'react';
+import {
+    removeAllOrderItemsSelected,
+    selectedAllOrder,
+} from '~/redux/slices/OrderSlice';
 
 function OrderPage() {
-
     const order = useSelector((state) => state.order);
-    const listOrderProduct = order.orderItems;
+
+    const [checked, setChecked] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const [listOrderProduct, setlistOrderProduct] = useState([]);
+
+    useEffect(() => {
+        setlistOrderProduct(order.orderItems);
+    }, [order.orderItems]);
+
+    useEffect(() => {
+        if (checked) {
+            if (Array.isArray(listOrderProduct)) {
+                dispatch(
+                    selectedAllOrder({
+                        listChecked: listOrderProduct.map(
+                            (item) => item.product
+                        ),
+                    })
+                );
+            }
+        } else {
+            dispatch(removeAllOrderItemsSelected());
+        }
+    }, [checked, listOrderProduct, dispatch]);
+
+    useEffect(() => {
+        console.log(order.orderItemsSelected);
+    }, [order.orderItemsSelected]);
 
     return (
         <div className="bg-[#f5f5f5] h-screen">
             <div className="container-custom">
-                <div>Giỏ hàng</div>
                 <div className="">
                     <div className="bg-white rounded-sm p-3 text-zinc-600 flex justify-between">
                         <div className="flex items-center gap-2">
-                            <input className="rounded-sm " type="checkbox" />
+                            <input
+                                className="rounded-sm "
+                                type="checkbox"
+                                checked={checked}
+                                onChange={(e) => setChecked(e.target.checked)}
+                            />
                             <span className=" text-md">Sản phẩm</span>
                         </div>
                         <div className="flex gap-32">
@@ -31,6 +67,7 @@ function OrderPage() {
                                 <ProductItem
                                     item={item}
                                     key={index}
+                                    checkedAll={checked}
                                 />
                             ))}
                         </ul>
@@ -39,8 +76,13 @@ function OrderPage() {
             </div>
             <div className="w-4/5 bg-white flex justify-between items-center m-auto fixed bottom-0 left-0 right-0 py-5 px-2">
                 <div className="flex items-center gap-2">
-                    <input className="rounded-sm" type="checkbox" />
-                    <span>Chọn tất cả(29)</span>
+                    <input
+                        className="rounded-sm"
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) => setChecked(e.target.checked)}
+                    />
+                    <span>Chọn tất cả({listOrderProduct.length})</span>
                 </div>
                 <div>Xóa</div>
                 <div>Bỏ sản phẩm không hoạt động</div>
