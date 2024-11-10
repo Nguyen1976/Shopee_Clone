@@ -24,6 +24,7 @@ export const OrderSlice = createSlice({
         addOrderProduct: (state, action) => {
             const { orderItem } = action.payload;
             //Kiểm tra sản phẩm có trong giỏ hàng
+            //find trả về đối tượng cần tìm
             const itemOrder = state?.orderItems?.find(
                 (item) => item?.product === orderItem.product
             );
@@ -68,7 +69,7 @@ export const OrderSlice = createSlice({
             const { idProduct } = action.payload;
             // Kiểm tra `orderItems` và `orderItemsSelected` có phải là mảng trước khi gọi `.filter()`
             state.orderItems = Array.isArray(state.orderItems)
-                ? state.orderItems.filter((item) => item?.product !== idProduct)
+                ? state.orderItems.filter((item) => item?.product !== idProduct)//Nếu khác thì dữ lại
                 : [];
             state.orderItemsSelected = Array.isArray(state.orderItemsSelected)
                 ? state.orderItemsSelected.filter(
@@ -76,7 +77,6 @@ export const OrderSlice = createSlice({
                   )
                 : [];
         },
-
         selectedAllOrder: (state, action) => {
             const { listChecked } = action.payload;
 
@@ -97,12 +97,15 @@ export const OrderSlice = createSlice({
 
         selectedOrder: (state, action) => {
             const { idProduct } = action.payload;
+
+            //Phương thức find trả về phần tử đầu tiên mà thỏa mãn
             const productToAdd = state.orderItems.find(
                 (item) => item.product === idProduct
             );
 
             if (Array.isArray(state.orderItemsSelected)) {
                 if (
+                    //Kiểm tra là đã tồn tại trong orderItemsSelected chưa trả về booleac
                     !state.orderItemsSelected.some(
                         (item) => item.product === idProduct
                     )
@@ -117,6 +120,7 @@ export const OrderSlice = createSlice({
 
             // Kiểm tra xem orderItemsSelected có phải là mảng không trước khi gọi filter
             if (Array.isArray(state.orderItemsSelected)) {
+                //filter để lọc dữ lại phần tử thỏa điều kiện trả về mảng mới
                 state.orderItemsSelected = state.orderItemsSelected.filter(
                     (item) => item.product !== idProduct
                 );
