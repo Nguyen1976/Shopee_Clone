@@ -10,6 +10,8 @@ import SignUpPage from '~/pages/SignUpPage';
 import config from '~/configs';
 import OrderPage from '~/pages/OrderPage';
 import HeaderLayout from '~/layouts/HeaderLayout/';
+import PaymentPage from '~/pages/PaymentPage';
+import FooterLayout from '~/layouts/FooterLayout';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
@@ -22,5 +24,6 @@ export const routes = [
         layout: DefaultLayout,
     },
     {path: config.routes.order, component: OrderPage, layout: HeaderLayout},
+    {path: config.routes.payment, component: PaymentPage, layout: FooterLayout},
     { path: '*', component: NotFoundPage },
 ];

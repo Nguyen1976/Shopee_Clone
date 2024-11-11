@@ -69,7 +69,7 @@ export const OrderSlice = createSlice({
             const { idProduct } = action.payload;
             // Kiểm tra `orderItems` và `orderItemsSelected` có phải là mảng trước khi gọi `.filter()`
             state.orderItems = Array.isArray(state.orderItems)
-                ? state.orderItems.filter((item) => item?.product !== idProduct)//Nếu khác thì dữ lại
+                ? state.orderItems.filter((item) => item?.product !== idProduct) //Nếu khác thì dữ lại
                 : [];
             state.orderItemsSelected = Array.isArray(state.orderItemsSelected)
                 ? state.orderItemsSelected.filter(
@@ -132,6 +132,21 @@ export const OrderSlice = createSlice({
                 state.orderItemsSelected = [];
             }
         },
+        setItemsPrice: (state, action) => {
+            const { itemsPrice } = action.payload;
+
+            state.itemsPrice = itemsPrice;
+        },
+        setTotalPrice: (state, action) => {
+            const { totalPrice } = action.payload;
+
+            state.totalPrice = totalPrice;
+        },
+        setShippingPrice: (state, action) => {
+            const { shippingPrice } = action.payload;
+
+            state.shippingPrice = shippingPrice;
+        },
     },
 });
 
@@ -144,6 +159,9 @@ export const {
     removeOrderProductSelected,
     selectedOrder,
     removeAllOrderItemsSelected,
+    setItemsPrice,
+    setTotalPrice,
+    setShippingPrice,
 } = OrderSlice.actions;
 
 export default OrderSlice.reducer;

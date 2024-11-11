@@ -11,11 +11,13 @@ import {
     removeOrderProductSelected,
     selectedOrder,
 } from '~/redux/slices/OrderSlice';
+import { formatter } from '~/utils/formater';
 
-function ProductItem({ item, checkedAll }) {
+function ProductItem({ item, checkedAll, setCheckAll }) {
     const dispatch = useDispatch();
 
     const [checked, setChecked] = useState(false);
+    
 
     const handleDecreaseAmount = () => {
         if (item.amount > 1) {
@@ -38,6 +40,7 @@ function ProductItem({ item, checkedAll }) {
             dispatch(removeOrderProductSelected({ idProduct: item.product }));
         }
     }, [checked, dispatch, item.product]);
+    
 
     return (
         <li className="p-3 border-b-2 flex items-center justify-between">
@@ -47,16 +50,19 @@ function ProductItem({ item, checkedAll }) {
                     type="checkbox"
                     checked={checkedAll || checked}
                     onChange={(e) => setChecked(e.target.checked)}
+                    onClick={() => {
+                        setCheckAll(false);
+                    }}
                 />
                 <img
                     className="object-cover h-20"
-                    src={item.image[0]}
+                    src={item.image}
                     alt={item.name}
                 />
                 <div>{item.name}</div>
             </div>
             <div className="flex justify-between flex-1 mr-4">
-                <div>{item.price}đ</div>
+                <div>{formatter(item.price)}</div>
                 <div className="h-9 w-32 border-1 rounded-sm border-zinc-300 text-zinc-300 text-center px-1 ml-5 flex items-center">
                     <button
                         className="h-full pr-1"
@@ -77,7 +83,7 @@ function ProductItem({ item, checkedAll }) {
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
-                <div className="text-primary">đ{item.price * item.amount}</div>
+                <div className="text-primary">đ{formatter(item.price * item.amount)}</div>
                 <button onClick={handleRemoveProduct}>
                     <FontAwesomeIcon className="text-primary" icon={faTrash} />
                 </button>
@@ -93,6 +99,8 @@ ProductItem.propTypes = {
         image: PropTypes.arrayOf(PropTypes.string).isRequired,
         price: PropTypes.number.isRequired,
         amount: PropTypes.number.isRequired,
+        checkedAll: PropTypes.bool,
+        setCheckAll: PropTypes.func,
     }).isRequired,
 };
 

@@ -1080,6 +1080,10 @@ input[type="range"]::-ms-fill-lower {
   margin-top: 2rem;
 }
 
+.mt-\[9px\] {
+  margin-top: 9px;
+}
+
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -1112,6 +1116,10 @@ input[type="range"]::-ms-fill-lower {
 
 .h-1 {
   height: 0.25rem;
+}
+
+.h-10 {
+  height: 2.5rem;
 }
 
 .h-11 {
@@ -1184,10 +1192,6 @@ input[type="range"]::-ms-fill-lower {
 
 .h-full {
   height: 100%;
-}
-
-.h-screen {
-  height: 100vh;
 }
 
 .min-h-7 {
@@ -1430,6 +1434,10 @@ input[type="range"]::-ms-fill-lower {
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -1454,6 +1462,10 @@ input[type="range"]::-ms-fill-lower {
   justify-content: space-between;
 }
 
+.justify-items-start {
+  justify-items: start;
+}
+
 .gap-1 {
   gap: 0.25rem;
 }
@@ -1464,6 +1476,10 @@ input[type="range"]::-ms-fill-lower {
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-20 {
+  gap: 5rem;
 }
 
 .gap-3 {
@@ -1480,6 +1496,18 @@ input[type="range"]::-ms-fill-lower {
 
 .gap-5 {
   gap: 1.25rem;
+}
+
+.gap-\[120px\] {
+  gap: 120px;
+}
+
+.gap-28 {
+  gap: 7rem;
+}
+
+.gap-24 {
+  gap: 6rem;
 }
 
 .-space-x-px > :not([hidden]) ~ :not([hidden]) {
@@ -1562,6 +1590,10 @@ input[type="range"]::-ms-fill-lower {
 
 .border-t-2 {
   border-top-width: 2px;
+}
+
+.border-t-\[1px\] {
+  border-top-width: 1px;
 }
 
 .border-none {
@@ -1679,6 +1711,15 @@ input[type="range"]::-ms-fill-lower {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-\[\] {
+  background-color: ;
+}
+
+.bg-\[\#fffefb\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 254 251 / var(--tw-bg-opacity));
+}
+
 .bg-header {
   background-image: linear-gradient(-180deg, #f53d2d, #f63);
 }
@@ -1709,6 +1750,10 @@ input[type="range"]::-ms-fill-lower {
 
 .p-5 {
   padding: 1.25rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .px-1 {
@@ -1796,6 +1841,11 @@ input[type="range"]::-ms-fill-lower {
   padding-bottom: 2rem;
 }
 
+.px-11 {
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
+}
+
 .pb-16 {
   padding-bottom: 4rem;
 }
@@ -1836,8 +1886,20 @@ input[type="range"]::-ms-fill-lower {
   padding-top: 1.75rem;
 }
 
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+
 .text-center {
   text-align: center;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
 }
 
 .text-2xl {
@@ -1935,6 +1997,11 @@ input[type="range"]::-ms-fill-lower {
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(28 100 242 / var(--tw-text-opacity));
 }
 
 .text-gray-400 {
@@ -2080,6 +2147,24 @@ input[type="range"]::-ms-fill-lower {
   border-width: 1px;
 }
 
+.border-payment {
+  background-image: repeating-linear-gradient(
+            45deg,
+            #6fa6d6,
+            #6fa6d6 33px,
+            white 0,
+            white 41px,
+            #f18d9b 0,
+            #f18d9b 74px,
+            white 0,
+            white 82px
+        );
+  background-position-x: -30px;
+  background-size: 116px 3px;
+  height: 3px;
+  width: 100%;
+}
+
 /*layer để tùy chỉnh lớp từ thuộc tính css*/
 
 /*apply để tùy chỉnh lớp từ các class có sẵn */
@@ -2142,6 +2227,32 @@ input[type="range"]::-ms-fill-lower {
     padding-left: 10rem;
     padding-right: 10rem;
   }
+}
+
+.before\:absolute::before {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.before\:-left-3::before {
+  content: var(--tw-content);
+  left: -0.75rem;
+}
+
+.before\:h-7::before {
+  content: var(--tw-content);
+  height: 1.75rem;
+}
+
+.before\:w-\[2px\]::before {
+  content: var(--tw-content);
+  width: 2px;
+}
+
+.before\:bg-primary::before {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 85 51 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-\[\#e8e8e8\]:hover {

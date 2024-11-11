@@ -83,7 +83,7 @@ function ProductDetailPage() {
                         orderItem: {
                             name: product?.name,
                             amount: quantity,
-                            image: product?.image,
+                            image: detailImage,
                             price: product?.price,
                             product: product?._id,
                             discount: product?.discount,
