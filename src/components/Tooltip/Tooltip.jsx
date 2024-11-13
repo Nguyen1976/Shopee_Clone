@@ -42,9 +42,9 @@ function Tooltip({
                             bg-white 
                             shadow-lg
                             opacity-0
-                            ${scaleTopRight ? 'animate-scale-top-right' : ''} 
+                            ${scaleTopRight ? 'origin-top-right animate-scale' : ''} 
                             ${fadeIn ? 'animate-fade-in' : ''}
-                            ${scaleTop ? 'animate-scale-top' : ''}
+                            ${scaleTop ? 'animate-scale origin-top' : ''}
                             ${hideDefault ? 'opacity-100' : ''}
                         `}
                         style={{

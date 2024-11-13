@@ -11,30 +11,19 @@ module.exports = {
                 primary: '#fb5533',
             },
             animation: {
-                'scale-top-right': 'scaleTopRight 0.3s ease-in-out forwards',
                 'fade-in': 'fadeIn 0.3s ease-in-out forwards',
-                'scale-top': 'scaleTop 0.3s ease-in-out forwards',
+                'scale' : 'scale 0.2s linear forwards',
                 'toast-message': 'slideInleft ease 1s, fadeOut linear 0.5s 2.5s forwards'
             },
             keyframes: {
-                scaleTopRight: {
+                scale: {
                     '0%': {
                         opacity: '0',
-                        transform: 'translate(190px, -190px) scale(0)',
+                        transform:'scale(0)'
                     },
                     '100%': {
                         opacity: '1',
-                        transform: 'translate(0, 0) scale(1)',
-                    }
-                },
-                scaleTop: {
-                    '0%': {
-                        opacity: '0',
-                        transform: 'translate(0, -50px) scale(0)',
-                    },
-                    '100%': {
-                        opacity: '1',
-                        transform: 'translate(0, 0) scale(1)',
+                        transform:'scale(1)'
                     }
                 },
                 fadeIn: {

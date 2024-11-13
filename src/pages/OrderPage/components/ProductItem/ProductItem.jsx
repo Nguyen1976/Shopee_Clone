@@ -96,7 +96,7 @@ ProductItem.propTypes = {
     item: PropTypes.shape({
         product: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        image: PropTypes.arrayOf(PropTypes.string).isRequired,
+        image: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         amount: PropTypes.number.isRequired,
         checkedAll: PropTypes.bool,

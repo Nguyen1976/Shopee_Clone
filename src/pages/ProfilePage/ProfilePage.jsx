@@ -27,7 +27,6 @@ function ProfilePage() {
 
     const userInfo = useSelector((state) => state.user);
 
-
     useEffect(() => {
         setName(userInfo.name);
         setEmail(userInfo.email);
@@ -69,9 +68,8 @@ function ProfilePage() {
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
-        const base64 = await imageToBase64(file).then(res => res)
-        setBase64Image(base64)
-
+        const base64 = await imageToBase64(file).then((res) => res);
+        setBase64Image(base64);
     };
 
     const handleButtonClick = () => {
@@ -123,18 +121,6 @@ function ProfilePage() {
                                     onChange={(e) => setPhone(e.target.value)}
                                     placeholder="Số điện thoại"
                                     value={phone}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex items-center">
-                            <div className="text-[#555555cc] pb-8 w-1/5">
-                                Địa chỉ
-                            </div>
-                            <div className="pl-5 text-[#333] pb-8 flex-1">
-                                <InputForm
-                                    onChange={(e) => setAddress(e.target.value)}
-                                    placeholder="Địa chỉ"
-                                    value={address}
                                 />
                             </div>
                         </div>

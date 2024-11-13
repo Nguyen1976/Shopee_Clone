@@ -139,6 +139,7 @@ export const OrderSlice = createSlice({
         },
         setTotalPrice: (state, action) => {
             const { totalPrice } = action.payload;
+            
 
             state.totalPrice = totalPrice;
         },

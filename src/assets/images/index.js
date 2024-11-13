@@ -20,6 +20,8 @@ const images = {
     bgAccesLayout: require('~/assets/images/bgAccesLayout.png'),
     freeShip: require('~/assets/images/freeShip.png'),
     noAvatar: require('~/assets/images/noAvatar.png'),
+    laterMoney: require('~/assets/images/laterMoney.png'),
+    paypal: require('~/assets/images/paypal.png'),
 };
 
 export default images;
