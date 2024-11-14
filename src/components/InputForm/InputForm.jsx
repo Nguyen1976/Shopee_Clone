@@ -7,7 +7,7 @@ function InputForm({
     isError,
     onChange,
     onBlur,
-    message,
+    message = '',
     placeholder,
     type = 'text',
     value,
@@ -27,7 +27,9 @@ function InputForm({
             <div className="flex relative">
                 <input
                     onChange={onChange}
-                    className="w-full border-[#f3f3f3] border-2 p-2"
+                    className={`w-full outline-none border-1 border-[#f3f3f3] border-2 p-2 ${
+                        isError ? 'border-red-300' : ''
+                    }`}
                     type={inputType}
                     placeholder={placeholder}
                     onBlur={onBlur}
@@ -42,11 +44,9 @@ function InputForm({
                     />
                 )}
             </div>
-            {!isError && (
-                <span className="text-xs text-[#f33a58] ml-2 select-none">
-                    {message}
-                </span>
-            )}
+            <span className="text-xs text-[#f33a58] ml-2 select-none">
+                {message}
+            </span>
         </>
     );
 }
