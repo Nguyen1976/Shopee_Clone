@@ -23,3 +23,23 @@ export const getWards = async (districtCode) => {
 
     return response.data.wards;
 };
+
+export const createAddress = async (userId, newAddress) => {
+    const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/address/create-address`,
+        {
+            userId,
+            addressData: {
+                ...newAddress,
+            },
+        }
+    );
+    return res.data;
+};
+
+export const getAddress = async (userId) => {
+    const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/address/${userId}`
+    );
+    return res.data;
+};

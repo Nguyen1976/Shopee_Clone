@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HandleModalAddress from './components/HandleModalAddress';
-import * as UserService from '~/services/UserService';
+import * as AddressService from '~/services/AddressService';
 
 function AddressPage() {
     const [showModal, setShowModal] = useState(false);
@@ -21,7 +21,7 @@ function AddressPage() {
         const fetchData = async () => {
             try {
                 if (userId) {
-                    const res = await UserService.getListAddress(userId);
+                    const res = await AddressService.getAddress(userId);
                     setListAddress(res || []); // Đảm bảo là mảng nếu không có dữ liệu
                 }
             } catch (err) {

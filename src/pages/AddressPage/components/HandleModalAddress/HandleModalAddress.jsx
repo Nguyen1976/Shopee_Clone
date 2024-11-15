@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import Modal from '~/components/Modal';
 import InputForm from '~/components/InputForm';
 import * as AddressService from '~/services/AddressService';
-import * as UserService from '~/services/UserService';
 import Loading from '~/components/Loading';
 
 function HandleModalAddress({ showModal, setShowModal }) {
@@ -30,6 +29,7 @@ function HandleModalAddress({ showModal, setShowModal }) {
     const [addressActive, setAddressActive] = useState(CITY_ACTIVE);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingCreateAddress, setIsLoadingCreateAddress] = useState(false);
     const [isErrorInput, setIsErrorInput] = useState(false);
 
     const [isShowListAddress, setIsShowListAddress] = useState(false);
@@ -48,7 +48,7 @@ function HandleModalAddress({ showModal, setShowModal }) {
         );
         //filter(Boolean) sẽ loại bỏ những phần tử không có giá trị thật, chỉ giữ lại những phần tử có giá trị hợp lệ.
     }, [city, district, commune]);
-    
+
     useEffect(() => {
         updateInputAddress();
     }, [updateInputAddress]);
@@ -87,10 +87,10 @@ function HandleModalAddress({ showModal, setShowModal }) {
     }, [addressActive, cityCode, districtCode]);
 
     const handleAddAdress = async () => {
-        console.log(userInfo?.id);
         if (name && phone && valueInputAddress && addressDetails) {
             try {
-                await UserService.createAddress(userInfo?.id, {
+                setIsLoadingCreateAddress(true);
+                await AddressService.createAddress(userInfo?.id, {
                     name,
                     phone,
                     city,
@@ -101,6 +101,14 @@ function HandleModalAddress({ showModal, setShowModal }) {
             } catch (error) {
                 console.log(error);
                 setIsErrorInput(true);
+            } finally {
+                setShowModal(false);
+                setIsErrorInput(false);
+                setPhone('');
+                setName('');
+                setAddressDetails('');
+                setValueInputAddress('');
+                setIsLoadingCreateAddress(false)
             }
         } else {
             setIsErrorInput(true);
@@ -281,12 +289,16 @@ function HandleModalAddress({ showModal, setShowModal }) {
                     >
                         Trở lại
                     </button>
-                    <button
-                        className="py-2 px-10 bg-primary hover:bg-red-400 text-white"
-                        onClick={handleAddAdress}
+                    <Loading
+                        isLoading={isLoadingCreateAddress}
                     >
-                        Hoàn thành
-                    </button>
+                        <button
+                            className="py-2 px-10 bg-primary hover:bg-red-400 text-white"
+                            onClick={handleAddAdress}
+                        >
+                            Hoàn thành
+                        </button>
+                    </Loading>
                 </div>
             </div>
         </Modal>
