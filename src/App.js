@@ -1,14 +1,9 @@
 import React, { Fragment, useEffect } from 'react';
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from '~/routes';
 import DefaultLayout from './layouts/DefaultLayout';
 import { useSelector } from 'react-redux';
-import * as VisitService from '~/services/VisitService'
-
+import * as VisitService from '~/services/VisitService';
 function App() {
     const userInfo = useSelector((state) => state.user);
 
@@ -19,9 +14,9 @@ function App() {
             } catch (err) {
                 console.error(err);
             }
-        }
+        };
         postVisit();
-    }, [])
+    }, []);
 
     return (
         <div>
@@ -34,11 +29,7 @@ function App() {
 
                         if (route.isAdmin && userInfo && !userInfo?.isAdmin) {
                             // Chuyển hướng về trang chủ nếu người dùng không phải admin
-                            return (
-                                <Route
-                                    key={index}
-                                />
-                            );
+                            return <Route key={index} />;
                         }
 
                         if (route.layout === null) {

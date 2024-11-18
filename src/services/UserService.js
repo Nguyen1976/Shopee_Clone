@@ -33,7 +33,7 @@ export const signInUser = async (data) => {
 };
 
 export const updateUser = async (id, data) => {
-    const res = await axios.put(
+    const res = await axiosJWT.put(
         `${process.env.REACT_APP_API_URL}/user/update-user/${id}`,
         data
     );
@@ -41,12 +41,12 @@ export const updateUser = async (id, data) => {
 };
 
 export const getAllUsers = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/user/getAll`);
+    const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/user/getAll`);
     return res.data;
 };
 
 export const deleteManyUsers = async (ids) => {
-    const res = await axios.delete(
+    const res = await axiosJWT.delete(
         `${process.env.REACT_APP_API_URL}/user/delete-many`,
         {
             data: { ids }, // Gửi dữ liệu dưới dạng body
@@ -62,3 +62,20 @@ export const searchUsers = async (name) => {
     return res.data;
 };
 
+export const refreshToken = async (refreshToken) => {
+    try {
+        const { data } = await axios.post(
+            `${process.env.REACT_APP_API_URL}/user/refresh-token`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${refreshToken}`, // Thay "token" bằng "Authorization" để tuân theo chuẩn.
+                },
+            }
+        );
+        return data; // Trả về dữ liệu từ API.
+    } catch (error) {
+        console.error('Error refreshing token:', error.message);
+        throw new Error('Failed to refresh token. Please try again.'); // Thông báo lỗi cụ thể.
+    }
+};

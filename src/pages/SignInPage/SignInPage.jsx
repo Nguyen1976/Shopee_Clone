@@ -44,11 +44,13 @@ function SignInPage() {
                     email,
                     password,
                 });
+                if (data.access_token) {
+                    localStorage.setItem('access_token', data.access_token);
+                }
 
-                localStorage.setItem(
-                    'access_token',
-                    JSON.stringify(data.access_token)
-                );
+                if(data.refresh_token) {
+                    localStorage.setItem('refresh_token', data.refresh_token);
+                }
 
                 const decoded = jwtDecode(data.access_token);
                 if (decoded && decoded.id) {
@@ -111,10 +113,12 @@ function SignInPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         isError={isPasswordValid}
                         onBlur={handleValidPassword}
-                        type='password'
+                        type="password"
                         placeholder={'Mật khẩu'}
                         message={
-                            password ? 'Mật khẩu không hợp lệ' : 'Hãy nhập mật khẩu'
+                            password
+                                ? 'Mật khẩu không hợp lệ'
+                                : 'Hãy nhập mật khẩu'
                         }
                     />
                 </div>
