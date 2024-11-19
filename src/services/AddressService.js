@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { axiosJWT } from './axiosJWT';
 
-
 // Lấy danh sách các tỉnh
 export const getProvinces = async () => {
     const response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/p/`);
@@ -35,6 +34,14 @@ export const createAddress = async (userId, newAddress) => {
                 ...newAddress,
             },
         }
+    );
+    return res.data;
+};
+
+export const updateAddress = async (addressId, newAddress) => {
+    const res = await axiosJWT.put(
+        `${process.env.REACT_APP_API_URL}/address/update-address/${addressId}`,
+        newAddress
     );
     return res.data;
 };

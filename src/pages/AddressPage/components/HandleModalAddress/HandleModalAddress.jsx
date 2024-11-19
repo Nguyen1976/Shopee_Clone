@@ -6,7 +6,14 @@ import InputForm from '~/components/InputForm';
 import * as AddressService from '~/services/AddressService';
 import Loading from '~/components/Loading';
 
-function HandleModalAddress({ showModal, setShowModal }) {
+function HandleModalAddress({
+    showModal,
+    setShowModal,
+    title,
+    data,
+    isCreateAddress,
+    setLoadAddress,
+}) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
@@ -20,6 +27,8 @@ function HandleModalAddress({ showModal, setShowModal }) {
     const [communeCode, setCommuneCode] = useState('');
 
     const [addressDetails, setAddressDetails] = useState('');
+
+    const [idAddress, setIdAddress] = useState('');
 
     const [listAddress, setListAddress] = useState([]);
 
@@ -41,6 +50,17 @@ function HandleModalAddress({ showModal, setShowModal }) {
     useEffect(() => {
         if (commune) setIsShowListAddress(false);
     }, [commune]);
+
+    useEffect(() => {
+        if (data) {
+            setName(data.name);
+            setCity(data.city);
+            setCommune(data.commune);
+            setPhone(data.phone);
+            setAddressDetails(data.address);
+            setIdAddress(data._id);
+        }
+    }, [data]);
 
     const updateInputAddress = useCallback(() => {
         setValueInputAddress(
@@ -108,7 +128,38 @@ function HandleModalAddress({ showModal, setShowModal }) {
                 setName('');
                 setAddressDetails('');
                 setValueInputAddress('');
-                setIsLoadingCreateAddress(false)
+                setIsLoadingCreateAddress(false);
+                setLoadAddress((prev) => !prev);
+            }
+        } else {
+            setIsErrorInput(true);
+        }
+    };
+
+    const handleUpdateAddress = async () => {
+        if (name && phone && valueInputAddress && addressDetails) {
+            try {
+                setIsLoadingCreateAddress(true);
+                await AddressService.updateAddress(idAddress, {
+                    name,
+                    phone,
+                    city,
+                    district,
+                    commune,
+                    address: addressDetails,
+                });
+            } catch (error) {
+                console.log(error);
+                setIsErrorInput(true);
+            } finally {
+                setShowModal(false);
+                setIsErrorInput(false);
+                setPhone('');
+                setName('');
+                setAddressDetails('');
+                setValueInputAddress('');
+                setIsLoadingCreateAddress(false);
+                setLoadAddress((prev) => !prev)
             }
         } else {
             setIsErrorInput(true);
@@ -152,7 +203,7 @@ function HandleModalAddress({ showModal, setShowModal }) {
     return (
         <Modal showModal={showModal}>
             <div className="p-4 h-[500px]">
-                <div className="text-lg">Địa chỉ mới</div>
+                <div className="text-lg">{title}</div>
                 <div className="flex justify-between gap-3 items-center mt-5">
                     <InputForm
                         onFocus={() => setIsErrorInput(false)}
@@ -289,12 +340,14 @@ function HandleModalAddress({ showModal, setShowModal }) {
                     >
                         Trở lại
                     </button>
-                    <Loading
-                        isLoading={isLoadingCreateAddress}
-                    >
+                    <Loading isLoading={isLoadingCreateAddress}>
                         <button
                             className="py-2 px-10 bg-primary hover:bg-red-400 text-white"
-                            onClick={handleAddAdress}
+                            onClick={
+                                isCreateAddress
+                                    ? handleAddAdress
+                                    : handleUpdateAddress
+                            }
                         >
                             Hoàn thành
                         </button>
