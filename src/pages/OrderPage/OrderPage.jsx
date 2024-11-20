@@ -1,26 +1,31 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import ProductItem from './components/ProductItem';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     removeAllOrderItemsSelected,
     selectedAllOrder,
     setItemsPrice,
     setShippingPrice,
     setTotalPrice,
+    addShippingAddress,
 } from '~/redux/slices/OrderSlice';
 import { useNavigate } from 'react-router-dom';
 import config from '~/configs';
 import useToast from '~/hooks/useToast';
 import ToastMessage from '~/components/ToastMessage';
 import { formatter } from '~/utils/formater';
+import * as AddressService from '~/services/AddressService';
 
 function OrderPage() {
     const [listOrderProduct, setlistOrderProduct] = useState([]);
     const [listProductSelect, setlistProductSelect] = useState([]);
     const [checked, setChecked] = useState(false);
+    const [userId, setUserId] = useState('');
+    const [shippingAddress, setShippingAddress] = useState({});
 
     const order = useSelector((state) => state.order);
+    const userInfo = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
 
@@ -31,6 +36,10 @@ function OrderPage() {
     useEffect(() => {
         setlistOrderProduct(order.orderItems);
     }, [order.orderItems]);
+
+    useEffect(() => {
+        setUserId(userInfo.id);
+    }, [userInfo]);
 
     useEffect(() => {
         if (checked) {
@@ -60,25 +69,38 @@ function OrderPage() {
     }, [listProductSelect]);
 
     const shippingPrice = useMemo(() => {
-        if(itemsPrice > 200000){
-            return 10000
-          }else if(itemsPrice === 0 ){
-            return 0
-          }else {
-            return 20000
-          }
-    }, [itemsPrice])
+        if (itemsPrice > 200000) {
+            return 10000;
+        } else if (itemsPrice === 0) {
+            return 0;
+        } else {
+            return 20000;
+        }
+    }, [itemsPrice]);
 
     const totalPrice = useMemo(() => {
         return itemsPrice + shippingPrice;
-    }, [itemsPrice, shippingPrice])
+    }, [itemsPrice, shippingPrice]);
+
+    const getAddressDefault = useCallback(async () => {
+        if (userId) {
+            const address = await AddressService.getAddressDefault(userId);
+            setShippingAddress(address);
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        getAddressDefault();
+    }, [getAddressDefault]);
 
     const handleBuy = () => {
-        if (listProductSelect.length) {
+        if (listProductSelect.length && shippingAddress) {
             navigate(config.routes.payment);
             dispatch(setItemsPrice({ itemsPrice }));
-            dispatch(setTotalPrice({ totalPrice }))
-            dispatch(setShippingPrice({ shippingPrice }))
+            dispatch(setTotalPrice({ totalPrice }));
+            dispatch(setShippingPrice({ shippingPrice }));
+            console.log(shippingAddress);
+            dispatch(addShippingAddress({ shippingAddress }));
         } else {
             showToast('Hãy chọn sản phẩm cần mua');
         }

@@ -93,6 +93,21 @@
         width: 100%;
     }
 
+    .outline-custom {
+        --tw-ring-shadow: none;
+    }
+
+    .outline-custom:focus {
+        --tw-ring-shadow: none;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
 }
 
 .container-custom {

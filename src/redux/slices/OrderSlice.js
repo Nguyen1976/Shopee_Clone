@@ -139,7 +139,6 @@ export const OrderSlice = createSlice({
         },
         setTotalPrice: (state, action) => {
             const { totalPrice } = action.payload;
-            
 
             state.totalPrice = totalPrice;
         },
@@ -147,6 +146,10 @@ export const OrderSlice = createSlice({
             const { shippingPrice } = action.payload;
 
             state.shippingPrice = shippingPrice;
+        },
+        addShippingAddress: (state, action) => {
+            const { shippingAddress } = action.payload;
+            state.shippingAddress = shippingAddress;
         },
     },
 });
@@ -163,6 +166,7 @@ export const {
     setItemsPrice,
     setTotalPrice,
     setShippingPrice,
+    addShippingAddress,
 } = OrderSlice.actions;
 
 export default OrderSlice.reducer;

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,30 +12,34 @@ import images from '~/assets/images';
 import TopHeader from '~/components/Header/TopHeader';
 import * as OrderService from '~/services/OrderService';
 import * as PaymentService from '~/services/PaymentService';
+import Modal from '~/components/Modal';
+import * as AddressService from '~/services/AddressService';
+import { addShippingAddress } from '~/redux/slices/OrderSlice';
 
 function PaymentPage() {
     const [userId, setUserId] = useState('');
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
     const [totalItems, setTotalItems] = useState(0);
     const [deliveryPrice, setDeliveryPrice] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [listProductOrder, setListProductOrder] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState('later_money');
     const [clientID, setClientID] = useState('');
-    const [isPaid, setIsPaid] = useState(false);
-    const fullName = 'Nguyen';
-    const city = 'Hanoi';
     const order = useSelector((state) => state.order);
     const userInfo = useSelector((state) => state.user);
+    const [showModal, setShowModal] = useState(false);
+    const [listAddress, setListAddress] = useState([]);
+    const [shippingAddress, setShippingAddress] = useState({});
+
+    //Nhận address khi select nhưng chưa nhấn Xác nhận (lưu trữ tạm thời)
+    const [shippingAddressSelectedTemp, setShippingAddressSelectedTemp] =
+        useState({});
+
+    const dispatch = useDispatch();
+
+    //twowaybinding input raido address
+    const [selectAddress, setSelectAddress] = useState('option-0');
 
     useEffect(() => {
-        setName(userInfo?.name);
-        setPhone(userInfo?.phone);
-        setAddress(userInfo?.address);
-        setEmail(userInfo?.email);
         setUserId(userInfo?.id);
     }, [userInfo]);
 
@@ -44,7 +48,10 @@ function PaymentPage() {
         setTotalItems(order?.itemsPrice);
         setDeliveryPrice(order?.shippingPrice);
         setTotalPrice(order?.totalPrice);
+        setShippingAddress(order?.shippingAddress);
     }, [order]);
+
+    useEffect(() => {}, []);
 
     const handlePayment = async () => {
         try {
@@ -54,13 +61,9 @@ function PaymentPage() {
                 itemsPrice: totalItems,
                 shippingPrice: deliveryPrice,
                 totalPrice,
-                fullName,
-                address,
-                phone,
-                city,
-                email,
+                shippingAddress,
                 user: userId,
-                isPaid,
+                isPaid: paymentMethod === 'paypal',
                 paidAt: new Date(),
             });
             console.log(res);
@@ -68,6 +71,21 @@ function PaymentPage() {
             console.error(err);
         }
     };
+
+    const fetchDataAddress = useCallback(async () => {
+        try {
+            if (userId) {
+                const res = await AddressService.getAddress(userId);
+                setListAddress(res || []); // Đảm bảo là mảng nếu không có dữ liệu
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        fetchDataAddress();
+    }, [fetchDataAddress]);
 
     useEffect(() => {
         const getConfig = async () => {
@@ -83,8 +101,86 @@ function PaymentPage() {
         setPaymentMethod(e.target.value);
     };
 
+    const handleSelectAddress = (e) => {
+        setSelectAddress(e.target.value);
+    };
+    const handleSelectAddressDelivery = (e) => {
+        setShippingAddress(shippingAddressSelectedTemp);
+        dispatch(addShippingAddress({ shippingAddress }));
+        setShowModal(false);
+    };
+
     return (
         <div className="bg-[#f5f5f5] border-b-2 border-primary pb-5">
+            <Modal showModal={showModal}>
+                <div className="p-4 h-[600px] w-[500px]">
+                    <h3 className="text-lg m-2 border-b-[1px] pb-2">
+                        Địa Chỉ Của Tôi
+                    </h3>
+                    <ul className="mt-2 overflow-y-scroll no-scrollbar h-4/5">
+                        {listAddress
+                            .sort((a, b) => b.default - a.default)
+                            .map((item, index) => (
+                                <li
+                                    className="border-b pb-5 mb-5 flex gap-3"
+                                    key={index}
+                                >
+                                    <input
+                                        className="custom-outline mt-2"
+                                        type="radio"
+                                        checked={
+                                            selectAddress === `option-${index}`
+                                        }
+                                        value={`option-${index}`}
+                                        onChange={handleSelectAddress}
+                                        onClick={() =>
+                                            setShippingAddressSelectedTemp(item)
+                                        }
+                                    />
+                                    <div className="">
+                                        <div>
+                                            {item.name} |{' '}
+                                            <span className="text-zinc-500 text-sm">
+                                                {item.phone}
+                                            </span>
+                                        </div>
+                                        <div className="text-zinc-500 text-sm mt-1">
+                                            {item.address}
+                                        </div>
+                                        <div className="text-zinc-500 text-sm mt-1">
+                                            {item.commune +
+                                                ', ' +
+                                                item.district +
+                                                ', ' +
+                                                item.city}
+                                        </div>
+                                        {item.default && (
+                                            <button className="bg-transparent border-primary border-1 text-primary text-sm px-1 mt-1">
+                                                Mặc định
+                                            </button>
+                                        )}
+                                    </div>
+                                </li>
+                            ))}
+                    </ul>
+                    <div className="border-t-[1px] border-zinc-300">
+                        <div className="pt-4 flex justify-end items-center gap-3">
+                            <button
+                                className="py-2 px-12 border-zinc-300 border-1"
+                                onClick={() => setShowModal(false)}
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                className="py-2 px-8 text-white bg-primary"
+                                onClick={() => handleSelectAddressDelivery()}
+                            >
+                                Xác nhận
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
             <div className="bg-header py-2">
                 <div className="container-custom">
                     <TopHeader />
@@ -111,10 +207,15 @@ function PaymentPage() {
                     </div>
                     <div className="mt-3 flex gap-4">
                         <span className="font-semibold">
-                            {name} {phone}
+                            {shippingAddress.name} {shippingAddress.phone}
                         </span>
-                        <span>{address}</span>
-                        <span className="text-blue-600">Thay Đổi</span>
+                        <span>{shippingAddress.address}</span>
+                        <span
+                            className="text-blue-600 cursor-pointer"
+                            onClick={() => setShowModal(true)}
+                        >
+                            Thay Đổi
+                        </span>
                     </div>
                 </div>
             </div>
@@ -249,7 +350,9 @@ function PaymentPage() {
                     {paymentMethod === 'later_money' ? (
                         <button
                             className="py-2 px-16 bg-primary text-white"
-                            onClick={handlePayment}
+                            onClick={() => {
+                                handlePayment();
+                            }}
                         >
                             Đặt hàng
                         </button>
@@ -278,7 +381,6 @@ function PaymentPage() {
                                 }}
                                 // Xử lý khi thanh toán thành công
                                 onApprove={() => {
-                                    setIsPaid(true)
                                     handlePayment();
                                 }}
                                 // Xử lý khi có lỗi

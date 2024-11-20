@@ -11,7 +11,6 @@ function InputForm({
     placeholder,
     type = 'text',
     value,
-    ...props
 }) {
     // Sử dụng state để điều khiển kiểu hiển thị của input
     const [inputType, setInputType] = useState(type);
@@ -27,14 +26,13 @@ function InputForm({
             <div className="flex relative">
                 <input
                     onChange={onChange}
-                    className={`w-full outline-none border-1 border-[#f3f3f3] border-2 p-2 ${
+                    className={`w-full border-1 border-[#adadad] border-[2px] p-2 outline-custom ${
                         isError ? 'border-red-300' : ''
                     }`}
                     type={inputType}
                     placeholder={placeholder}
                     onBlur={onBlur}
                     value={value}
-                    {...props}
                 />
                 {type === 'password' && (
                     <FontAwesomeIcon

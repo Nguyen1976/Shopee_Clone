@@ -52,3 +52,10 @@ export const getAddress = async (userId) => {
     );
     return res.data;
 };
+
+export const getAddressDefault = async (userId) => {
+    const res = await axiosJWT.get(
+        `${process.env.REACT_APP_API_URL}/address/get-address-default/${userId}`
+    );
+    return res.data;
+}
