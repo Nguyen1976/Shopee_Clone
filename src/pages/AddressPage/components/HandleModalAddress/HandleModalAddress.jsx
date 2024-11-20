@@ -5,6 +5,7 @@ import Modal from '~/components/Modal';
 import InputForm from '~/components/InputForm';
 import * as AddressService from '~/services/AddressService';
 import Loading from '~/components/Loading';
+import PropTypes from 'prop-types';
 
 function HandleModalAddress({
     showModal,
@@ -356,6 +357,15 @@ function HandleModalAddress({
             </div>
         </Modal>
     );
+}
+
+HandleModalAddress.propTypes = {
+    showModal: PropTypes.bool.isRequired,
+    setShowModal: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    data: PropTypes.object,
+    isCreateAddress: PropTypes.bool.isRequired,
+    setLoadAddress: PropTypes.func.isRequired,
 }
 
 export default React.memo(HandleModalAddress);

@@ -88,10 +88,6 @@ export const OrderSlice = createSlice({
             } else {
                 // Nếu không phải mảng, gán mảng rỗng
                 state.orderItemsSelected = [];
-                console.error(
-                    'listChecked is not an array or is undefined:',
-                    listChecked
-                );
             }
         },
 
@@ -149,6 +145,7 @@ export const OrderSlice = createSlice({
         },
         addShippingAddress: (state, action) => {
             const { shippingAddress } = action.payload;
+
             state.shippingAddress = shippingAddress;
         },
     },

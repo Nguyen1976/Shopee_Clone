@@ -17,7 +17,6 @@ function ProductItem({ item, checkedAll, setCheckAll }) {
     const dispatch = useDispatch();
 
     const [checked, setChecked] = useState(false);
-    
 
     const handleDecreaseAmount = () => {
         if (item.amount > 1) {
@@ -40,7 +39,6 @@ function ProductItem({ item, checkedAll, setCheckAll }) {
             dispatch(removeOrderProductSelected({ idProduct: item.product }));
         }
     }, [checked, dispatch, item.product]);
-    
 
     return (
         <li className="p-3 border-b-2 flex items-center justify-between">
@@ -83,7 +81,9 @@ function ProductItem({ item, checkedAll, setCheckAll }) {
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
-                <div className="text-primary">đ{formatter(item.price * item.amount)}</div>
+                <div className="text-primary">
+                    đ{formatter(item.price * item.amount)}
+                </div>
                 <button onClick={handleRemoveProduct}>
                     <FontAwesomeIcon className="text-primary" icon={faTrash} />
                 </button>

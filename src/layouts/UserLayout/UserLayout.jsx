@@ -46,7 +46,10 @@ function UserLayout({ children }) {
                                 />
                                 <span
                                     className={`hover:text-primary cursor-pointer ml-2 ${
-                                        location.pathname.includes('/user')
+                                        location.pathname.includes(
+                                            config.routes.profile ||
+                                                config.purchase.address
+                                        )
                                             ? 'text-primary'
                                             : ''
                                     }`}
@@ -85,8 +88,18 @@ function UserLayout({ children }) {
                                     className="text-[#0f4fb0] text-xl"
                                     icon={faClipboardList}
                                 />
-                                <span className="hover:text-primary cursor-pointer ml-2">
-                                    Đơn mua
+                                <span
+                                    className={`hover:text-primary cursor-pointer ml-2 ${
+                                        location.pathname.includes(
+                                            config.routes.purchase
+                                        )
+                                            ? 'text-primary'
+                                            : ''
+                                    }`}
+                                >
+                                    <Link to={config.routes.purchase}>
+                                        Đơn mua
+                                    </Link>
                                 </span>
                             </li>
                             <li className="ml-2 mt-3">

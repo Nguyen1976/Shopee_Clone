@@ -9,3 +9,11 @@ export const createOrder = async (data) => {
     );
     return res.data;
 };
+
+export const getAllOrderDetails = async (userId) => {
+    const res = await axiosJWT.post(
+        `${process.env.REACT_APP_API_URL}/order/get-all-order/${userId}`,
+        
+    );
+    return res.data;
+}

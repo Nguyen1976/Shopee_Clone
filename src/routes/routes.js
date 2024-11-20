@@ -13,11 +13,13 @@ import HeaderLayout from '~/layouts/HeaderLayout/';
 import PaymentPage from '~/pages/PaymentPage';
 import FooterLayout from '~/layouts/FooterLayout';
 import AddressPage from '~/pages/AddressPage';
+import PurchasePage from '~/pages/PurchasePage';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
     { path: config.routes.profile, component: ProfilePage, layout: UserLayout },
     { path: config.routes.address, component: AddressPage, layout: UserLayout },
+    { path: config.routes.purchase, component: PurchasePage, layout: UserLayout },
     { path: config.routes.signIn, component: SignInPage, layout: AccessLayout },
     { path: config.routes.signUp, component: SignUpPage, layout: AccessLayout },
     {

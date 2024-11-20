@@ -1,7 +1,8 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import ProductItem from './components/ProductItem';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     removeAllOrderItemsSelected,
     selectedAllOrder,
@@ -10,12 +11,12 @@ import {
     setTotalPrice,
     addShippingAddress,
 } from '~/redux/slices/OrderSlice';
-import { useNavigate } from 'react-router-dom';
 import config from '~/configs';
 import useToast from '~/hooks/useToast';
 import ToastMessage from '~/components/ToastMessage';
 import { formatter } from '~/utils/formater';
 import * as AddressService from '~/services/AddressService';
+import { useOrder } from '~/context/OrderContext';
 
 function OrderPage() {
     const [listOrderProduct, setlistOrderProduct] = useState([]);
@@ -23,6 +24,8 @@ function OrderPage() {
     const [checked, setChecked] = useState(false);
     const [userId, setUserId] = useState('');
     const [shippingAddress, setShippingAddress] = useState({});
+
+    const { setIsOrderConfirmed } = useOrder();
 
     const order = useSelector((state) => state.order);
     const userInfo = useSelector((state) => state.user);
@@ -96,6 +99,7 @@ function OrderPage() {
     const handleBuy = () => {
         if (listProductSelect.length && shippingAddress) {
             navigate(config.routes.payment);
+            setIsOrderConfirmed(true);
             dispatch(setItemsPrice({ itemsPrice }));
             dispatch(setTotalPrice({ totalPrice }));
             dispatch(setShippingPrice({ shippingPrice }));
