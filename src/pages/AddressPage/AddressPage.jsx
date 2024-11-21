@@ -6,8 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HandleModalAddress from './components/HandleModalAddress';
 import * as AddressService from '~/services/AddressService';
 import Loading from '~/components/Loading';
-import useToast from '~/hooks/useToast';
-import ToastMessage from '~/components/ToastMessage';
+import { useToast } from '~/context';
 
 function AddressPage() {
     const [showModal, setShowModal] = useState(false);
@@ -18,9 +17,8 @@ function AddressPage() {
     const [isCreateAddressModal, setIsCreateAddressModal] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
 
-    const { toast, showToast, setToast } = useToast();
+    const { addToast } = useToast();
 
     const userInfo = useSelector((state) => state.user);
 
@@ -75,12 +73,10 @@ function AddressPage() {
             fetchDataAddress();
         } catch (err) {
             console.error(err);
-            showToast('Cập nhật địa chỉ không thành công');
-            setIsError(true);
+            addToast('Cập nhật địa chỉ không thành công', 'error');
         } finally {
             setIsLoading(false);
-            setIsError(false);
-            showToast('Cập nhật địa chỉ thành công');
+            addToast('Cập nhật địa chỉ thành công', 'success');
         }
     };
 
@@ -96,11 +92,6 @@ function AddressPage() {
                     setLoadAddress={setLoadAddress}
                 />
             )}
-            {toast && <ToastMessage 
-                message={toast}
-                onClose = {() => setToast('')}
-                isError={isError}
-            />}
             <div className="flex justify-between items-center text-lg border-b border-b-zinc-300 pb-6">
                 <div className="p-2">Địa chỉ của tôi</div>
                 <button

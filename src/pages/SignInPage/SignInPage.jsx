@@ -7,10 +7,9 @@ import { isValidEmail, isValidPassword } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
 import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import Loading from '~/components/Loading';
-import ToastMessage from '~/components/ToastMessage/ToastMessage';
-import useToast from '~/hooks/useToast';
 import config from '~/configs';
 import InputForm from '~/components/InputForm';
+import { useToast } from '~/context';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -22,7 +21,7 @@ function SignInPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [isErrorToast, setIsErrorToast] = useState(false);
 
-    const { toast, showToast, setToast } = useToast(3000);
+    const { addToast } = useToast();
 
     const navigate = useNavigate();
 
@@ -73,14 +72,14 @@ function SignInPage() {
             } finally {
                 setIsLoading(false);
                 if (isErrorToast) {
-                    showToast('Đăng nhập thất bại');
+                    addToast('Đăng nhập thất bại', 'error');
                 } else {
-                    showToast('Đăng nhập thành công');
+                    addToast('Đăng nhập thành công', 'success');
                     navigate(config.routes.home);
                 }
             }
         } else {
-            showToast('Đăng nhập thất bại');
+            addToast('Đăng nhập thất bại', 'error');
             setIsErrorToast(true);
             setIsLoading(false);
         }
@@ -88,13 +87,6 @@ function SignInPage() {
 
     return (
         <div className="flex justify-end">
-            {toast && (
-                <ToastMessage
-                    isError={isErrorToast}
-                    message={toast}
-                    onClose={() => setToast('')}
-                />
-            )}
             <div className="bg-white p-5 w-96">
                 <div className="text-xl font-normal">Đăng nhập</div>
                 <div id="email" className="mt-4 h-14">

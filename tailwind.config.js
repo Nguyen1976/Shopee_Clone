@@ -12,48 +12,61 @@ module.exports = {
             },
             animation: {
                 'fade-in': 'fadeIn 0.3s ease-in-out forwards',
-                'scale' : 'scale 0.2s linear forwards',
-                'toast-message': 'slideInleft ease 1s, fadeOut linear 0.5s 2.5s forwards'
+                scale: 'scale 0.2s linear forwards',
+                'toast-message':
+                    'slideInleft ease 1s, slideInRight linear 0.75s 3s forwards',
             },
             keyframes: {
                 scale: {
                     '0%': {
                         opacity: '0',
-                        transform:'scale(0)'
+                        transform: 'scale(0)',
                     },
                     '100%': {
                         opacity: '1',
-                        transform:'scale(1)'
-                    }
+                        transform: 'scale(1)',
+                    },
                 },
                 fadeIn: {
                     '0%': { opacity: '0' },
-                    '100%': { opacity: '1' }
+                    '100%': { opacity: '1' },
                 },
                 slideInleft: {
                     '0%': {
-                        opacity: '0', 
-                        transform: 'translateX(450px)'
+                        opacity: '0',
+                        transform: 'translateX(450px)',
                     },
                     '40%': {
-                        transform: 'translateX(-10%)'
+                        transform: 'translateX(-10%)',
                     },
                     '80%': {
-                        transform: 'translateX(0%)'
+                        transform: 'translateX(0%)',
                     },
                     '100%': {
-                        opacity: '1', 
-                        transform: 'translateX(0px)'
-                    }
+                        opacity: '1',
+                        transform: 'translateX(0px)',
+                    },
                 },
                 fadeOut: {
                     '0%': { opacity: '1' },
-                    '100%': { opacity: '0' }
-                }
-            }
+                    '100%': { opacity: '0' },
+                },
+                slideInRight: {
+                    '0%': {
+                        transform: 'translateX(0px)',
+                    },
+                    '40%': {
+                        transform: 'translateX(1%)',
+                    },
+                    '80%': {
+                        transform: 'translateX(-10%)',
+                    },
+                    '100%': {
+                        transform: 'translateX(450px)',
+                    },
+                },
+            },
         },
     },
-    plugins: [
-        require('flowbite/plugin')
-    ],
+    plugins: [require('flowbite/plugin')],
 };

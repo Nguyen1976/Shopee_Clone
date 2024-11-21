@@ -17,8 +17,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '~/components/Tooltip';
 import { addOrderProduct } from '~/redux/slices/OrderSlice';
-import useToast from '~/hooks/useToast';
-import ToastMessage from '~/components/ToastMessage';
+import { useToast } from '~/context';
 
 function ProductDetailPage() {
     const [product, setProduct] = useState({});
@@ -27,13 +26,12 @@ function ProductDetailPage() {
     const [indexImage, setIndexImage] = useState('');
     const [addressUser, setAddressUser] = useState('');
     const [quantity, setQuantity] = useState(1);
-    const [isError, setIsError] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
 
-    const { toast, showToast, setToast } = useToast(3000);
+    const { addToast } = useToast();
 
     const useInfo = useSelector((state) => state.user);
 
@@ -91,24 +89,15 @@ function ProductDetailPage() {
                         },
                     })
                 );
-                setIsError(false);
-                showToast('Thêm vào giỏ hàng thành công');
+                addToast('Thêm vào giỏ hàng thành công', 'success');
             } else {
-                setIsError(true);
-                showToast('Không đủ số lượng sản phẩm trong kho');
+                addToast('Không đủ số lượng sản phẩm trong kho', 'warning');
             }
         }
     };
 
     return (
         <div className="bg-[#f5f5f5] pt-5">
-            {toast && (
-                <ToastMessage
-                    isError={isError}
-                    message={toast}
-                    onClose={() => setToast('')}
-                />
-            )}
             <div className="container-custom mt-5">
                 <div className="bg-white flex p-3 gap-4">
                     <div className="w-2/5 py-3">

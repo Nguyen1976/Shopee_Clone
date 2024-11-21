@@ -11,7 +11,7 @@ export const createOrder = async (data) => {
 };
 
 export const getAllOrderDetails = async (userId) => {
-    const res = await axiosJWT.post(
+    const res = await axiosJWT.get(
         `${process.env.REACT_APP_API_URL}/order/get-all-order/${userId}`,
         
     );

@@ -12,11 +12,10 @@ import {
     addShippingAddress,
 } from '~/redux/slices/OrderSlice';
 import config from '~/configs';
-import useToast from '~/hooks/useToast';
-import ToastMessage from '~/components/ToastMessage';
+
 import { formatter } from '~/utils/formater';
 import * as AddressService from '~/services/AddressService';
-import { useOrder } from '~/context/OrderContext';
+import { useOrder, useToast } from '~/context';
 
 function OrderPage() {
     const [listOrderProduct, setlistOrderProduct] = useState([]);
@@ -34,7 +33,7 @@ function OrderPage() {
 
     const navigate = useNavigate();
 
-    const { toast, showToast, setToast } = useToast(3000);
+    const { addToast } = useToast();
 
     useEffect(() => {
         setlistOrderProduct(order.orderItems);
@@ -106,15 +105,13 @@ function OrderPage() {
             console.log(shippingAddress);
             dispatch(addShippingAddress({ shippingAddress }));
         } else {
-            showToast('Hãy chọn sản phẩm cần mua');
+            addToast('Hãy chọn sản phẩm cần mua', 'warning');
         }
     };
 
     return (
         <div className="bg-[#f5f5f5] h-full">
-            {toast && (
-                <ToastMessage message={toast} onClose={() => setToast('')} />
-            )}
+            
             <div className="container-custom">
                 <div className="">
                     <div className="bg-white rounded-sm p-3 text-zinc-600 flex justify-between">

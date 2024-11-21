@@ -4,7 +4,6 @@ import { routes } from '~/routes';
 import DefaultLayout from './layouts/DefaultLayout';
 import { useSelector } from 'react-redux';
 import * as VisitService from '~/services/VisitService';
-import { OrderProvider } from './context/OrderContext';
 function App() {
     const userInfo = useSelector((state) => state.user);
 
@@ -21,7 +20,7 @@ function App() {
 
     return (
         <div>
-            <OrderProvider>
+            
                 <Router>
                     <Routes>
                         {routes.map((route, index) => {
@@ -56,7 +55,6 @@ function App() {
                         })}
                     </Routes>
                 </Router>
-            </OrderProvider>
         </div>
     );
 }

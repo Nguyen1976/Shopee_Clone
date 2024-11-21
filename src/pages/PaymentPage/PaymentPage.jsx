@@ -15,10 +15,8 @@ import * as PaymentService from '~/services/PaymentService';
 import Modal from '~/components/Modal';
 import * as AddressService from '~/services/AddressService';
 import { addShippingAddress } from '~/redux/slices/OrderSlice';
-import { useOrder } from '~/context/OrderContext';
+import { useOrder, useToast } from '~/context';
 import Loading from '~/components/Loading';
-import ToastMessage from '~/components/ToastMessage';
-import useToast from '~/hooks/useToast';
 
 function PaymentPage() {
     const [userId, setUserId] = useState('');
@@ -37,8 +35,7 @@ function PaymentPage() {
     const order = useSelector((state) => state.order);
     const userInfo = useSelector((state) => state.user);
 
-    const { toast, showToast, setToast } = useToast();
-    const [isError, setIsError] = useState(false);
+    const { addToast } = useToast();
 
     //Nhận address khi select nhưng chưa nhấn Xác nhận (lưu trữ tạm thời)
     const [shippingAddressSelectedTemp, setShippingAddressSelectedTemp] =
@@ -73,7 +70,6 @@ function PaymentPage() {
     const handlePayment = async () => {
         try {
             setIsLoading(true);
-            setIsError(false);
             await OrderService.createOrder({
                 orderItems: listProductOrder,
                 paymentMethod,
@@ -85,16 +81,12 @@ function PaymentPage() {
                 isPaid: paymentMethod === 'paypal',
                 paidAt: new Date(),
             });
-            navigate('');
+            navigate(config.routes.purchase);
         } catch (err) {
             console.error(err);
-            setIsError(true);
-            showToast('Thanh toán không thành công');
+            addToast('Thanh toán không thành công', 'error');
         } finally {
             setIsLoading(false);
-            if (!isError) {
-                navigate(config.routes.purchase);
-            }
         }
     };
 
@@ -138,9 +130,6 @@ function PaymentPage() {
 
     return (
         <Loading isLoading={isLoading}>
-            {toast && (
-                <ToastMessage message={toast} onClose={() => setToast('')} />
-            )}
             <div className="bg-[#f5f5f5] border-b-2 border-primary pb-5">
                 <Modal showModal={showModal}>
                     <div className="p-4 h-[600px] w-[500px]">

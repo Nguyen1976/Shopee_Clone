@@ -85,7 +85,7 @@ function Header() {
     ];
 
     return (
-        <header className="bg-header py-2 sticky top-0 z-50">
+        <header className="bg-header py-2 sticky top-0 z-40">
             <div className="text-white container-custom">
                 {/*TopHeader*/}
                 <TopHeader />

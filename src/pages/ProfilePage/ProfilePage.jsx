@@ -5,10 +5,9 @@ import { isValidEmail, isValidPhoneNumber } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
 import { updateUser } from '~/redux/slices/UserSlice';
 import Loading from '~/components/Loading';
-import ToastMessage from '~/components/ToastMessage';
-import useToast from '~/hooks/useToast';
 import InputForm from '~/components/InputForm';
 import { imageToBase64 } from '~/utils/imageToBase64';
+import { useToast } from '~/context';
 
 function ProfilePage() {
     const [name, setName] = useState('');
@@ -21,7 +20,7 @@ function ProfilePage() {
 
     const dispatch = useDispatch();
 
-    const { toast, showToast, setToast } = useToast(3000);
+    const { addToast } = useToast();
 
     const inputRef = useRef(null);
 
@@ -59,9 +58,9 @@ function ProfilePage() {
         } finally {
             setIsLoading(false);
             if (isErrorToast) {
-                showToast('Cập nhật thông tin người dùng không thành công');
+                addToast('Cập nhật thông tin người dùng không thành công', 'error');
             } else {
-                showToast('Cập nhật thông tin người dùng thành công');
+                addToast('Cập nhật thông tin người dùng thành công', 'success');
             }
         }
     };
@@ -78,13 +77,6 @@ function ProfilePage() {
 
     return (
         <Loading isLoading={isLoading}>
-            {toast && (
-                <ToastMessage
-                    isError={isErrorToast}
-                    message={toast}
-                    onClose={() => setToast('')}
-                />
-            )}
             <div className="pb-4 border-b-2 border-[#f5f5f5]">
                 <div className="text-lg">Hồ Sơ Của Tôi</div>
                 <div className="text-sm">
