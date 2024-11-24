@@ -1,6 +1,7 @@
 import { faBell, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faClipboardList, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -17,6 +18,7 @@ function UserLayout({ children }) {
     useEffect(() => {
         setName(userInfo.name);
     }, [userInfo]);
+
     return (
         <DefaultLayout>
             <div className="container-custom flex bg-[#f5f5f5] border-primary border-b-4 py-8">
@@ -54,9 +56,22 @@ function UserLayout({ children }) {
                                             : ''
                                     }`}
                                 >
-                                    Tài khoản của tôi
+                                    <Link to={config.routes.profile}>
+                                        Tài khoản của tôi
+                                    </Link>
                                 </span>
-                                <ul className="ml-7 text-sm">
+                                <ul
+                                    className={`ml-7 text-sm h-12 transition-all duration-500 ${
+                                        !(
+                                            location.pathname ===
+                                                config.routes.profile ||
+                                            location.pathname ===
+                                                config.routes.address
+                                        )
+                                            ? 'h-0 opacity-0'
+                                            : ''
+                                    }`}
+                                >
                                     <li
                                         className={`hover:text-primary mt-2 ${
                                             location.pathname ===
@@ -119,5 +134,9 @@ function UserLayout({ children }) {
         </DefaultLayout>
     );
 }
+
+UserLayout.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default React.memo(UserLayout);

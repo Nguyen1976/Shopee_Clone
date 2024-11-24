@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import React from "react";
-import Footer from "~/components/Footer";
+import PropTypes from 'prop-types';
+import React from 'react';
+import Footer from '~/components/Footer';
 
 function FooterLayout({ children }) {
-    return (  
+    return (
         <>
             {children}
             <Footer />
@@ -13,6 +13,6 @@ function FooterLayout({ children }) {
 
 FooterLayout.propTypes = {
     children: PropTypes.node.isRequired,
-}
+};
 
 export default React.memo(FooterLayout);

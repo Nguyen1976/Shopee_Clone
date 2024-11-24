@@ -160,7 +160,7 @@ function HandleModalAddress({
                 setAddressDetails('');
                 setValueInputAddress('');
                 setIsLoadingCreateAddress(false);
-                setLoadAddress((prev) => !prev)
+                setLoadAddress((prev) => !prev);
             }
         } else {
             setIsErrorInput(true);
@@ -366,6 +366,6 @@ HandleModalAddress.propTypes = {
     data: PropTypes.object,
     isCreateAddress: PropTypes.bool.isRequired,
     setLoadAddress: PropTypes.func.isRequired,
-}
+};
 
 export default React.memo(HandleModalAddress);

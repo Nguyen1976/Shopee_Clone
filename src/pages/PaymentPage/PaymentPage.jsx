@@ -122,7 +122,7 @@ function PaymentPage() {
     const handleSelectAddress = (e) => {
         setSelectAddress(e.target.value);
     };
-    const handleSelectAddressDelivery = (e) => {
+    const handleSelectAddressDelivery = () => {
         setShippingAddress(shippingAddressSelectedTemp);
         dispatch(addShippingAddress({ shippingAddress }));
         setShowModal(false);
@@ -366,8 +366,10 @@ function PaymentPage() {
                     </div>
                     <div className="border-t-[1px] border-zinc-300 bg-[#fffefb] p-6 flex items-center justify-between">
                         <div className="text-sm text-zinc-500">
-                            Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân
-                            theo
+                            <p>
+                                Nhấn &quot;Đặt hàng&quot; đồng nghĩa với việc
+                                bạn đồng ý tuân theo
+                            </p>
                             <Link
                                 className="text-blue-600 text-md ml-2"
                                 to={'/'}

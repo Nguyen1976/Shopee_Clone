@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import {
-    faCartShopping,
-    faSearch,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -13,15 +10,14 @@ import images from '~/assets/images';
 import useDebounce from '~/hooks/useDebounce';
 import config from '~/configs';
 import * as ProductService from '~/services/ProductService';
-import TopHeader from './TopHeader'
+import TopHeader from './TopHeader';
 
 function Header() {
     const [isInputFocus, setIsInputFocus] = useState(false);
-   
+
     const [valueSearch, setValueSearch] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const debouncedValueSearch = useDebounce(valueSearch, 500);
-
 
     const listOrderProduct = useSelector((state) => state.order);
 
@@ -46,8 +42,6 @@ function Header() {
         };
         fetchDataSearch();
     }, [debouncedValueSearch]);
-
-
 
     const hotSearch = [
         {
@@ -176,8 +170,7 @@ function Header() {
                                                                     <img
                                                                         className="object-cover h-12 border-1"
                                                                         src={
-                                                                            item
-                                                                                .image
+                                                                            item.image
                                                                         }
                                                                         alt=""
                                                                     />
@@ -198,9 +191,12 @@ function Header() {
                                                     <div>
                                                         {listOrderProduct
                                                             .orderItems.length -
-                                                            5 >= 0 ? listOrderProduct
-                                                            .orderItems.length -
-                                                            5 : 0}{' '}
+                                                            5 >=
+                                                        0
+                                                            ? listOrderProduct
+                                                                  .orderItems
+                                                                  .length - 5
+                                                            : 0}{' '}
                                                         Thêm hàng vào sản phẩm
                                                     </div>
                                                     <button

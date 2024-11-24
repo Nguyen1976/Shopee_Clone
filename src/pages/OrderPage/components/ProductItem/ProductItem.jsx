@@ -99,9 +99,9 @@ ProductItem.propTypes = {
         image: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         amount: PropTypes.number.isRequired,
-        checkedAll: PropTypes.bool,
-        setCheckAll: PropTypes.func,
     }).isRequired,
+    checkedAll: PropTypes.bool,
+    setCheckAll: PropTypes.func,
 };
 
 export default React.memo(ProductItem);

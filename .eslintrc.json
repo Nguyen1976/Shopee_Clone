@@ -1,0 +1,41 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true,
+      "jest": true  // Thêm dòng này để ESLint nhận diện Jest
+    },
+    "extends": [
+      "eslint:recommended",  // Cấu hình ESLint mặc định
+      "plugin:react/recommended",  // Các quy tắc cho React
+      "plugin:react-hooks/recommended",  // Quy tắc cho React Hooks
+      "prettier"  // Tích hợp Prettier để tránh xung đột giữa ESLint và Prettier
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "plugins": [
+      "react",  // Plugin React
+      "react-hooks",  // Plugin React Hooks
+      "prettier"  // Plugin Prettier
+    ],
+    "rules": {
+      "react/prop-types": "error",  // Tắt kiểm tra prop-types (nếu bạn không sử dụng prop-types)
+      "react/react-in-jsx-scope": "off",  // Nếu bạn dùng React 17+, không cần import React
+      "prettier/prettier": ["error", {
+        "endOfLine": "auto"  // Xử lý tự động dòng kết thúc (line endings)
+      }],
+      "jsx-quotes": ["error", "prefer-double"],  // Sử dụng dấu nháy kép cho JSX
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]  // Chấp nhận cả file .js và .jsx cho JSX
+    },
+    "settings": {
+      "react": {
+        "version": "detect"  // Tự động phát hiện phiên bản React đang sử dụng
+      }
+    }
+  }
+  

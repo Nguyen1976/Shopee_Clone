@@ -14,7 +14,7 @@ function AddressPage() {
     const [userId, setUserId] = useState('');
     const [titleModal, setTitleModal] = useState('');
     const [dataUpdateAddress, setDataUpdateAddress] = useState({});
-    const [isCreateAddressModal, setIsCreateAddressModal] = useState(false)
+    const [isCreateAddressModal, setIsCreateAddressModal] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -52,16 +52,14 @@ function AddressPage() {
         setTitleModal('Thêm địa chỉ');
         setIsCreateAddressModal(true);
         setDataUpdateAddress({});
-    }
+    };
 
     const handleModalUpdateAddress = (data) => {
         setShowModal(true);
         setTitleModal('Cập nhật địa chỉ');
         setDataUpdateAddress(data);
         setIsCreateAddressModal(false);
-    }
-
-
+    };
 
     const setDefaultAddress = async (data) => {
         try {
@@ -86,7 +84,7 @@ function AddressPage() {
                 <HandleModalAddress
                     showModal={showModal}
                     setShowModal={setShowModal}
-                    title = {titleModal}
+                    title={titleModal}
                     data={dataUpdateAddress}
                     isCreateAddress={isCreateAddressModal}
                     setLoadAddress={setLoadAddress}
@@ -132,8 +130,12 @@ function AddressPage() {
                                     </div>
                                 </div>
                                 <div className="text-end">
-                                    <div className="text-sm text-blue-600 cursor-pointer"
-                                    onClick={() => handleModalUpdateAddress(item)}>
+                                    <div
+                                        className="text-sm text-blue-600 cursor-pointer"
+                                        onClick={() =>
+                                            handleModalUpdateAddress(item)
+                                        }
+                                    >
                                         Cập nhật
                                     </div>
                                     <button

@@ -58,7 +58,10 @@ function ProfilePage() {
         } finally {
             setIsLoading(false);
             if (isErrorToast) {
-                addToast('Cập nhật thông tin người dùng không thành công', 'error');
+                addToast(
+                    'Cập nhật thông tin người dùng không thành công',
+                    'error'
+                );
             } else {
                 addToast('Cập nhật thông tin người dùng thành công', 'success');
             }

@@ -58,4 +58,4 @@ export const getAddressDefault = async (userId) => {
         `${process.env.REACT_APP_API_URL}/address/get-address-default/${userId}`
     );
     return res.data;
-}
+};

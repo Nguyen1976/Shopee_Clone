@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import images from '~/assets/images'
+import images from '~/assets/images';
 
 function Image({ src, alt, fallback: customFallback = images.noAvatar }) {
-    const [fallback, setFallback] = useState('')
-    
+    const [fallback, setFallback] = useState('');
+
     const handleError = () => {
-        setFallback(customFallback)
-    }
+        setFallback(customFallback);
+    };
     return (
         <>
             <img
@@ -23,7 +23,7 @@ function Image({ src, alt, fallback: customFallback = images.noAvatar }) {
 Image.propTypes = {
     src: PropTypes.string,
     alt: PropTypes.string,
-    fallback: PropTypes.string
-}
+    fallback: PropTypes.string,
+};
 
 export default Image;

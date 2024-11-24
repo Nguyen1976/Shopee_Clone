@@ -100,7 +100,7 @@ function SignUpPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             isError={isPasswordValid}
                             onBlur={handleValidPassword}
-                            type='password'
+                            type="password"
                             placeholder={'Mật khẩu'}
                             message={
                                 password
@@ -114,7 +114,7 @@ function SignUpPage() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             isError={isConfirmPasswordValid}
                             onBlur={handleValidConfirmPassword}
-                            type='password'
+                            type="password"
                             placeholder="Xác nhận mật khẩu"
                             message={'Mật khẩu không khớp'}
                         />

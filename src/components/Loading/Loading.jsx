@@ -22,6 +22,6 @@ function Loading({ isLoading, children }) {
 Loading.propTypes = {
     isLoading: PropTypes.bool,
     children: PropTypes.node.isRequired,
-}
+};
 
 export default React.memo(Loading);

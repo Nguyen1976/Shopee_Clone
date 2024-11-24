@@ -1,1 +1,1 @@
-export { default } from './HandleModalAddress'
+export { default } from './HandleModalAddress';

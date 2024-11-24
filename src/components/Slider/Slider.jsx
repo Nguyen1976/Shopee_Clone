@@ -1,7 +1,6 @@
 import { Swiper } from 'swiper/react';
 import 'swiper/css';
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faChevronLeft,
@@ -14,7 +13,6 @@ function Slider({ children, spaceBetween, slidesPerView, loop }) {
     const swiperRef = useRef(null);
     const [isShowNav, setIsShowNav] = useState(false);
 
-   
     return (
         <div
             className="w-full h-full mx-auto relative"
@@ -62,6 +60,6 @@ Slider.propTypes = {
     spaceBetween: PropTypes.number,
     slidesPerView: PropTypes.number,
     loop: PropTypes.bool,
-}
+};
 
 export default React.memo(Slider);

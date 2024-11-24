@@ -30,14 +30,14 @@ function HomePage() {
 
     const fetchDataProduct = async (page) => {
         try {
-            setIsLoading(true)
-            setAllProduct([])
+            setIsLoading(true);
+            setAllProduct([]);
             const res = await ProductService.getProductNavigation(page - 1, 10);
             setAllProduct(res.data);
         } catch (error) {
             console.error('Error fetching product data:', error);
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 
@@ -108,9 +108,7 @@ function HomePage() {
                     </div>
                 </div>
                 <div className="container-custom mt-5">
-                    <Loading
-                        isLoading={isLoading}
-                    >
+                    <Loading isLoading={isLoading}>
                         <div className="grid grid-cols-6 gap-4 min-h-7">
                             {allProduct.map((item, index) => (
                                 <Link

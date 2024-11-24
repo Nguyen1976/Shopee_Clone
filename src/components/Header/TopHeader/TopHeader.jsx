@@ -31,7 +31,7 @@ function TopHeader() {
         setName(userInfo.name);
         setAvatar(userInfo.avatar);
     }, [userInfo]);
-    
+
     useEffect(() => {
         const accessToken = localStorage.getItem('access_token');
 
@@ -134,7 +134,7 @@ function TopHeader() {
                                     </div>
                                     <div
                                         className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             navigate(config.routes.signIn)
                                         }
                                     >

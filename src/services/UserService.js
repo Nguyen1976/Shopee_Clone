@@ -41,7 +41,9 @@ export const updateUser = async (id, data) => {
 };
 
 export const getAllUsers = async () => {
-    const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/user/getAll`);
+    const res = await axiosJWT.get(
+        `${process.env.REACT_APP_API_URL}/user/getAll`
+    );
     return res.data;
 };
 

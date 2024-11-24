@@ -58,4 +58,5 @@ InputForm.propTypes = {
     message: PropTypes.string,
     placeholder: PropTypes.string,
     type: PropTypes.string,
+    value: PropTypes.string,
 };

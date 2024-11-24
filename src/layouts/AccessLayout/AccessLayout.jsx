@@ -58,6 +58,6 @@ function AccessLayout({ children }) {
 
 AccessLayout.propTypes = {
     children: PropTypes.node.isRequired,
-}
+};
 
 export default React.memo(AccessLayout);

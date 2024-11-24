@@ -1,5 +1,10 @@
-import { faCircleCheck, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleCheck,
+    faTriangleExclamation,
+    faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useToast } from '~/context';
 
@@ -43,5 +48,11 @@ function ToastItem({ status, message, id }) {
         </>
     );
 }
+
+ToastItem.propTypes = {
+    status: PropTypes.oneOf(['success', 'error', 'warning']),
+    message: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+};
 
 export default React.memo(ToastItem);

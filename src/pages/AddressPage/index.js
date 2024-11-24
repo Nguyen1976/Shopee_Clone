@@ -1,1 +1,1 @@
-export { default } from './AddressPage'
+export { default } from './AddressPage';

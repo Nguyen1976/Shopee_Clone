@@ -1,1 +1,1 @@
-export { default } from './AccessLayout'
+export { default } from './AccessLayout';

@@ -1,1 +1,1 @@
-export { default } from './ListToast'
+export { default } from './ListToast';

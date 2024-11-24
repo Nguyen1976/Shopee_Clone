@@ -1,1 +1,1 @@
-export { default } from './ToastItem'
+export { default } from './ToastItem';

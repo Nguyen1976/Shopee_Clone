@@ -85,9 +85,8 @@ axiosJWT.interceptors.response.use(
             return new Promise((resolve, reject) => {
                 failedQueue.push({
                     resolve: (token) => {
-                        originalRequest.headers[
-                            'Authorization'
-                        ] = `Bearer ${token}`;
+                        originalRequest.headers['Authorization'] =
+                            `Bearer ${token}`;
                         resolve(axiosJWT(originalRequest));
                     },
                     reject: (err) => reject(err),

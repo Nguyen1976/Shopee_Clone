@@ -9,7 +9,6 @@ import React from 'react';
 import images from '~/assets/images';
 
 function Footer() {
-    
     return (
         <footer className="bg-[#f5f5f5] py-12">
             <div className="container-custom grid grid-cols-5 gap-5">

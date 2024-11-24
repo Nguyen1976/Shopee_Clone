@@ -1,8 +1,6 @@
 import { updateUser } from '~/redux/slices/UserSlice';
 import * as UserService from '~/services/UserService';
 
-
-
 const loadUserIntoStore = async (dispatch, id, token) => {
     try {
         const res = await UserService.getDetailsUser(id, token);

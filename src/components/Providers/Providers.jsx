@@ -5,6 +5,7 @@ import store from '~/redux/store.js';
 import { persistor } from '~/redux/store';
 import { OrderProvider } from '~/context';
 import { ToastProvider } from '~/context';
+import PropTypes from 'prop-types';
 
 function Providers({ children }) {
     return (
@@ -17,5 +18,9 @@ function Providers({ children }) {
         </Provider>
     );
 }
+
+Providers.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default Providers;

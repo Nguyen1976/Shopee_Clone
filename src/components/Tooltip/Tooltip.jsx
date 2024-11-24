@@ -12,7 +12,7 @@ function Tooltip({
     scaleTopRight,
     fadeIn,
     scaleTop,
-    hideDefault
+    hideDefault,
 }) {
     const [isShow, setIsShow] = useState(false);
 

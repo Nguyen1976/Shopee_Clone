@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ToastContext } from './ToastContext';
 import ListToast from '~/components/ToastMessage/ListToast';
+import PropTypes from 'prop-types';
 
 export const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = useState([]);
@@ -15,12 +16,18 @@ export const ToastProvider = ({ children }) => {
     };
 
     const closeToast = (id) => {
-        setToasts(prevToasts => prevToasts.filter((toast) => toast.id !== id))
-    }
+        setToasts((prevToasts) =>
+            prevToasts.filter((toast) => toast.id !== id)
+        );
+    };
     return (
         <ToastContext.Provider value={{ toasts, addToast, closeToast }}>
             <ListToast />
             {children}
         </ToastContext.Provider>
     );
+};
+
+ToastProvider.propTypes = {
+    children: PropTypes.node.isRequired,
 };

@@ -23,6 +23,7 @@ function Modal({ children, showModal }) {
 
 Modal.propTypes = {
     children: PropTypes.node.isRequired,
+    showModal: PropTypes.bool,
 };
 
 export default React.memo(Modal);

@@ -19,7 +19,11 @@ export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
     { path: config.routes.profile, component: ProfilePage, layout: UserLayout },
     { path: config.routes.address, component: AddressPage, layout: UserLayout },
-    { path: config.routes.purchase, component: PurchasePage, layout: UserLayout },
+    {
+        path: config.routes.purchase,
+        component: PurchasePage,
+        layout: UserLayout,
+    },
     { path: config.routes.signIn, component: SignInPage, layout: AccessLayout },
     { path: config.routes.signUp, component: SignUpPage, layout: AccessLayout },
     {
@@ -27,7 +31,11 @@ export const routes = [
         component: ProductDetailPage,
         layout: DefaultLayout,
     },
-    {path: config.routes.order, component: OrderPage, layout: HeaderLayout},
-    {path: config.routes.payment, component: PaymentPage, layout: FooterLayout},
+    { path: config.routes.order, component: OrderPage, layout: HeaderLayout },
+    {
+        path: config.routes.payment,
+        component: PaymentPage,
+        layout: FooterLayout,
+    },
     { path: '*', component: NotFoundPage },
 ];
