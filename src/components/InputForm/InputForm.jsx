@@ -23,7 +23,7 @@ function InputForm({
         );
     };
     return (
-        <>
+        <div>
             <div className="flex relative">
                 <input
                     onChange={onChange}
@@ -44,10 +44,12 @@ function InputForm({
                     />
                 )}
             </div>
-            <span className="text-xs text-[#f33a58] ml-2 select-none">
-                {message}
-            </span>
-        </>
+            {isError && (
+                <span className="text-xs text-[#f33a58] ml-2 select-none">
+                    {message}
+                </span>
+            )}
+        </div>
     );
 }
 

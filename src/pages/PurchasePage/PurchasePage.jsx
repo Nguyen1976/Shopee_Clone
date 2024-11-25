@@ -26,7 +26,7 @@ function PurchasePage() {
 
     useEffect(() => {
         navigate(`${config.routes.purchase}/?type=1`);
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         const fetchData = async () => {

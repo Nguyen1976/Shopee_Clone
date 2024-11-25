@@ -198,9 +198,12 @@ function TopHeader() {
                                 >
                                     Tài khoản của tôi
                                 </div>
-                                <div className="text-black hover:text-primary p-2 text-sm cursor-pointer">
+                                <Link
+                                    to={config.routes.purchase}
+                                    className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                >
                                     Đơn mua
-                                </div>
+                                </Link>
                                 <div
                                     className="text-black hover:text-primary p-2 text-sm cursor-pointer"
                                     onClick={handleLogout}

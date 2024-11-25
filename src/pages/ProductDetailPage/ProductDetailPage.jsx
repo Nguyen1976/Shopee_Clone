@@ -67,6 +67,7 @@ function ProductDetailPage() {
     const handleAddOrderProduct = () => {
         if (!useInfo?.id) {
             navigate('/sign-in', { state: location?.pathname });
+            addToast('Hãy đăng nhập để mua hàng', 'warning');
         } else {
             const orderRedux = order?.orderItems?.find(
                 (item) => item.product === product?._id

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import config from '~/configs';
 import DefaultLayout from '~/layouts/DefaultLayout';
 
@@ -15,9 +15,15 @@ function UserLayout({ children }) {
 
     const location = useLocation();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        setName(userInfo.name);
-    }, [userInfo]);
+        if (userInfo?.id) {
+            setName(userInfo.name);
+        } else {
+            navigate(config.routes.signIn);
+        }
+    }, [userInfo, navigate]);
 
     return (
         <DefaultLayout>

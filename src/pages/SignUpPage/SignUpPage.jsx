@@ -78,7 +78,7 @@ function SignUpPage() {
                     <div id="name" className="mt-4 h-14">
                         <InputForm
                             onChange={(e) => setName(e.target.value)}
-                            isError={isNameValid}
+                            isError={!isNameValid}
                             onBlur={handleValidName}
                             placeholder={'Name'}
                             message={name ? 'Tên không hợp lệ' : 'Hãy nhập tên'}
@@ -87,7 +87,7 @@ function SignUpPage() {
                     <div id="email" className="mt-4 h-14">
                         <InputForm
                             onChange={(e) => setEmail(e.target.value)}
-                            isError={isEmailValid}
+                            isError={!isEmailValid}
                             onBlur={handleValidEmail}
                             placeholder={'Email'}
                             message={
@@ -98,7 +98,7 @@ function SignUpPage() {
                     <div id="password" className="mt-4 h-14">
                         <InputForm
                             onChange={(e) => setPassword(e.target.value)}
-                            isError={isPasswordValid}
+                            isError={!isPasswordValid}
                             onBlur={handleValidPassword}
                             type="password"
                             placeholder={'Mật khẩu'}
@@ -112,7 +112,7 @@ function SignUpPage() {
                     <div id="confirm-password" className="mt-4 h-14">
                         <InputForm
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            isError={isConfirmPasswordValid}
+                            isError={!isConfirmPasswordValid}
                             onBlur={handleValidConfirmPassword}
                             type="password"
                             placeholder="Xác nhận mật khẩu"
@@ -121,7 +121,7 @@ function SignUpPage() {
                     </div>
                     <Loading isLoading={isLoading}>
                         <button
-                            className=" bg-primary w-full text-white p-2"
+                            className=" bg-primary w-full text-white p-2 mt-4"
                             onClick={handleSubmit}
                         >
                             Đăng ký

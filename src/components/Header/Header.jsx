@@ -17,6 +17,9 @@ function Header() {
 
     const [valueSearch, setValueSearch] = useState('');
     const [searchResult, setSearchResult] = useState([]);
+
+    const userInfo = useSelector((state) => state.user);
+
     const debouncedValueSearch = useDebounce(valueSearch, 500);
 
     const listOrderProduct = useSelector((state) => state.order);
@@ -137,7 +140,11 @@ function Header() {
                     <div className="mr-24">
                         <Tooltip
                             funcRender={() => {
-                                if (listOrderProduct.orderItems.length === 0) {
+                                //Phải trong trạng thái đăng nhập thì mới có giỏ hàng
+                                if (
+                                    listOrderProduct.orderItems.length === 0 ||
+                                    !userInfo.access_token
+                                ) {
                                     return (
                                         <div className="w-full flex flex-col justify-center items-center py-12">
                                             <div className="w-1/3">

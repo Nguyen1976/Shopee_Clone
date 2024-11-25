@@ -58,7 +58,7 @@ export const deleteManyUsers = async (ids) => {
 };
 
 export const searchUsers = async (name) => {
-    const res = await axios.get(
+    const res = await axiosJWT.get(
         `${process.env.REACT_APP_API_URL}/user/search-users?name=${name}`
     );
     return res.data;

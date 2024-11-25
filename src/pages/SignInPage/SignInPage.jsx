@@ -65,21 +65,22 @@ function SignInPage() {
                     }
                 }
                 setIsErrorToast(false);
-            } catch (error) {
-                console.error(error);
-                setIsErrorToast(true);
-                setIsLoading(false);
-            } finally {
-                setIsLoading(false);
                 if (isErrorToast) {
-                    addToast('Đăng nhập thất bại', 'error');
+                    addToast('Tài khoản hoặc mất khẩu sai', 'error');
                 } else {
                     addToast('Đăng nhập thành công', 'success');
                     navigate(config.routes.home);
                 }
+            } catch (error) {
+                console.error(error);
+                setIsErrorToast(true);
+                setIsLoading(false);
+                addToast('Đăng nhập thất bại', 'error');
+            } finally {
+                setIsLoading(false);
             }
         } else {
-            addToast('Đăng nhập thất bại', 'error');
+            addToast('Tài khoản hoặc mất khẩu sai định dạng', 'error');
             setIsErrorToast(true);
             setIsLoading(false);
         }
@@ -92,8 +93,9 @@ function SignInPage() {
                 <div id="email" className="mt-4 h-14">
                     <InputForm
                         onChange={(e) => setEmail(e.target.value)}
-                        isError={isEmailValid}
-                        onBlur={handleValidEmail}
+                        value={email}
+                        isError={!isEmailValid}
+                        onBlur={() => handleValidEmail()}
                         placeholder={'Email'}
                         message={
                             email ? 'Email không hợp lệ' : 'Hãy nhập email'
@@ -103,8 +105,9 @@ function SignInPage() {
                 <div id="password" className="mt-4 h-14">
                     <InputForm
                         onChange={(e) => setPassword(e.target.value)}
-                        isError={isPasswordValid}
-                        onBlur={handleValidPassword}
+                        value={password}
+                        isError={!isPasswordValid}
+                        onBlur={() => handleValidPassword()}
                         type="password"
                         placeholder={'Mật khẩu'}
                         message={
@@ -116,7 +119,7 @@ function SignInPage() {
                 </div>
                 <Loading isLoading={isLoading}>
                     <button
-                        className=" bg-primary w-full text-white p-2 select-none"
+                        className=" bg-primary w-full text-white p-2 select-none mt-4"
                         onClick={handleSubmit}
                     >
                         Đăng nhập

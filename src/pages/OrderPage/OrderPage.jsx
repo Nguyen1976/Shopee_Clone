@@ -36,8 +36,10 @@ function OrderPage() {
     const { addToast } = useToast();
 
     useEffect(() => {
-        setlistOrderProduct(order.orderItems);
-    }, [order.orderItems]);
+        if (userInfo.id) {
+            setlistOrderProduct(order.orderItems);
+        }
+    }, [userInfo.id, order]);
 
     useEffect(() => {
         setUserId(userInfo.id);
@@ -86,17 +88,18 @@ function OrderPage() {
 
     const getAddressDefault = useCallback(async () => {
         if (userId) {
-            const address = await AddressService.getAddressDefault(userId);
-            setShippingAddress(address);
+            try {
+                const address = await AddressService.getAddressDefault(userId);
+                setShippingAddress(address);
+            } catch (error) {
+                console.error('Error fetching address default:', error);
+            }
         }
     }, [userId]);
 
-    useEffect(() => {
-        getAddressDefault();
-    }, [getAddressDefault]);
-
-    const handleBuy = () => {
+    const handleBuy = async () => {
         if (listProductSelect.length && shippingAddress) {
+            await getAddressDefault();
             navigate(config.routes.payment);
             setIsOrderConfirmed(true);
             dispatch(setItemsPrice({ itemsPrice }));
