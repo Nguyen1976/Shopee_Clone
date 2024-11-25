@@ -11,7 +11,7 @@ import {
     removeOrderProductSelected,
     selectedOrder,
 } from '~/redux/slices/OrderSlice';
-import { formatter } from '~/utils/formater';
+import { formater } from '~/utils/formater';
 
 function ProductItem({ item, checkedAll, setCheckAll }) {
     const dispatch = useDispatch();
@@ -60,7 +60,7 @@ function ProductItem({ item, checkedAll, setCheckAll }) {
                 <div>{item.name}</div>
             </div>
             <div className="flex justify-between flex-1 mr-4">
-                <div>{formatter(item.price)}</div>
+                <div>{formater(item.price)}</div>
                 <div className="h-9 w-32 border-1 rounded-sm border-zinc-300 text-zinc-300 text-center px-1 ml-5 flex items-center">
                     <button
                         className="h-full pr-1"
@@ -82,7 +82,7 @@ function ProductItem({ item, checkedAll, setCheckAll }) {
                     </button>
                 </div>
                 <div className="text-primary">
-                    đ{formatter(item.price * item.amount)}
+                    đ{formater(item.price * item.amount)}
                 </div>
                 <button onClick={handleRemoveProduct}>
                     <FontAwesomeIcon className="text-primary" icon={faTrash} />

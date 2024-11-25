@@ -61,7 +61,7 @@ function UserLayout({ children }) {
                                     </Link>
                                 </span>
                                 <ul
-                                    className={`ml-7 text-sm h-12 transition-all duration-500 ${
+                                    className={`ml-7 text-sm transition-all duration-500 ${
                                         !(
                                             location.pathname ===
                                                 config.routes.profile ||
@@ -69,7 +69,7 @@ function UserLayout({ children }) {
                                                 config.routes.address
                                         )
                                             ? 'h-0 opacity-0'
-                                            : ''
+                                            : 'h-12 opacity-1'
                                     }`}
                                 >
                                     <li

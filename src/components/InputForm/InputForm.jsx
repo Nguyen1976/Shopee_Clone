@@ -7,10 +7,11 @@ function InputForm({
     isError,
     onChange,
     onBlur,
+    onFocus,
     message = '',
     placeholder,
     type = 'text',
-    value,
+    value = '',
 }) {
     // Sử dụng state để điều khiển kiểu hiển thị của input
     const [inputType, setInputType] = useState(type);
@@ -33,6 +34,7 @@ function InputForm({
                     placeholder={placeholder}
                     onBlur={onBlur}
                     value={value}
+                    onFocus={onFocus}
                 />
                 {type === 'password' && (
                     <FontAwesomeIcon
@@ -55,6 +57,7 @@ InputForm.propTypes = {
     isError: PropTypes.bool,
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
     message: PropTypes.string,
     placeholder: PropTypes.string,
     type: PropTypes.string,

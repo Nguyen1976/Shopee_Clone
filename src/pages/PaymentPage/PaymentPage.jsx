@@ -6,7 +6,7 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
-import { formatter } from '~/utils/formater';
+import { formater } from '~/utils/formater';
 import config from '~/configs';
 import images from '~/assets/images';
 import TopHeader from '~/components/Header/TopHeader';
@@ -269,10 +269,10 @@ function PaymentPage() {
                                             <div>{item.name}</div>
                                         </div>
                                         <div className="flex gap-28">
-                                            <div>{formatter(item.price)}</div>
+                                            <div>{formater(item.price)}</div>
                                             <div>{item.amount}</div>
                                             <div>
-                                                {formatter(
+                                                {formater(
                                                     item.price * item.amount
                                                 )}
                                             </div>
@@ -285,7 +285,7 @@ function PaymentPage() {
                             <div className="p-6 flex justify-end gap-3">
                                 <span>Tồng số tiền (các sản phẩm) : </span>
                                 <span className="text-primary text-lg">
-                                    {formatter(totalItems)}
+                                    {formater(totalItems)}
                                 </span>
                             </div>
                         </div>
@@ -345,20 +345,20 @@ function PaymentPage() {
                                     <span className="text-sm text-zinc-500">
                                         Tổng tiền hàng
                                     </span>
-                                    <span>{formatter(totalItems)}</span>
+                                    <span>{formater(totalItems)}</span>
                                 </div>
                                 <div className="flex justify-between mt-5">
                                     <span className="text-sm text-zinc-500">
                                         Tổng tiền phí vận chuyển
                                     </span>
-                                    <span>{formatter(deliveryPrice)}</span>
+                                    <span>{formater(deliveryPrice)}</span>
                                 </div>
                                 <div className="flex justify-between mt-5 items-center">
                                     <span className="text-sm text-zinc-500">
                                         Tổng thanh toán
                                     </span>
                                     <span className="text-2xl text-primary">
-                                        {formatter(totalPrice)}
+                                        {formater(totalPrice)}
                                     </span>
                                 </div>
                             </div>

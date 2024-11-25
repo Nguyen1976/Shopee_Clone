@@ -13,7 +13,7 @@ import {
 } from '~/redux/slices/OrderSlice';
 import config from '~/configs';
 
-import { formatter } from '~/utils/formater';
+import { formater } from '~/utils/formater';
 import * as AddressService from '~/services/AddressService';
 import { useOrder, useToast } from '~/context';
 
@@ -161,7 +161,7 @@ function OrderPage() {
                     <div>
                         Tổng thanh toán({listProductSelect.length} Sản phẩm):{' '}
                         <span className="text-primary text-lg">
-                            {formatter(itemsPrice)}
+                            {formater(itemsPrice)}
                         </span>
                     </div>
                     <button

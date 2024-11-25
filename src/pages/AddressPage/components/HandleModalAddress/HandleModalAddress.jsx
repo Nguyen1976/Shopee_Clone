@@ -65,7 +65,9 @@ function HandleModalAddress({
 
     const updateInputAddress = useCallback(() => {
         setValueInputAddress(
-            [city, district, commune].filter(Boolean).join(', ')
+            [city || '', district || '', commune || '']
+                .filter(Boolean)
+                .join(', ')
         );
         //filter(Boolean) sẽ loại bỏ những phần tử không có giá trị thật, chỉ giữ lại những phần tử có giá trị hợp lệ.
     }, [city, district, commune]);
@@ -221,19 +223,22 @@ function HandleModalAddress({
                         value={phone}
                     />
                 </div>
-                <div className="relative z-50 mt-5">
+                <div className="relative mt-5">
                     <InputForm
                         isError={isErrorInput}
-                        value={valueInputAddress}
+                        value={valueInputAddress || ''}
                         onFocus={() => {
                             setIsShowListAddress(true);
                             setIsErrorInput(false);
                         }}
-                        onChange={() => false} //
+                        onChange={(e) => setValueInputAddress(e.target.value)}
                     />
 
                     {isShowListAddress && (
-                        <div className="absolute modal w-full top-12 bg-white shadow-lg z-30">
+                        <div
+                            className="absolute modal top-12 w-full bg-white shadow-lg z-10"
+                            onBlur={() => setIsShowListAddress(false)}
+                        >
                             <div className="flex items-center w-full gap-9 justify-center">
                                 <div
                                     className={`p-2 cursor-pointer ${
