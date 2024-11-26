@@ -11,17 +11,20 @@ import { faCaretDown, faEarthAsia } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '~/components/Tooltip';
 import { jwtDecode } from 'jwt-decode';
 
-import { updateUser } from '~/redux/slices/UserSlice';
+import { resetUser } from '~/redux/slices/UserSlice';
 import config from '~/configs';
 import images from '~/assets/images';
 import Image from '~/components/Image';
 import loadUserIntoStore from '~/utils/loadUserIntoStore';
+import { useToast } from '~/context';
 
 function TopHeader() {
     const [name, setName] = useState('');
     const [avatar, setAvatar] = useState('');
 
     const userInfo = useSelector((state) => state.user);
+
+    const { addToast } = useToast();
 
     const dispatch = useDispatch();
 
@@ -45,8 +48,9 @@ function TopHeader() {
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');
-        dispatch(updateUser({}));
+        dispatch(resetUser());
         navigate(config.routes.signIn);
+        addToast('Đăng xuất thành công', 'success');
     };
 
     return (

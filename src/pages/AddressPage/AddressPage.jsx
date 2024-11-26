@@ -65,7 +65,7 @@ function AddressPage() {
         try {
             setIsLoading(true);
             data.default = true;
-            await AddressService.updateAddress(data._id, {
+            await AddressService.updateAddress(userId, data._id, {
                 ...data,
             });
             fetchDataAddress();

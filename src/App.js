@@ -1,22 +1,22 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from '~/routes';
 import DefaultLayout from './layouts/DefaultLayout';
 import { useSelector } from 'react-redux';
-import * as VisitService from '~/services/VisitService';
+// import * as VisitService from '~/services/VisitService';
 function App() {
     const userInfo = useSelector((state) => state.user);
 
-    useEffect(() => {
-        const postVisit = async () => {
-            try {
-                await VisitService.postVisit();
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        postVisit();
-    }, []);
+    // useEffect(() => {
+    //     const postVisit = async () => {
+    //         try {
+    //             await VisitService.postVisit();
+    //         } catch (err) {
+    //             console.error(err);
+    //         }
+    //     };
+    //     postVisit();
+    // }, []);
 
     return (
         <div>

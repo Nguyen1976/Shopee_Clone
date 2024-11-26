@@ -105,7 +105,6 @@ function OrderPage() {
             dispatch(setItemsPrice({ itemsPrice }));
             dispatch(setTotalPrice({ totalPrice }));
             dispatch(setShippingPrice({ shippingPrice }));
-            console.log(shippingAddress);
             dispatch(addShippingAddress({ shippingAddress }));
         } else {
             addToast('Hãy chọn sản phẩm cần mua', 'warning');

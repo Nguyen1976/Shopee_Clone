@@ -27,7 +27,7 @@ export const getWards = async (districtCode) => {
 
 export const createAddress = async (userId, newAddress) => {
     const res = await axiosJWT.post(
-        `${process.env.REACT_APP_API_URL}/address/create-address`,
+        `${process.env.REACT_APP_API_URL}/address/create-address/${userId}`,
         {
             userId,
             addressData: {
@@ -38,9 +38,9 @@ export const createAddress = async (userId, newAddress) => {
     return res.data;
 };
 
-export const updateAddress = async (addressId, newAddress) => {
+export const updateAddress = async (userId, addressId, newAddress) => {
     const res = await axiosJWT.put(
-        `${process.env.REACT_APP_API_URL}/address/update-address/${addressId}`,
+        `${process.env.REACT_APP_API_URL}/address/update-address/${addressId}/${userId}`,
         newAddress
     );
     return res.data;
