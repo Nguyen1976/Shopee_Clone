@@ -13,6 +13,7 @@ function PurchasePage() {
     const [listOrdered, setListOrdered] = useState([]);
     const [typeNumber, setTypeNumber] = useState(1);
     const [isloading, setIsLoading] = useState(false);
+    const [userId, setUserId] = useState('');
 
     const userInfo = useSelector((state) => state.user);
 
@@ -21,6 +22,10 @@ function PurchasePage() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const type = queryParams.get('type');
+
+    useEffect(() => {
+        setUserId(userInfo?.id);
+    }, [userInfo]);
 
     useEffect(() => {
         setTypeNumber(parseInt(type));
@@ -34,16 +39,18 @@ function PurchasePage() {
         const fetchData = async () => {
             try {
                 setIsLoading(true);
-                const res = await OrderService.getAllOrderDetails(userInfo?.id);
-                setListOrdered(res.data);
-            } catch (e) {
-                console.error(e);
+                if (userId) {
+                    const res = await OrderService.getAllOrderDetails(userId);
+                    setListOrdered(res.data);
+                }
+            } catch (error) {
+                console.error('fetchData order', error);
             } finally {
                 setIsLoading(false);
             }
         };
         fetchData();
-    }, [userInfo?.id]);
+    }, [userId]);
 
     const pages = [
         { type: 1, text: 'Tất cả' },
@@ -80,11 +87,35 @@ function PurchasePage() {
             </div>
             {typeNumber === 1 && (
                 <ul>
-                    {listOrdered.map((item, index) => (
-                        <li key={index}>
-                            <PurchaseItem item={item} />
-                        </li>
-                    ))}
+                    {listOrdered.map((item, index) => {
+                        if (item.isPaid && !item.canceled) {
+                            if (item.isDelivered) {
+                                return (
+                                    <li key={index}>
+                                        <PurchaseSuccess item={item} />
+                                    </li>
+                                );
+                            } else {
+                                return (
+                                    <li key={index}>
+                                        <PurchaseItem item={item} />
+                                    </li>
+                                );
+                            }
+                        } else if (!item.isDelivered && !item.canceled) {
+                            return (
+                                <li key={index}>
+                                    <PurchaseItem item={item} />
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={index}>
+                                    <PurchaseCanceled item={item} />
+                                </li>
+                            );
+                        }
+                    })}
                 </ul>
             )}
             {typeNumber === 2 && (
@@ -103,7 +134,7 @@ function PurchasePage() {
             {typeNumber === 3 && (
                 <ul>
                     {listOrdered.map((item, index) => {
-                        if (!item.isDelivery) {
+                        if (!item.isDelivery && !item.canceled) {
                             return (
                                 <li key={index}>
                                     <PurchaseItem item={item} />

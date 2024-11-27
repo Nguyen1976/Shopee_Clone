@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
+import { GoogleLogin } from '@react-oauth/google';
 
 import { isValidEmail, isValidPassword } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
@@ -19,7 +19,6 @@ function SignInPage() {
     const [isPasswordValid, setIsPasswordValid] = useState(true);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isErrorToast, setIsErrorToast] = useState(false);
 
     const { addToast } = useToast();
 
@@ -35,6 +34,22 @@ function SignInPage() {
         setIsPasswordValid(isValidPassword(password));
     };
 
+    const handleLoadInfoUser = async (data, accessToken, refreshToken) => {
+        if (accessToken) {
+            localStorage.setItem('access_token', accessToken);
+        }
+        if (refreshToken) {
+            localStorage.setItem('refresh_token', refreshToken);
+        }
+        await loadUserIntoStore(dispatch, data.id, accessToken);
+        if (data.isAdmin) {
+            navigate(config.routes.adminUser);
+        } else {
+            navigate(config.routes.home);
+        }
+        addToast('Đăng nhập thành công', 'success');
+    };
+
     const handleSubmit = async () => {
         setIsLoading(true);
         if (isEmailValid && isPasswordValid && email && password) {
@@ -43,37 +58,15 @@ function SignInPage() {
                     email,
                     password,
                 });
-                if (data.access_token) {
-                    localStorage.setItem('access_token', data.access_token);
-                }
-
-                if (data.refresh_token) {
-                    localStorage.setItem('refresh_token', data.refresh_token);
-                }
-
-                const decoded = jwtDecode(data.access_token);
-                if (decoded && decoded.id) {
-                    await loadUserIntoStore(
-                        dispatch,
-                        decoded.id,
-                        data.access_token
+                if (data) {
+                    await handleLoadInfoUser(
+                        data,
+                        data.access_token,
+                        data.refresh_token
                     );
-                    if (data.isAdmin) {
-                        navigate(config.routes.adminUser);
-                    } else {
-                        navigate(config.routes.home);
-                    }
-                }
-                setIsErrorToast(false);
-                if (isErrorToast) {
-                    addToast('Tài khoản hoặc mất khẩu sai', 'error');
-                } else {
-                    addToast('Đăng nhập thành công', 'success');
-                    navigate(config.routes.home);
                 }
             } catch (error) {
                 console.error(error);
-                setIsErrorToast(true);
                 setIsLoading(false);
                 addToast('Đăng nhập thất bại', 'error');
             } finally {
@@ -81,7 +74,23 @@ function SignInPage() {
             }
         } else {
             addToast('Tài khoản hoặc mất khẩu sai định dạng', 'error');
-            setIsErrorToast(true);
+            setIsLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async (response) => {
+        try {
+            const res = await UserService.signInGoogle(response.credential);
+            if (res) {
+                await handleLoadInfoUser(
+                    res,
+                    res.accessToken,
+                    res.refreshToken
+                );
+            }
+        } catch (err) {
+            console.error(err);
+            addToast('Đăng nhập với Google thất bại', 'error');
             setIsLoading(false);
         }
     };
@@ -102,7 +111,7 @@ function SignInPage() {
                         }
                     />
                 </div>
-                <div id="password" className="mt-4 h-14">
+                <form id="password" className="mt-4 h-14">
                     <InputForm
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
@@ -116,7 +125,7 @@ function SignInPage() {
                                 : 'Hãy nhập mật khẩu'
                         }
                     />
-                </div>
+                </form>
                 <Loading isLoading={isLoading}>
                     <button
                         className=" bg-primary w-full text-white p-2 select-none mt-4"
@@ -134,7 +143,10 @@ function SignInPage() {
                 </div>
                 <div className="mt-6 flex gap-4 justify-between">
                     <button className="w-1/2 border-2 p-2">Facebook</button>
-                    <button className="w-1/2 border-2 p-2">Google</button>
+                    <GoogleLogin
+                        onSuccess={handleGoogleLogin}
+                        onError={() => console.log('Login Failed')}
+                    />
                 </div>
                 <div className="text-center text-sm mt-5 text-[#8b8b8b]">
                     Bạn mới biết đến Shopee?{' '}

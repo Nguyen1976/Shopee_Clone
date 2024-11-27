@@ -18,7 +18,8 @@ function UserLayout({ children }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (userInfo?.id) {
+        const token = localStorage.getItem('access_token');
+        if (token) {
             setName(userInfo.name);
         } else {
             navigate(config.routes.signIn);

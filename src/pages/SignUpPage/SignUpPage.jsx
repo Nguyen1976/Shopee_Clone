@@ -73,7 +73,7 @@ function SignUpPage() {
     return (
         <div className="flex justify-end">
             <div className="bg-white p-5 w-96">
-                <div>
+                <form>
                     <div className="text-xl font-normal">Đăng ký</div>
                     <div id="name" className="mt-4 h-14">
                         <InputForm
@@ -127,7 +127,7 @@ function SignUpPage() {
                             Đăng ký
                         </button>
                     </Loading>
-                </div>
+                </form>
                 <div className="flex mt-6 mx-auto items-center">
                     <div className="bg-[#dbdbdb] h-[1px] w-2/5"></div>
                     <span className="w-1/5 text-center text-[#dbdbdb] text-sm">

@@ -6,15 +6,19 @@ import { persistor } from '~/redux/store';
 import { OrderProvider } from '~/context';
 import { ToastProvider } from '~/context';
 import PropTypes from 'prop-types';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function Providers({ children }) {
+    const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     return (
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ToastProvider>
-                    <OrderProvider>{children}</OrderProvider>
-                </ToastProvider>
-            </PersistGate>
+            <GoogleOAuthProvider clientId={clientId}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <ToastProvider>
+                        <OrderProvider>{children}</OrderProvider>
+                    </ToastProvider>
+                </PersistGate>
+            </GoogleOAuthProvider>
         </Provider>
     );
 }

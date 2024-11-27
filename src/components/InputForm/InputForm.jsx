@@ -12,6 +12,7 @@ function InputForm({
     placeholder,
     type = 'text',
     value = '',
+    autocomplete = 'off',
 }) {
     // Sử dụng state để điều khiển kiểu hiển thị của input
     const [inputType, setInputType] = useState(type);
@@ -35,6 +36,7 @@ function InputForm({
                     onBlur={onBlur}
                     value={value}
                     onFocus={onFocus}
+                    autoComplete={autocomplete}
                 />
                 {type === 'password' && (
                     <FontAwesomeIcon
@@ -53,8 +55,6 @@ function InputForm({
     );
 }
 
-export default React.memo(InputForm);
-
 InputForm.propTypes = {
     isError: PropTypes.bool,
     onChange: PropTypes.func,
@@ -64,4 +64,7 @@ InputForm.propTypes = {
     placeholder: PropTypes.string,
     type: PropTypes.string,
     value: PropTypes.string,
+    autocomplete: PropTypes.string,
 };
+
+export default React.memo(InputForm);

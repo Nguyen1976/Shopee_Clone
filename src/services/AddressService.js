@@ -26,36 +26,29 @@ export const getWards = async (districtCode) => {
 };
 
 export const createAddress = async (userId, newAddress) => {
-    const res = await axiosJWT.post(
-        `${process.env.REACT_APP_API_URL}/address/create-address/${userId}`,
-        {
-            userId,
-            addressData: {
-                ...newAddress,
-            },
-        }
-    );
+    const res = await axiosJWT.post(`/address/create-address/${userId}`, {
+        userId,
+        addressData: {
+            ...newAddress,
+        },
+    });
     return res.data;
 };
 
 export const updateAddress = async (userId, addressId, newAddress) => {
     const res = await axiosJWT.put(
-        `${process.env.REACT_APP_API_URL}/address/update-address/${addressId}/${userId}`,
+        `/address/update-address/${addressId}/${userId}`,
         newAddress
     );
     return res.data;
 };
 
 export const getAddress = async (userId) => {
-    const res = await axiosJWT.get(
-        `${process.env.REACT_APP_API_URL}/address/${userId}`
-    );
+    const res = await axiosJWT.get(`/address/${userId}`);
     return res.data;
 };
 
 export const getAddressDefault = async (userId) => {
-    const res = await axiosJWT.get(
-        `${process.env.REACT_APP_API_URL}/address/get-address-default/${userId}`
-    );
+    const res = await axiosJWT.get(`/address/get-address-default/${userId}`);
     return res.data;
 };

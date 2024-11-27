@@ -3,16 +3,19 @@
 import { axiosJWT } from './axiosJWT';
 
 export const createOrder = async (data) => {
-    const res = await axiosJWT.post(
-        `${process.env.REACT_APP_API_URL}/order/create/${data.user}`,
-        data
-    );
+    const res = await axiosJWT.post(`/order/create/${data.user}`, data);
     return res.data;
 };
 
 export const getAllOrderDetails = async (userId) => {
-    const res = await axiosJWT.get(
-        `${process.env.REACT_APP_API_URL}/order/get-all-order/${userId}`
-    );
+    const res = await axiosJWT.get(`/order/get-all-order/${userId}`);
+    return res.data;
+};
+
+export const cancelOrder = async (userId, orderItems, orderId) => {
+    const res = await axiosJWT.put(`/order/cancel-order/${userId}`, {
+        orderItems,
+        orderId,
+    });
     return res.data;
 };

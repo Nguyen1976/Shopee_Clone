@@ -48,6 +48,8 @@ function TopHeader() {
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+
         dispatch(resetUser());
         navigate(config.routes.signIn);
         addToast('Đăng xuất thành công', 'success');
@@ -195,21 +197,20 @@ function TopHeader() {
                         funcRender={() => (
                             <div className="w-full">
                                 <div
-                                    className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                    className="text-black hover:text-green-500 hover:bg-zinc-50 px-2 py-3 text-sm cursor-pointer"
                                     onClick={() =>
                                         navigate(config.routes.profile)
                                     }
                                 >
                                     Tài khoản của tôi
                                 </div>
-                                <Link
-                                    to={config.routes.purchase}
-                                    className="text-black hover:text-primary p-2 text-sm cursor-pointer"
-                                >
-                                    Đơn mua
-                                </Link>
+                                <div className="text-black hover:text-green-500 hover:bg-zinc-50 px-2 py-3 text-sm cursor-pointer">
+                                    <Link to={config.routes.purchase}>
+                                        Đơn mua
+                                    </Link>
+                                </div>
                                 <div
-                                    className="text-black hover:text-primary p-2 text-sm cursor-pointer"
+                                    className="text-black hover:text-green-500 hover:bg-zinc-50 px-2 py-3 text-sm cursor-pointer"
                                     onClick={handleLogout}
                                 >
                                     Đăng xuất
