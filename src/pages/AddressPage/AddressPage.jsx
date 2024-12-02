@@ -1,20 +1,36 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import HandleModalAddress from './components/HandleModalAddress';
+import ModalAddress from '~/components/ModalAddress';
 import * as AddressService from '~/services/AddressService';
 import Loading from '~/components/Loading';
 import { useToast } from '~/context';
 
 function AddressPage() {
-    const [showModal, setShowModal] = useState(false);
     const [listAddress, setListAddress] = useState([]);
     const [userId, setUserId] = useState('');
     const [titleModal, setTitleModal] = useState('');
     const [dataUpdateAddress, setDataUpdateAddress] = useState({});
     const [isCreateAddressModal, setIsCreateAddressModal] = useState(false);
+
+    // handle show or hidden modalAddress
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [openModal, setOpenModal] = useState(false);
+
+    const popupName = searchParams.get('popup');
+
+    useEffect(() => {
+        if (popupName === 'modal-address') {
+            setOpenModal(true);
+            return;
+        }
+
+        setOpenModal(false);
+    }, [popupName]);
+    //End handle show or hidden modalAddress
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +42,7 @@ function AddressPage() {
         setUserId(userInfo?.id);
     }, [userInfo.id]);
 
-    //Sự dụng để khi component HandleModalAddress thực hiện hành vi tạo hoặc cập nhật thì listAddress sẽ được render lại
+    //Sự dụng để khi component ModalAddress thực hiện hành vi tạo hoặc cập nhật thì listAddress sẽ được render lại
     const [loadAddress, setLoadAddress] = useState(false);
 
     const fetchDataAddress = useCallback(async () => {
@@ -48,17 +64,17 @@ function AddressPage() {
     }, [fetchDataAddress, loadAddress]);
 
     const handleModalCreateAddress = () => {
-        setShowModal(true);
         setTitleModal('Thêm địa chỉ');
         setIsCreateAddressModal(true);
         setDataUpdateAddress({});
+        setSearchParams({ popup: 'modal-address' });
     };
 
     const handleModalUpdateAddress = (data) => {
-        setShowModal(true);
         setTitleModal('Cập nhật địa chỉ');
-        setDataUpdateAddress(data);
+        setDataUpdateAddress(data); //Thêm thông tin địa chỉ hiện tại cho modal
         setIsCreateAddressModal(false);
+        setSearchParams({ popup: 'modal-address' });
     };
 
     const setDefaultAddress = async (data) => {
@@ -80,10 +96,9 @@ function AddressPage() {
 
     return (
         <Loading isLoading={isLoading}>
-            {showModal && (
-                <HandleModalAddress
-                    showModal={showModal}
-                    setShowModal={setShowModal}
+            {openModal && (
+                <ModalAddress
+                    setOpenModal={setOpenModal}
                     title={titleModal}
                     data={dataUpdateAddress}
                     isCreateAddress={isCreateAddressModal}

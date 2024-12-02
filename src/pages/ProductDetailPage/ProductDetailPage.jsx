@@ -160,6 +160,7 @@ function ProductDetailPage() {
                                 </span>
                             </div>
                         </div>
+
                         <ul>
                             <li className="flex items-center mt-10">
                                 <div className="text-zinc-400">Mã giảm giá</div>
