@@ -1,27 +1,47 @@
+//Ảnh lưu trữ tại cloudinary
+
 const images = {
-    logo: require('~/assets/images/logo.png'),
-    qrcode: require('~/assets/images/qrcode.png'),
-    appgallery: require('~/assets/images/appgallery.png'),
-    appstore: require('~/assets/images/appstore.png'),
-    googleplay: require('~/assets/images/googleplay.png'),
-    notNotify: require('~/assets/images/notNotify.png'),
-    notProduct: require('~/assets/images/notProduct.png'),
-    slider1: require('~/assets/images/slider1.jpg'),
-    slider2: require('~/assets/images/slider2.jpg'),
-    slider3: require('~/assets/images/slider3.jpg'),
-    slider4: require('~/assets/images/slider4.jpg'),
-    slider5: require('~/assets/images/slider5.jpg'),
-    banner1: require('~/assets/images/banner1.jpg'),
-    banner2: require('~/assets/images/banner2.jpg'),
-    currentEvent: require('~/assets/images/currentEvent.png'),
-    product: require('~/assets/images/product.webp'),
-    delivery: require('~/assets/images/delivery.png'),
-    logoColor: require('~/assets/images/logoColor.png'),
-    bgAccesLayout: require('~/assets/images/bgAccesLayout.png'),
-    freeShip: require('~/assets/images/freeShip.png'),
-    noAvatar: require('~/assets/images/noAvatar.png'),
-    laterMoney: require('~/assets/images/laterMoney.png'),
-    paypal: require('~/assets/images/paypal.png'),
+    logo: 'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236946/logo_a1hsfa.png',
+    qrcode: 'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237213/qrcode_onyf4k.png',
+    appgallery:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236678/appgallery_rm9an7.png',
+    appstore:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236720/appstore_dzlrfz.png',
+    googleplay:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236445/googleplay_gb4ani.png',
+    notNotify:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237069/notNotify_evsjgf.png',
+    notProduct:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237106/notProduct_aql0st.png',
+    slider1:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237243/slider1_wv4cje.jpg',
+    slider2:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237274/slider2_yctecv.jpg',
+    slider3:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237299/slider3_tg3env.jpg',
+    slider4:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237329/slider4_wrb27d.jpg',
+    slider5:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237360/slider5_vf4ce3.jpg',
+    banner1:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236753/banner1_mhtwhu.jpg',
+    banner2:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236785/banner2_olzbi5.jpg',
+    currentEvent:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236840/currentEvent_mtipy6.png',
+    delivery:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236864/delivery_ycoyb3.png',
+    logoColor:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236973/logoColor_flx5da.png',
+    bgAccesLayout:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236815/bgAccesLayout_scpmk8.png',
+    freeShip:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236888/freeShip_mbgquv.png',
+    noAvatar:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237034/noAvatar_qmysbd.png',
+    laterMoney:
+        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236921/laterMoney_q50zna.png',
+    paypal: 'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237150/paypal_g13omi.png',
 };
 
 export default images;

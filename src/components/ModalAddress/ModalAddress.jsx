@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Modal from '~/components/Modal';
 
@@ -8,11 +7,12 @@ import * as AddressService from '~/services/AddressService';
 import Loading from '~/components/Loading';
 import PropTypes from 'prop-types';
 import AddressList from './AddressList';
+import { useSelector } from 'react-redux';
 
 function ModalAddress({
     setOpenModal,
     title,
-    data,
+    data = {},
     isCreateAddress,
     setReRenderAddress,
     width,
@@ -38,11 +38,19 @@ function ModalAddress({
     }, [popupName]);
 
     const handleCloseModal = () => {
-        setOpenModal(false);
         resetDataModalAddress();
+        setOpenModal(false);
         navigate(-1);
     };
     //End hendle show and hidden modal
+
+    const [userId, setUserId] = useState('');
+
+    const userInfo = useSelector((state) => state.user.id);
+
+    useEffect(() => {
+        setUserId(userInfo);
+    }, [userInfo]);
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -64,8 +72,6 @@ function ModalAddress({
 
     const [valueInputAddress, setValueInputAddress] = useState('');
 
-    const userInfo = useSelector((state) => state.user);
-
     useEffect(() => {
         if (commune) setIsShowListAddress(false);
     }, [commune]);
@@ -73,12 +79,12 @@ function ModalAddress({
     //Trường hợp khi là updateModal
     useEffect(() => {
         if (data) {
-            setName(data.name);
-            setCity(data.city);
-            setCommune(data.commune);
-            setPhone(data.phone);
-            setAddressDetails(data.address);
-            setIdAddress(data._id);
+            setName(data?.name);
+            setCity(data?.city);
+            setCommune(data?.commune);
+            setPhone(data?.phone);
+            setAddressDetails(data?.address);
+            setIdAddress(data?._id);
         }
     }, [data]);
 
@@ -105,10 +111,11 @@ function ModalAddress({
     };
 
     const handleAddAdress = async () => {
-        if (name && phone && valueInputAddress && addressDetails) {
+        console.log(name, phone, valueInputAddress, addressDetails, userId);
+        if (name && phone && valueInputAddress && addressDetails && userId) {
             try {
                 setIsLoadingCreateAddress(true);
-                await AddressService.createAddress(userInfo?.id, {
+                await AddressService.createAddress(userId, {
                     name,
                     phone,
                     city,
@@ -129,10 +136,11 @@ function ModalAddress({
     };
 
     const handleUpdateAddress = async () => {
-        if (name && phone && valueInputAddress && addressDetails) {
+        if (name && phone && valueInputAddress && addressDetails && userId) {
+            console.log(name, phone, valueInputAddress, addressDetails);
             try {
                 setIsLoadingCreateAddress(true);
-                await AddressService.updateAddress(idAddress, {
+                await AddressService.updateAddress(userId, idAddress, {
                     name,
                     phone,
                     city,

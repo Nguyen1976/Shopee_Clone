@@ -52,3 +52,10 @@ export const getAddressDefault = async (userId) => {
     const res = await axiosJWT.get(`/address/get-address-default/${userId}`);
     return res.data;
 };
+
+export const deleteAddress = async (userId, addressId) => {
+    const res = await axiosJWT.delete(
+        `/address/delete-address/${addressId}/${userId}`
+    );
+    return res.data;
+};

@@ -61,7 +61,7 @@ function Footer() {
                 <div>
                     <div className="font-bold text-sm">Đơn vị vận chuyển</div>
                     <div className="mt-5">
-                        <img src={images.delivery} alt="" />
+                        <img loading="lazy" src={images.delivery} alt="" />
                     </div>
                 </div>
                 <div>
@@ -102,7 +102,12 @@ function Footer() {
                     <div className="font-bold text-sm">
                         TẢI ỨNG DỤNG SHOPEE NGAY THÔI
                     </div>
-                    <img className="mt-2" src={images.qrcode} alt="qrcode" />
+                    <img
+                        loading="lazy"
+                        className="mt-2"
+                        src={images.qrcode}
+                        alt="qrcode"
+                    />
                 </div>
             </div>
         </footer>

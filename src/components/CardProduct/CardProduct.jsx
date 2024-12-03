@@ -15,13 +15,14 @@ function CardProduct({ countInStock = 0, price, image, name, discount }) {
             )}
             <div className="h-48">
                 <img
+                    loading="lazy"
                     className="object-cover h-full"
                     src={image}
                     alt="product"
                 />
             </div>
             <div className="absolute top-0">
-                <img src={images.currentEvent} alt="event" />
+                <img loading="lazy" src={images.currentEvent} alt="event" />
             </div>
             <div className="p-2 flex flex-col">
                 <h4 className="leading-none line-clamp-2 min-h-8 overflow-hidden">
