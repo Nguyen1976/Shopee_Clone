@@ -16,6 +16,8 @@ function AddressPage() {
     const [dataUpdateAddress, setDataUpdateAddress] = useState({});
     const [isCreateAddressModal, setIsCreateAddressModal] = useState(false);
 
+    const [reRenderAddress, setReRenderAddress] = useState(false);
+
     // handle show or hidden modalAddress
     const [searchParams, setSearchParams] = useSearchParams();
     const [openModal, setOpenModal] = useState(false);
@@ -42,14 +44,12 @@ function AddressPage() {
         setUserId(userInfo?.id);
     }, [userInfo.id]);
 
-    //Sự dụng để khi component ModalAddress thực hiện hành vi tạo hoặc cập nhật thì listAddress sẽ được render lại
-    const [loadAddress, setLoadAddress] = useState(false);
-
     const fetchDataAddress = useCallback(async () => {
         try {
             setIsLoading(true);
             if (userId) {
                 const res = await AddressService.getAddress(userId);
+                console.log(res);
                 setListAddress(res || []); // Đảm bảo là mảng nếu không có dữ liệu
             }
         } catch (err) {
@@ -61,7 +61,7 @@ function AddressPage() {
 
     useEffect(() => {
         fetchDataAddress();
-    }, [fetchDataAddress, loadAddress]);
+    }, [fetchDataAddress, reRenderAddress]);
 
     const handleModalCreateAddress = () => {
         setTitleModal('Thêm địa chỉ');
@@ -84,7 +84,7 @@ function AddressPage() {
             await AddressService.updateAddress(userId, data._id, {
                 ...data,
             });
-            fetchDataAddress();
+            await fetchDataAddress();
         } catch (err) {
             console.error(err);
             addToast('Cập nhật địa chỉ không thành công', 'error');
@@ -102,7 +102,7 @@ function AddressPage() {
                     title={titleModal}
                     data={dataUpdateAddress}
                     isCreateAddress={isCreateAddressModal}
-                    setLoadAddress={setLoadAddress}
+                    setReRenderAddress={setReRenderAddress}
                 />
             )}
             <div className="flex justify-between items-center text-lg border-b border-b-zinc-300 pb-6">

@@ -23,10 +23,6 @@ function AddressList({
 
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        console.log(cityCode, districtCode, communeCode);
-    }, [cityCode, districtCode, communeCode]);
-
     const fetchAddress = useCallback(async () => {
         let res;
         const fetcher = {

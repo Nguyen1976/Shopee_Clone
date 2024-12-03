@@ -14,7 +14,9 @@ function ModalAddress({
     title,
     data,
     isCreateAddress,
-    setLoadAddress,
+    setReRenderAddress,
+    width,
+    height,
 }) {
     //isCreateAddress để xác định modal đang có chức năng create hay update
 
@@ -26,17 +28,18 @@ function ModalAddress({
     const popupName = searchParams.get('popup');
 
     useEffect(() => {
-        console.log(popupName);
         if (popupName === 'modal-address') {
             setOpenModal(true);
             return;
         }
 
         setOpenModal(false);
-    }, [popupName, setOpenModal]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [popupName]);
 
     const handleCloseModal = () => {
         setOpenModal(false);
+        resetDataModalAddress();
         navigate(-1);
     };
     //End hendle show and hidden modal
@@ -92,14 +95,13 @@ function ModalAddress({
         updateInputAddress();
     }, [updateInputAddress]);
 
-    const resetModalAddress = () => {
+    const resetDataModalAddress = () => {
         setIsErrorInput(false);
         setPhone('');
         setName('');
         setAddressDetails('');
         setValueInputAddress('');
         setIsLoadingCreateAddress(false);
-        setLoadAddress((prev) => !prev);
     };
 
     const handleAddAdress = async () => {
@@ -118,7 +120,8 @@ function ModalAddress({
                 console.log(error);
                 setIsErrorInput(true);
             } finally {
-                resetModalAddress();
+                setReRenderAddress((prev) => !prev);
+                handleCloseModal();
             }
         } else {
             setIsErrorInput(true);
@@ -141,7 +144,8 @@ function ModalAddress({
                 console.log(error);
                 setIsErrorInput(true);
             } finally {
-                resetModalAddress();
+                setReRenderAddress((prev) => !prev);
+                handleCloseModal();
             }
         } else {
             setIsErrorInput(true);
@@ -171,7 +175,10 @@ function ModalAddress({
 
     return (
         <Modal showModal={true}>
-            <div className="p-4 h-[500px]">
+            <div
+                className="p-4"
+                style={{ width: `${width}px`, height: `${height}px` }}
+            >
                 <div className="text-lg">{title}</div>
                 <div className="flex justify-between gap-3 items-center mt-5">
                     <InputForm
@@ -249,11 +256,13 @@ function ModalAddress({
 }
 
 ModalAddress.propTypes = {
-    setOpenModal: PropTypes.func.isRequired,
+    setOpenModal: PropTypes.func,
     title: PropTypes.string.isRequired,
     data: PropTypes.object,
-    isCreateAddress: PropTypes.bool.isRequired,
-    setLoadAddress: PropTypes.func.isRequired,
+    isCreateAddress: PropTypes.bool,
+    setReRenderAddress: PropTypes.func,
+    width: PropTypes.number,
+    height: PropTypes.number,
 };
 
 export default React.memo(ModalAddress);

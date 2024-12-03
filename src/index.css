@@ -666,6 +666,10 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -780,6 +784,10 @@ video {
 
 .mt-\[9px\] {
   margin-top: 9px;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .line-clamp-1 {
@@ -908,6 +916,18 @@ video {
   height: 100%;
 }
 
+.h-\[\] {
+  height: ;
+}
+
+.h-\[900px\] {
+  height: 900px;
+}
+
+.h-\[800px\] {
+  height: 800px;
+}
+
 .min-h-7 {
   min-height: 1.75rem;
 }
@@ -968,6 +988,10 @@ video {
   width: 8rem;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -1006,38 +1030,6 @@ video {
 
 .w-max {
   width: max-content;
-}
-
-.w-\[100px\] {
-  width: 100px;
-}
-
-.w-\[110px\] {
-  width: 110px;
-}
-
-.w-28 {
-  width: 7rem;
-}
-
-.w-36 {
-  width: 9rem;
-}
-
-.w-2 {
-  width: 0.5rem;
-}
-
-.w-20 {
-  width: 5rem;
-}
-
-.w-\[90pxp\] {
-  width: 90pxp;
-}
-
-.w-\[90px\] {
-  width: 90px;
 }
 
 .max-w-72 {
@@ -1083,13 +1075,13 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.translate-x-40 {
-  --tw-translate-x: 10rem;
+.translate-x-\[109\%\] {
+  --tw-translate-x: 109%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.translate-x-\[109\%\] {
-  --tw-translate-x: 109%;
+.translate-x-\[150px\] {
+  --tw-translate-x: 150px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1110,11 +1102,6 @@ video {
 
 .translate-x-\[490\%\] {
   --tw-translate-x: 490%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-\[150px\] {
-  --tw-translate-x: 150px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
