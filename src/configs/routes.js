@@ -8,6 +8,7 @@ const routes = {
     productDetail: '/product-detail/:id',
     order: '/order',
     payment: '/payment',
+    productAdmin: '/admin/product-admin',
 };
 
 export default routes;

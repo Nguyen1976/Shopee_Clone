@@ -13,13 +13,13 @@ function ListAddress({ reRenderAddress, handleModalUpdateAddress }) {
     const userInfo = useSelector((state) => state.user);
 
     const fetchDataAddress = useCallback(async () => {
-        if (!userInfo.id || isLoading) return; // Chặn nếu đang tải hoặc không có user
-
         setIsLoading(true);
         try {
-            const res = await AddressService.getAddress(userInfo.id);
+            if (userInfo?.id) {
+                const res = await AddressService.getAddress(userInfo.id);
 
-            setListAddress(res.addresses);
+                setListAddress(res.addresses);
+            }
         } catch (err) {
             console.error(err);
         } finally {

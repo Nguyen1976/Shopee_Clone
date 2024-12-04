@@ -14,6 +14,8 @@ import PaymentPage from '~/pages/PaymentPage';
 import FooterLayout from '~/layouts/FooterLayout';
 import AddressPage from '~/pages/AddressPage';
 import PurchasePage from '~/pages/PurchasePage';
+import productAdminPage from '~/pages/productAdminPage';
+import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
@@ -36,6 +38,11 @@ export const routes = [
         path: config.routes.payment,
         component: PaymentPage,
         layout: FooterLayout,
+    },
+    {
+        path: config.routes.productAdmin,
+        component: productAdminPage,
+        layout: AdminLayout,
     },
     { path: '*', component: NotFoundPage },
 ];

@@ -1,6 +1,24 @@
-import { createContext } from 'react';
+import PropTypes from 'prop-types';
+import { createContext, useContext, useState } from 'react';
 
-// Tạo Context
 export const OrderContext = createContext();
 
-//Context tại ra để bắt buộc phải đi qua order sản phẩm khi muốn vào trang payment
+export const OrderProvider = ({ children }) => {
+    const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
+
+    return (
+        <OrderContext.Provider
+            value={{ isOrderConfirmed, setIsOrderConfirmed }}
+        >
+            {children}
+        </OrderContext.Provider>
+    );
+};
+
+OrderProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+export const useOrder = () => {
+    return useContext(OrderContext);
+};

@@ -39,7 +39,8 @@ function AddressPayment({ userId, shippingAddress, setShippingAddress }) {
         try {
             if (userId) {
                 const res = await AddressService.getAddress(userId);
-                setListAddress(res || []); // Đảm bảo là mảng nếu không có dữ liệu
+                console.log(res);
+                setListAddress(res.addresses || []); // Đảm bảo là mảng nếu không có dữ liệu
             }
         } catch (err) {
             console.error(err);
@@ -89,50 +90,48 @@ function AddressPayment({ userId, shippingAddress, setShippingAddress }) {
                         Địa Chỉ Của Tôi
                     </h3>
                     <ul className="mt-2 overflow-y-scroll no-scrollbar h-4/5">
-                        {listAddress
-                            .sort((a, b) => b.default - a.default)
-                            .map((item, index) => (
-                                <li
-                                    className="border-b pb-5 mb-5 flex gap-3"
-                                    key={index}
-                                >
-                                    <input
-                                        className="custom-outline mt-2"
-                                        type="radio"
-                                        checked={
-                                            selectAddress === `option-${index}`
-                                        }
-                                        value={`option-${index}`}
-                                        onChange={handleSelectAddress}
-                                        onClick={() =>
-                                            setShippingAddressSelectedTemp(item)
-                                        }
-                                    />
-                                    <div className="">
-                                        <div>
-                                            {item.name} |{' '}
-                                            <span className="text-zinc-500 text-sm">
-                                                {item.phone}
-                                            </span>
-                                        </div>
-                                        <div className="text-zinc-500 text-sm mt-1">
-                                            {item.address}
-                                        </div>
-                                        <div className="text-zinc-500 text-sm mt-1">
-                                            {item.commune +
-                                                ', ' +
-                                                item.district +
-                                                ', ' +
-                                                item.city}
-                                        </div>
-                                        {item.default && (
-                                            <button className="bg-transparent border-primary border-1 text-primary text-sm px-1 mt-1">
-                                                Mặc định
-                                            </button>
-                                        )}
+                        {listAddress.map((item, index) => (
+                            <li
+                                className="border-b pb-5 mb-5 flex gap-3"
+                                key={index}
+                            >
+                                <input
+                                    className="custom-outline mt-2"
+                                    type="radio"
+                                    checked={
+                                        selectAddress === `option-${index}`
+                                    }
+                                    value={`option-${index}`}
+                                    onChange={handleSelectAddress}
+                                    onClick={() =>
+                                        setShippingAddressSelectedTemp(item)
+                                    }
+                                />
+                                <div className="">
+                                    <div>
+                                        {item.name} |{' '}
+                                        <span className="text-zinc-500 text-sm">
+                                            {item.phone}
+                                        </span>
                                     </div>
-                                </li>
-                            ))}
+                                    <div className="text-zinc-500 text-sm mt-1">
+                                        {item.address}
+                                    </div>
+                                    <div className="text-zinc-500 text-sm mt-1">
+                                        {item.commune +
+                                            ', ' +
+                                            item.district +
+                                            ', ' +
+                                            item.city}
+                                    </div>
+                                    {item.default && (
+                                        <button className="bg-transparent border-primary border-1 text-primary text-sm px-1 mt-1">
+                                            Mặc định
+                                        </button>
+                                    )}
+                                </div>
+                            </li>
+                        ))}
                         <button
                             className="py-2 px-12 mb-2 border-zinc-300 border-1"
                             onClick={openModalAddAddress}
