@@ -1,77 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-import images from '~/assets/images';
+import HeaderAdmin from './components/HeaderAdmin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDropbox } from '@fortawesome/free-brands-svg-icons';
-import Tooltip from '~/components/Tooltip';
-import Image from '~/components/Image';
-import { useSelector } from 'react-redux';
+import {
+    faBell,
+    faChevronDown,
+    faComments,
+    faHeadset,
+} from '@fortawesome/free-solid-svg-icons';
 
 function AdminLayout({ children }) {
-    const [name, setName] = useState('');
-    const [avatar, setAvatar] = useState('');
-
-    const userInfo = useSelector((state) => state.user);
-
-    useEffect(() => {
-        setName(userInfo?.name);
-        setAvatar(userInfo?.avatar);
-        console.log(userInfo);
-    }, [userInfo]);
-
     return (
         <div>
-            <header className="flex items-center justify-between p-5">
-                <div className="flex items-center gap-3">
-                    <img className="w-24" src={images.logoColor} alt="Logo" />
-                    <span className="text-lg mt-1">Kênh Người Bán</span>
-                </div>
-                <div className="flex gap-3 items-center">
-                    <Tooltip
-                        funcRender={() => (
-                            <div className="w-full">
-                                <div className="flex justify-center">
-                                    <img src={images.qrcode} alt="qr code" />
-                                </div>
-                                <div className="flex flex-wrap px-3 gap-4">
-                                    <img
-                                        className="w-2/5"
-                                        src={images.appstore}
-                                        alt="app store"
-                                    />
-                                    <img
-                                        className="w-2/5"
-                                        src={images.googleplay}
-                                        alt="google play"
-                                    />
-                                    <img
-                                        className="w-2/5"
-                                        src={images.appgallery}
-                                        alt="app gallery"
-                                    />
-                                </div>
-                            </div>
-                        )}
-                        top={20}
-                        left={0}
-                        width={208}
-                        afterArrow={false}
-                        scaleTop={true}
-                    >
-                        <FontAwesomeIcon
-                            className="text-2xl"
-                            icon={faDropbox}
-                        />
-                    </Tooltip>
-                    <div>|</div>
-                    <div className="flex items-center">
-                        <Image className="h-5" src={avatar} alt="avatar" />
-                        <span>{name}</span>
+            <div className="fixed top-0 right-0 left-0 z-50 bg-white">
+                <HeaderAdmin />
+            </div>
+            <div className="mt-16">
+                <aside className="bg-white w-[177px] fixed top-16 left-0 z-10 overflow-y-scroll h-screen scrollbar">
+                    <ul className="mt-5 text-zinc-400 font-bold px-2">
+                        <li className="flex gap-1 items-center mt-5">
+                            <span className="max-w-1">Quản Lý Người Dùng</span>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </li>
+                        <li className="flex gap-1 items-center mt-5">
+                            <span className="max-w-1">Quản Lý Sản phẩm</span>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </li>
+                        <li className="flex gap-1 items-center mt-5">
+                            <span className="max-w-1">Quản Lý Đơn Hàng</span>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </li>
+                    </ul>
+                </aside>
+                <div className="w-full h-[2000px] bg-[#f6f6f6]">
+                    <div className="pl-56 pr-28">
+                        <div>{children}</div>
                     </div>
                 </div>
-            </header>
-            {children}
+                <aside className="w-[50px] fixed top-16 right-0 z-10 h-screen bg-white">
+                    <ul className="text-center mt-5">
+                        <li className="hover:bg-zinc-200 py-3">
+                            <FontAwesomeIcon
+                                className="text-primary text-2xl"
+                                icon={faBell}
+                            />
+                        </li>
+                        <li className="hover:bg-zinc-200 py-3">
+                            <FontAwesomeIcon
+                                className="text-primary text-2xl"
+                                icon={faHeadset}
+                            />
+                        </li>
+                        <li className="hover:bg-zinc-200 py-3">
+                            <FontAwesomeIcon
+                                className="text-primary text-2xl"
+                                icon={faComments}
+                            />
+                        </li>
+                    </ul>
+                </aside>
+            </div>
         </div>
     );
 }

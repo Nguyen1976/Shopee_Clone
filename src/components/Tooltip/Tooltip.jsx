@@ -39,6 +39,7 @@ function Tooltip({
                             z-40
                             absolute 
                             ${afterArrow ? 'after-arrow' : ''} 
+                            after-bridge
                             bg-white 
                             shadow-lg
                             opacity-0
