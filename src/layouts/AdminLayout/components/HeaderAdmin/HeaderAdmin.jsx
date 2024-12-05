@@ -22,7 +22,7 @@ function HeaderAdmin() {
     }, [userInfo]);
 
     return (
-        <header className="flex items-center justify-between px-5 py-2 shadow-md">
+        <header className="flex items-center justify-between px-5 shadow-md">
             <div className="flex items-center gap-3">
                 <img className="w-24" src={images.logoColor} alt="Logo" />
                 <span className="text-lg mt-1">Kênh Người Bán</span>

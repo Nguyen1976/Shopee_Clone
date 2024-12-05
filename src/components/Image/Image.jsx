@@ -15,7 +15,7 @@ function Image({
     };
     return (
         <img
-            className={`rounded-full overflow-hidden ${className}`}
+            className={`h-full w-full object-cover overflow-hidden ${className}`}
             src={fallback || src}
             alt={alt}
             onError={handleError}

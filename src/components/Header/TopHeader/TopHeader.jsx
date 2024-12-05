@@ -43,7 +43,7 @@ function TopHeader() {
     };
 
     return (
-        <div className="flex justify-between text-sm text-white">
+        <div className="flex justify-between text-sm text-white items-center">
             <div className="flex gap-2 items-center">
                 <div className="hover:opacity-50">
                     <a href="/">Kênh người bán</a>
@@ -78,7 +78,7 @@ function TopHeader() {
                             </div>
                         </div>
                     )}
-                    top={20}
+                    top={35}
                     left={0}
                     width={208}
                     afterArrow={false}
@@ -136,7 +136,7 @@ function TopHeader() {
                                 </div>
                             </div>
                         )}
-                        top={20}
+                        top={35}
                         right={0}
                         width={320}
                         afterArrow={true}
@@ -166,7 +166,7 @@ function TopHeader() {
                                 </div>
                             </div>
                         )}
-                        top={20}
+                        top={35}
                         right={0}
                         width={150}
                         afterArrow={true}
@@ -204,14 +204,14 @@ function TopHeader() {
                                 </div>
                             </div>
                         )}
-                        top={20}
+                        top={35}
                         right={0}
                         width={150}
                         afterArrow={true}
                         scaleTop={true}
                     >
-                        <div className="flex">
-                            <div className="h-5 w-5 flex-shrink-0 ">
+                        <div className="flex items-center">
+                            <div className="h-5 w-5 rounded-full overflow-hidden">
                                 <Image src={avatar} alt={`avartar`} />
                             </div>
                             <div className="ml-1 text-md">{name}</div>

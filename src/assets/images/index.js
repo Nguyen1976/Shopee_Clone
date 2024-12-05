@@ -38,7 +38,7 @@ const images = {
     freeShip:
         'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236888/freeShip_mbgquv.png',
     noAvatar:
-        'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237034/noAvatar_qmysbd.png',
+        'https://img.icons8.com/?size=100&id=114064&format=png&color=000000',
     laterMoney:
         'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733236921/laterMoney_q50zna.png',
     paypal: 'https://res.cloudinary.com/dcnfkcsln/image/upload/v1733237150/paypal_g13omi.png',

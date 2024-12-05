@@ -6,15 +6,17 @@ import * as UserService from '~/services/UserService';
 import { updateUser } from '~/redux/slices/UserSlice';
 import Loading from '~/components/Loading';
 import InputForm from '~/components/InputForm';
-import { imageToBase64 } from '~/utils/imageToBase64';
 import { useToast } from '~/context';
+import { uploadImageCloudinary } from '~/utils/uploadImageCloudinary';
+import { imageToBase64 } from '~/utils/imageToBase64';
 
 function ProfilePage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
-    const [base64Image, setBase64Image] = useState('');
+    const [avatar, setAvatar] = useState('');
+    const [avatarFile, setAvatarFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isErrorToast, setIsErrorToast] = useState(false);
 
@@ -31,7 +33,7 @@ function ProfilePage() {
         setEmail(userInfo.email);
         setPhone(userInfo.phone);
         setAddress(userInfo?.address);
-        setBase64Image(userInfo?.avatar);
+        setAvatar(userInfo?.avatar);
     }, [userInfo]);
 
     const validation = () => {
@@ -41,13 +43,15 @@ function ProfilePage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const urlAvatar = await uploadImageCloudinary(avatarFile);
+
             if (validation()) {
                 setIsLoading(true);
                 const res = await UserService.updateUser(userInfo.id, {
                     email,
                     phone,
                     address,
-                    avatar: base64Image,
+                    avatar: urlAvatar,
                 });
                 dispatch(updateUser({ ...res.data }));
             }
@@ -70,8 +74,9 @@ function ProfilePage() {
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
+        setAvatarFile(file);
         const base64 = await imageToBase64(file).then((res) => res);
-        setBase64Image(base64);
+        setAvatar(base64);
     };
 
     const handleButtonClick = () => {
@@ -132,10 +137,10 @@ function ProfilePage() {
                 <div className="w-1 h-60 bg-transparent border-r-2 pl-14"></div>
                 <div className="flex-1 text-center ml-16">
                     <div className="h-24 w-24 bg-[#efefef] rounded-full flex items-center justify-center ml-6 overflow-hidden">
-                        {base64Image ? (
+                        {avatar ? (
                             <img
                                 className="h-full w-full object-cover"
-                                src={base64Image}
+                                src={avatar}
                                 alt="avatar"
                             />
                         ) : (

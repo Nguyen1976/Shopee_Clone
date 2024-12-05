@@ -3,6 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@cloudinary/react": "^1.13.1",
+        "@cloudinary/url-gen": "^1.21.0",
         "@emotion/react": "^11.13.3",
         "@emotion/styled": "^11.13.0",
         "@fortawesome/free-brands-svg-icons": "^6.6.0",

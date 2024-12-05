@@ -25,7 +25,7 @@ function ListAddress({ reRenderAddress, handleModalUpdateAddress }) {
         } finally {
             setIsLoading(false);
         }
-    }, [userInfo.id, isLoading]);
+    }, [userInfo.id]);
 
     // Theo dõi sự thay đổi của page và tải dữ liệu
     useEffect(() => {
@@ -67,6 +67,7 @@ function ListAddress({ reRenderAddress, handleModalUpdateAddress }) {
 
     return (
         <>
+            {isLoading && <div>Đang load...</div>}
             <ul className="mt-5">
                 {listAddress.map((item, index) => (
                     <li className="border-b pb-5 mb-5" key={item._id || index}>

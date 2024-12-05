@@ -11,7 +11,7 @@
     .after-bridge::before {
         content: '';
         position: absolute;
-        top: -17px;
+        top: -43px;
         right: 0px;
         width: 100%;
         height: 50px;
