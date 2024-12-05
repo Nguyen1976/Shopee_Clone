@@ -147,7 +147,7 @@ function SignInPage() {
                     <button className="w-1/2 border-2 p-2">Facebook</button>
                     <GoogleLogin
                         onSuccess={handleGoogleLogin}
-                        onError={() => console.log('Login Failed')}
+                        onError={() => console.error('Login Failed')}
                     />
                 </div>
                 <div className="text-center text-sm mt-5 text-[#8b8b8b]">

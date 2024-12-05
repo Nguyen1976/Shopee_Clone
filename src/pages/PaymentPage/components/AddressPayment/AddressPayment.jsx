@@ -39,7 +39,6 @@ function AddressPayment({ userId, shippingAddress, setShippingAddress }) {
         try {
             if (userId) {
                 const res = await AddressService.getAddress(userId);
-                console.log(res);
                 setListAddress(res.addresses || []); // Đảm bảo là mảng nếu không có dữ liệu
             }
         } catch (err) {

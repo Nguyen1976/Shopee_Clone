@@ -111,7 +111,6 @@ function ModalAddress({
     };
 
     const handleAddAdress = async () => {
-        console.log(name, phone, valueInputAddress, addressDetails, userId);
         if (name && phone && valueInputAddress && addressDetails && userId) {
             try {
                 setIsLoadingCreateAddress(true);
@@ -124,7 +123,7 @@ function ModalAddress({
                     address: addressDetails,
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 setIsErrorInput(true);
             } finally {
                 setReRenderAddress((prev) => !prev);
@@ -137,7 +136,6 @@ function ModalAddress({
 
     const handleUpdateAddress = async () => {
         if (name && phone && valueInputAddress && addressDetails && userId) {
-            console.log(name, phone, valueInputAddress, addressDetails);
             try {
                 setIsLoadingCreateAddress(true);
                 await AddressService.updateAddress(userId, idAddress, {
@@ -149,7 +147,7 @@ function ModalAddress({
                     address: addressDetails,
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 setIsErrorInput(true);
             } finally {
                 setReRenderAddress((prev) => !prev);

@@ -7,12 +7,11 @@ import * as OrderService from '~/services/OrderService';
 function PurchaseItem({ item }) {
     const handleCancelOrder = async () => {
         try {
-            const res = await OrderService.cancelOrder(
+            await OrderService.cancelOrder(
                 item.user,
                 item.orderItems,
                 item._id
             );
-            console.log(res);
         } catch (err) {
             console.error('Failed to cancel order:', err);
         }

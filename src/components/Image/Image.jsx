@@ -1,22 +1,17 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import images from '~/assets/images';
 
-function Image({
-    src,
-    alt,
-    fallback: customFallback = images.noAvatar,
-    className = '',
-}) {
-    const [fallback, setFallback] = useState('');
+function Image({ src, alt, className = '' }) {
+    const [image, setImage] = useState('');
 
     const handleError = () => {
-        setFallback(customFallback);
+        setImage(images.noAvatar);
     };
     return (
         <img
             className={`h-full w-full object-cover overflow-hidden ${className}`}
-            src={fallback || src}
+            src={src || image}
             alt={alt}
             onError={handleError}
         />
@@ -26,8 +21,7 @@ function Image({
 Image.propTypes = {
     src: PropTypes.string,
     alt: PropTypes.string,
-    fallback: PropTypes.string,
     className: PropTypes.string,
 };
 
-export default Image;
+export default React.memo(Image);

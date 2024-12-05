@@ -18,7 +18,6 @@ function HeaderAdmin() {
     useEffect(() => {
         setName(userInfo?.name);
         setAvatar(userInfo?.avatar);
-        console.log(userInfo);
     }, [userInfo]);
 
     return (
@@ -102,11 +101,9 @@ function HeaderAdmin() {
                     funcRender={() => (
                         <div className="w-full p-2">
                             <div className="flex flex-col items-center my-5">
-                                <Image
-                                    className="h-14"
-                                    src={avatar}
-                                    alt="avatar"
-                                />
+                                <div className="w-14 rounded-full overflow-hidden">
+                                    <Image src={avatar} alt="avatar-toolTip" />
+                                </div>
                                 <span>{name}</span>
                             </div>
                             <div className="w-full h-[1px] bg-zinc-100"></div>
@@ -138,7 +135,9 @@ function HeaderAdmin() {
                     scaleTop={true}
                 >
                     <div className="flex items-center gap-2 hover:bg-zinc-100 p-4">
-                        <Image className="h-5" src={avatar} alt="avatar" />
+                        <div className="h-10 w-10 rounded-full overflow-hidden">
+                            <Image src={avatar} alt="avatar" />
+                        </div>
                         <span>{name}</span>
                         <FontAwesomeIcon
                             className="text-sm"
