@@ -9,13 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faEarthAsia } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '~/components/Tooltip';
-import { jwtDecode } from 'jwt-decode';
 
 import { resetUser } from '~/redux/slices/UserSlice';
 import config from '~/configs';
 import images from '~/assets/images';
 import Image from '~/components/Image';
-import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import { useToast } from '~/context';
 
 function TopHeader() {
@@ -34,17 +32,6 @@ function TopHeader() {
         setName(userInfo.name);
         setAvatar(userInfo.avatar);
     }, [userInfo]);
-
-    useEffect(() => {
-        const accessToken = localStorage.getItem('access_token');
-
-        if (accessToken) {
-            const decoded = jwtDecode(accessToken);
-            if (decoded.id) {
-                loadUserIntoStore(dispatch, decoded.id, accessToken);
-            }
-        }
-    }, [dispatch]);
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');

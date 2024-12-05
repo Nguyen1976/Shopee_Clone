@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { GoogleLogin } from '@react-oauth/google';
 
 import { isValidEmail, isValidPassword } from '~/utils/validate';
 import * as UserService from '~/services/UserService';
-import loadUserIntoStore from '~/utils/loadUserIntoStore';
 import Loading from '~/components/Loading';
 import config from '~/configs';
 import InputForm from '~/components/InputForm';
 import { useToast } from '~/context';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '~/redux/slices/UserSlice';
 
 function SignInPage() {
     const [email, setEmail] = useState('');
@@ -41,7 +41,9 @@ function SignInPage() {
         if (refreshToken) {
             localStorage.setItem('refresh_token', refreshToken);
         }
-        await loadUserIntoStore(dispatch, data.id, accessToken);
+        if (data.user._id) {
+            dispatch(updateUser({ _id: data.user._id }));
+        }
         if (data.isAdmin) {
             navigate(config.routes.adminUser);
         } else {

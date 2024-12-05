@@ -16,6 +16,7 @@ import AddressPage from '~/pages/AddressPage';
 import PurchasePage from '~/pages/PurchasePage';
 import productAdminPage from '~/pages/productAdminPage';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
+import ProductAdminPage from '~/pages/productAdminPage/ProductAdminPage';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
@@ -43,6 +44,12 @@ export const routes = [
         path: config.routes.productAdmin,
         component: productAdminPage,
         layout: AdminLayout,
+    },
+    {
+        path: config.routes.productAdmin,
+        component: ProductAdminPage,
+        layout: AdminLayout,
+        isAdmin: true,
     },
     { path: '*', component: NotFoundPage },
 ];
