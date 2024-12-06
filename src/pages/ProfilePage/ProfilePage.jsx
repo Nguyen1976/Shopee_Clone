@@ -7,7 +7,10 @@ import { updateUser } from '~/redux/slices/UserSlice';
 import Loading from '~/components/Loading';
 import InputForm from '~/components/InputForm';
 import { useToast } from '~/context';
-import { uploadImageCloudinary } from '~/utils/uploadImageCloudinary';
+import {
+    deleteImageCloudinary,
+    uploadImageCloudinary,
+} from '~/utils/cloudinary';
 import { imageToBase64 } from '~/utils/imageToBase64';
 
 function ProfilePage() {
@@ -16,9 +19,9 @@ function ProfilePage() {
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [avatarBase64, setAvatarBase64] = useState('');
     const [avatarFile, setAvatarFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isErrorToast, setIsErrorToast] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -40,35 +43,66 @@ function ProfilePage() {
         return isValidPhoneNumber(phone) || isValidEmail(email);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleUploadImage = async () => {
         try {
             const urlAvatar = await uploadImageCloudinary(avatarFile);
+            return urlAvatar;
+        } catch (error) {
+            console.error(error);
+            addToast('Upload Avatar Failed', error);
+        }
+    };
+    const handleDeleteImage = async () => {
+        try {
+            const resDelete = await deleteImageCloudinary(avatar, 'users');
+            return resDelete;
+        } catch (error) {
+            console.error(error);
+            addToast('Delete Avatar Failed', error);
+        }
+    };
 
-            if (validation()) {
-                setIsLoading(true);
-                const res = await UserService.updateUser(userInfo.id, {
-                    email,
-                    phone,
-                    address,
-                    avatar: urlAvatar,
-                });
-                dispatch(updateUser({ ...res.data }));
+    const handleSubmit = async () => {
+        try {
+            setIsLoading(true);
+            const urlAvatar = await handleUploadImage();
+            let resDelete = true;
+            if (avatar) {
+                resDelete = await handleDeleteImage();
             }
-            setIsErrorToast(false);
-        } catch (err) {
-            console.error(err);
-            setIsErrorToast(true);
-        } finally {
-            setIsLoading(false);
-            if (isErrorToast) {
+            if (resDelete) {
+                if (validation()) {
+                    setIsLoading(true);
+                    const res = await UserService.updateUser(userInfo.id, {
+                        email,
+                        phone,
+                        address,
+                        avatar: urlAvatar,
+                    });
+                    dispatch(updateUser({ ...res.data }));
+                    addToast(
+                        'Cập nhật thông tin người dùng thành công',
+                        'success'
+                    );
+                } else {
+                    addToast(
+                        'Số điện thoại hoặc email không đúng định dạng',
+                        'warning'
+                    );
+                    return;
+                }
+            } else {
                 addToast(
                     'Cập nhật thông tin người dùng không thành công',
                     'error'
                 );
-            } else {
-                addToast('Cập nhật thông tin người dùng thành công', 'success');
+                return;
             }
+        } catch (err) {
+            console.error(err);
+            addToast('Cập nhật thông tin người dùng không thành công', 'error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -76,7 +110,7 @@ function ProfilePage() {
         const file = e.target.files[0];
         setAvatarFile(file);
         const base64 = await imageToBase64(file).then((res) => res);
-        setAvatar(base64);
+        setAvatarBase64(base64);
     };
 
     const handleButtonClick = () => {
@@ -137,10 +171,10 @@ function ProfilePage() {
                 <div className="w-1 h-60 bg-transparent border-r-2 pl-14"></div>
                 <div className="flex-1 text-center ml-16">
                     <div className="h-24 w-24 bg-[#efefef] rounded-full flex items-center justify-center ml-6 overflow-hidden">
-                        {avatar ? (
+                        {avatar || avatarBase64 ? (
                             <img
                                 className="h-full w-full object-cover"
-                                src={avatar}
+                                src={avatarBase64 || avatar}
                                 alt="avatar"
                             />
                         ) : (
