@@ -65,13 +65,13 @@ function ProfilePage() {
     const handleSubmit = async () => {
         try {
             setIsLoading(true);
-            const urlAvatar = await handleUploadImage();
-            let resDelete = true;
-            if (avatar) {
-                resDelete = await handleDeleteImage();
-            }
-            if (resDelete) {
-                if (validation()) {
+            if (validation()) {
+                const urlAvatar = await handleUploadImage();
+                let resDelete = true;
+                if (avatar) {
+                    resDelete = await handleDeleteImage();
+                }
+                if (resDelete) {
                     setIsLoading(true);
                     const res = await UserService.updateUser(userInfo.id, {
                         email,
@@ -86,15 +86,15 @@ function ProfilePage() {
                     );
                 } else {
                     addToast(
-                        'Số điện thoại hoặc email không đúng định dạng',
-                        'warning'
+                        'Cập nhật thông tin người dùng không thành công',
+                        'error'
                     );
                     return;
                 }
             } else {
                 addToast(
-                    'Cập nhật thông tin người dùng không thành công',
-                    'error'
+                    'Số điện thoại hoặc email không đúng định dạng',
+                    'warning'
                 );
                 return;
             }

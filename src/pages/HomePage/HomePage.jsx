@@ -82,9 +82,15 @@ function HomePage() {
 
     return (
         <>
-            <div className="container-custom mt-7 flex gap-1 pb-7">
+            <div
+                className="container-custom mt-7 flex gap-1 pb-7 bg-no-repeat bg-cover bg-center"
+                style={{
+                    backgroundImage:
+                        'url(https://down-vn.img.susercontent.com/file/vn-11134258-7ras8-m3ahvxp9g7vw92)',
+                }}
+            >
                 <div className="w-2/3">
-                    <Slider slidesPerView={1} loop={true}>
+                    <Slider slidesPerView={1} loop={false}>
                         {listSlide.map((item, index) => (
                             <SwiperSlide key={`key-slider-${index}`}>
                                 <img src={item.image} alt={`Image-${index}`} />

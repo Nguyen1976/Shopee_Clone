@@ -133,7 +133,7 @@ function AddressList({
                 ></div>
             </div>
             <Loading isLoading={isLoading}>
-                <ul className="h-72 w-full overflow-y-scroll scrollbar">
+                <ul className="h-72 w-full overflow-y-scroll scrollbar scrollbar-y">
                     {listAddress.map((item, index) => (
                         <li
                             key={index}

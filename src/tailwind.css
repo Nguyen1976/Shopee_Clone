@@ -62,8 +62,11 @@
         scrollbar-color: #4b5563 #e5e7eb; /* thumb color, track color */
     }
 
-    .scrollbar::-webkit-scrollbar {
+    .scrollbar-y::-webkit-scrollbar {
         width: 3px; /* Width of the scrollbar */
+    }
+    .scrollbar-x::-webkit-scrollbar {
+        height: 3px; /* Width of the scrollbar */
     }
 
     .scrollbar::-webkit-scrollbar-track {

@@ -4,6 +4,7 @@ import './index.css';
 import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import Providers from './components/Providers';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
