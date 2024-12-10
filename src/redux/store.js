@@ -19,7 +19,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage, //Lưu vào storage
-    blacklist: ['user'], //Không áp dụng cho user
+    blacklist: ['user', 'product'], //Không áp dụng cho user
 };
 
 //Kết hợp các reducer thành 1 rootReducer

@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
 import { convertToRaw, EditorState } from 'draft-js';
 
 import InputFile from './components/InputFile/InputFile';
-import draftToHtml from 'draftjs-to-html';
+import * as ProductService from '~/services/ProductService';
 
 function ProductAdminPage() {
     const [files, setFiles] = useState([]);
+    const [fileCoverImg, setFileCoverImg] = useState([]);
     const [nameProduct, setNameProduct] = useState('');
 
     const [editorState, setEditorState] = useState(() =>
@@ -20,6 +22,15 @@ function ProductAdminPage() {
     const handleEditorChange = (editorState) => {
         setEditorState(editorState);
         setRawHTML(draftToHtml(convertToRaw(editorState.getCurrentContent()))); // Cập nhật rawHTML từ editor
+    };
+
+    const handleCreateProduct = () => {
+        try {
+            const res = ProductService.createProduct({});
+            console.log(res);
+        } catch (error) {
+            console.error('Error Create Product', error);
+        }
     };
 
     return (
@@ -39,9 +50,9 @@ function ProductAdminPage() {
             <div className="mt-5 gap-5 grid grid-cols-8">
                 <p className="text-sm col-span-1 text-end">Ảnh bìa</p>
                 <div className="col-span-7 flex gap-8">
-                    <InputFile setFiles={setFiles} isMultiple={true}>
+                    <InputFile setFiles={setFileCoverImg} isMultiple={true}>
                         <FontAwesomeIcon icon={faImages} />
-                        <div className="text-sm">0/1</div>
+                        <div className="text-sm">{fileCoverImg.length}/1</div>
                     </InputFile>
                     <ul className="text-sm list-disc text-zinc-400">
                         <li>Tải lên hình ảnh 1:1</li>
@@ -86,6 +97,14 @@ function ProductAdminPage() {
                         />
                     </div>
                 </div>
+            </div>
+            <div className="mt-5 text-end">
+                <button
+                    className="p-2 bg-primary text-white"
+                    onClick={handleCreateProduct}
+                >
+                    Thêm sản phẩm
+                </button>
             </div>
         </div>
     );
