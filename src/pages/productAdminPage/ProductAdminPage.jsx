@@ -1,32 +1,29 @@
 import React, { useState } from 'react';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import { convertToRaw, EditorState } from 'draft-js';
 
 import InputFile from './components/InputFile/InputFile';
 import * as ProductService from '~/services/ProductService';
+import EditorText from './components/EditorText/EditorText';
+import { useSelector } from 'react-redux';
 
 function ProductAdminPage() {
     const [files, setFiles] = useState([]);
     const [fileCoverImg, setFileCoverImg] = useState([]);
     const [nameProduct, setNameProduct] = useState('');
 
-    const [editorState, setEditorState] = useState(() =>
-        EditorState.createEmpty()
-    );
-
-    const [rawHTML, setRawHTML] = useState('');
-
-    const handleEditorChange = (editorState) => {
-        setEditorState(editorState);
-        setRawHTML(draftToHtml(convertToRaw(editorState.getCurrentContent()))); // Cập nhật rawHTML từ editor
-    };
+    const product = useSelector((state) => state.product);
 
     const handleCreateProduct = () => {
         try {
-            const res = ProductService.createProduct({});
+            const res = ProductService.createProduct({
+                name: product.name,
+                price: product.price,
+                countInStock: product.countInStock,
+                description: product.description,
+                images: files.map((file) => file.preview),
+                coverImage: fileCoverImg[0],
+            });
             console.log(res);
         } catch (error) {
             console.error('Error Create Product', error);
@@ -74,30 +71,11 @@ function ProductAdminPage() {
                         onChange={(e) => setNameProduct(e.target.value)}
                     />
                     <span className="border-l-zinc-400 border-l-[1px] pl-3">
-                        {nameProduct.length}/120
+                        {nameProduct.length || '0'}/120
                     </span>
                 </div>
             </div>
-            <div className="mt-5">
-                <p className="text-sm">Thông tin sản phẩm</p>
-                <div className="grid grid-cols-2 gap-5 mt-5">
-                    <div className="col-span-1 min-h-16 mt-2">
-                        <Editor
-                            editorState={editorState}
-                            onEditorStateChange={handleEditorChange}
-                            placeholder="Write something"
-                            wrapperClassName="border p-2"
-                            editorClassName="p-2"
-                        />
-                    </div>
-                    <div className="col-span-1">
-                        <div
-                            className="mt-2 h-full w-full overflow-x-scroll scrollbar scrollbar-x border p-2"
-                            dangerouslySetInnerHTML={{ __html: rawHTML }}
-                        />
-                    </div>
-                </div>
-            </div>
+            <EditorText />
             <div className="mt-5 text-end">
                 <button
                     className="p-2 bg-primary text-white"
