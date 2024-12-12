@@ -29,7 +29,7 @@ function Header() {
     useEffect(() => {
         const fetchDataSearch = async () => {
             try {
-                const res = await ProductService.getAllProducts(
+                const res = await ProductService.getProductsSearch(
                     debouncedValueSearch,
                     5
                 );

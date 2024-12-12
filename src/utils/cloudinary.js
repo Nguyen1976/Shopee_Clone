@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const uploadImageCloudinary = async (image) => {
+export const uploadImageCloudinary = async (image, folder) => {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'aisbzcxo');
-    formData.append('folder', 'users');
+    formData.append('folder', folder);
 
     try {
         const res = await axios.post(

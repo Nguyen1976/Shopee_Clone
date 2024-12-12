@@ -179,7 +179,7 @@ function TopHeader() {
                         </a>
                     </Tooltip>
                 </div>
-                {name ? (
+                {name && avatar ? (
                     <Tooltip
                         funcRender={() => (
                             <div className="w-full">

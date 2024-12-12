@@ -32,7 +32,7 @@ function HomePage() {
         try {
             setIsLoading(true);
             setAllProduct([]);
-            const res = await ProductService.getProductNavigation(page - 1, 10);
+            const res = await ProductService.getProductNavigate(page - 1, 10);
             setAllProduct(res.data);
         } catch (error) {
             console.error('Error fetching product data:', error);
@@ -124,7 +124,7 @@ function HomePage() {
                                     <CardProduct
                                         countInStock={item.countInStock}
                                         price={item.price}
-                                        image={item.image[0] || ''}
+                                        image={item.coverImage[0] || ''}
                                         name={item.name}
                                         discount={item?.discount}
                                     />

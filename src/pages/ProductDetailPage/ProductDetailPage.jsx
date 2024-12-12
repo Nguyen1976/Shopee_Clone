@@ -46,19 +46,15 @@ function ProductDetailPage() {
             try {
                 const res = await ProductService.getDetailProduct(param.id);
                 setProduct(res.data);
-                setListImages(res.data.image);
+                console.log(res.data);
+                setListImages(res.data.images);
+                setDetailImage(res.data.coverImage);
             } catch (error) {
                 console.error('Error fetching product data:', error);
             }
         };
         fetchData();
     }, [param]);
-
-    useEffect(() => {
-        if (listImages.length > 0) {
-            setDetailImage(listImages[0]);
-        }
-    }, [listImages]);
 
     useEffect(() => {
         setAddressUser(useInfo?.address);

@@ -25,7 +25,7 @@ function EditorText() {
         setTypingTimeout(
             setTimeout(() => {
                 dispatch(createProduct({ description: rawHTML }));
-            }, 3000)
+            }, 1000)
         );
     };
 
@@ -38,7 +38,7 @@ function EditorText() {
     }, [typingTimeout]);
 
     return (
-        <div className="mt-5">
+        <div className="mt-10">
             <p className="text-sm">Thông tin sản phẩm</p>
             <div className="grid grid-cols-2 gap-5 mt-5">
                 <div className="col-span-1 min-h-16 mt-2">

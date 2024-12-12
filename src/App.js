@@ -1,23 +1,24 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    // Navigate,
+} from 'react-router-dom';
 import { routes } from '~/routes';
 import DefaultLayout from './layouts/DefaultLayout';
 import { useSelector } from 'react-redux';
+// import config from './configs';
 
-// import * as VisitService from '~/services/VisitService';
 function App() {
     const userInfo = useSelector((state) => state.user);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    // useEffect(() => {
-    //     const postVisit = async () => {
-    //         try {
-    //             await VisitService.postVisit();
-    //         } catch (err) {
-    //             console.error(err);
-    //         }
-    //     };
-    //     postVisit();
-    // }, []);
+    useEffect(() => {
+        if (userInfo) {
+            setIsAdmin(userInfo.isAdmin);
+        }
+    }, [userInfo]);
 
     return (
         <div>
@@ -28,9 +29,8 @@ function App() {
 
                         let Layout = route.layout || DefaultLayout;
 
-                        if (route.isAdmin && userInfo && !userInfo?.isAdmin) {
-                            // Chuyển hướng về trang chủ nếu người dùng không phải admin
-                            return <Route key={index} />;
+                        if (route.isAdmin && !isAdmin) {
+                            return null;
                         }
 
                         if (route.layout === null) {

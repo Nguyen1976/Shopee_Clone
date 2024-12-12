@@ -14,6 +14,7 @@ import storage from 'redux-persist/lib/storage';
 
 import userReducer from './slices/UserSlice';
 import orderReducer from './slices/OrderSlice';
+import productReducer from './slices/ProductSlice';
 
 const persistConfig = {
     key: 'root',
@@ -26,6 +27,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     user: userReducer,
     order: orderReducer,
+    product: productReducer,
 });
 
 //Kết hợp persistConfig và rootReducer tạo thành 1 reducer có hỗ trợ lưu trữ

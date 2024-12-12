@@ -45,7 +45,7 @@ function ProfilePage() {
 
     const handleUploadImage = async () => {
         try {
-            const urlAvatar = await uploadImageCloudinary(avatarFile);
+            const urlAvatar = await uploadImageCloudinary(avatarFile, 'user');
             return urlAvatar;
         } catch (error) {
             console.error(error);

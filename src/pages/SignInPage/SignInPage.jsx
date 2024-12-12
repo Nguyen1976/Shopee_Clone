@@ -44,8 +44,8 @@ function SignInPage() {
         if (data.user._id) {
             dispatch(updateUser({ _id: data.user._id }));
         }
-        if (data.isAdmin) {
-            navigate(config.routes.adminUser);
+        if (data.user.isAdmin) {
+            navigate(config.routes.productAdmin);
         } else {
             navigate(config.routes.home);
         }

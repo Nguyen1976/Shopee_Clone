@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     name: '',
-    image: {},
-    coverImage: {},
     type: '',
     price: 0,
     countInStock: 0,
@@ -18,13 +16,19 @@ export const ProductSlice = createSlice({
     initialState,
     reducers: {
         createProduct: (state, action) => {
-            const { productItem } = action.payload;
-            // Chỉ cập nhật các thuộc tính được cung cấp
-            Object.entries(productItem).forEach(([key, value]) => {
-                if (Object.prototype.hasOwnProperty.call(state, key)) {
-                    state[key] = value;
-                }
-            });
+            const productItem = action.payload;
+
+            // Kiểm tra productItem trước khi xử lý
+            if (productItem && typeof productItem === 'object') {
+                Object.entries(productItem).forEach(([key, value]) => {
+                    // Chỉ cập nhật nếu thuộc tính tồn tại trong state
+                    if (Object.prototype.hasOwnProperty.call(state, key)) {
+                        state[key] = value;
+                    }
+                });
+            } else {
+                console.error('Invalid productItem:', productItem);
+            }
         },
     },
 });

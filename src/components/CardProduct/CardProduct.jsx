@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import images from '~/assets/images';
+import { formater } from '~/utils/formater';
 
 function CardProduct({ countInStock = 0, price, image, name, discount }) {
     return (
@@ -13,10 +14,10 @@ function CardProduct({ countInStock = 0, price, image, name, discount }) {
                     </span>
                 </div>
             )}
-            <div className="h-48">
+            <div className="h-48 overflow-hidden">
                 <img
                     loading="lazy"
-                    className="object-cover h-full"
+                    className="object-cover"
                     src={image}
                     alt="product"
                 />
@@ -30,7 +31,7 @@ function CardProduct({ countInStock = 0, price, image, name, discount }) {
                 </h4>
                 <div className="flex justify-between mt-5 items-center">
                     <div className="text-primary line-clamp-1 overflow-hidden">
-                        đ{price}
+                        {formater(price)}
                     </div>
                     <div className="text-sm line-clamp-1 overflow-hidden ml-2">
                         <span>Còn</span> {countInStock} <span>sản phẩm</span>

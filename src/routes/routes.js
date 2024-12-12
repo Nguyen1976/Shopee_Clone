@@ -14,9 +14,9 @@ import PaymentPage from '~/pages/PaymentPage';
 import FooterLayout from '~/layouts/FooterLayout';
 import AddressPage from '~/pages/AddressPage';
 import PurchasePage from '~/pages/PurchasePage';
-import productAdminPage from '~/pages/ProductAdminPage';
+import CreateProductAdminPage from '~/pages/CreateProductAdminPage';
+import ProductAdminPage from '~/pages/ProductAdminPage';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
-import ProductAdminPage from '~/pages/ProductAdminPage/ProductAdminPage';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
@@ -41,9 +41,10 @@ export const routes = [
         layout: FooterLayout,
     },
     {
-        path: config.routes.productAdmin,
-        component: productAdminPage,
+        path: config.routes.createProductAdmin,
+        component: CreateProductAdminPage,
         layout: AdminLayout,
+        isAdmin: true,
     },
     {
         path: config.routes.productAdmin,
