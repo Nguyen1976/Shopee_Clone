@@ -52,5 +52,5 @@ export const routes = [
         layout: AdminLayout,
         isAdmin: true,
     },
-    { path: '*', component: NotFoundPage },
+    { path: '*', component: NotFoundPage, layout: null },
 ];

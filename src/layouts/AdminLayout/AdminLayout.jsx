@@ -19,7 +19,7 @@ function AdminLayout({ children }) {
     };
 
     return (
-        <div className="">
+        <div className="w-screen">
             <div className="fixed top-0 right-0 left-0 z-20 bg-white">
                 <HeaderAdmin />
             </div>
@@ -58,8 +58,11 @@ function AdminLayout({ children }) {
                     </li>
                 </ul>
             </aside>
-            <div className="w-full min-h-screen relative -top-3">
-                <div className="pl-56 pr-28 mt-20 absolute top-5">
+            <div className="w-screen min-h-screen relative -top-3">
+                <div
+                    className="pl-56 pr-28 mt-20 absolute top-5"
+                    style={{ width: 'inherit' }}
+                >
                     <div className="bg-white py-6 px-16 rounded-md shadow-xl">
                         {children}
                     </div>

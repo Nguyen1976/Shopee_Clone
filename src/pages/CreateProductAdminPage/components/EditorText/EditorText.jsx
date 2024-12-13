@@ -25,7 +25,7 @@ function EditorText() {
         setTypingTimeout(
             setTimeout(() => {
                 dispatch(createProduct({ description: rawHTML }));
-            }, 1000)
+            }, 500)
         );
     };
 

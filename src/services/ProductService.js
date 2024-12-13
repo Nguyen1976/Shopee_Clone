@@ -44,3 +44,10 @@ export const createProduct = async (data) => {
     const res = await axiosJWT.post(`/product/create`, data);
     return res.data;
 };
+
+export const deleteProduct = async (ids) => {
+    const res = await axiosJWT.delete(`/product/delete-many`, {
+        params: { ids: ids.join(',') },
+    });
+    return res.data;
+};
