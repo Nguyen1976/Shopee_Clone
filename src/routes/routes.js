@@ -1,22 +1,24 @@
 import AccessLayout from '~/layouts/AccessLayout';
 import DefaultLayout from '~/layouts/DefaultLayout';
 import UserLayout from '~/layouts/UserLayout';
-import HomePage from '~/pages/HomePage';
-import NotFoundPage from '~/pages/NotFoundPage';
-import ProductDetailPage from '~/pages/ProductDetailPage';
-import ProfilePage from '~/pages/ProfilePage';
-import SignInPage from '~/pages/SignInPage';
-import SignUpPage from '~/pages/SignUpPage';
+import HomePage from '~/pages/users/HomePage';
+import NotFoundPage from '~/pages/users/NotFoundPage';
+import ProductDetailPage from '~/pages/users/ProductDetailPage';
+import ProfilePage from '~/pages/users/ProfilePage';
+import SignInPage from '~/pages/users/SignInPage';
+import SignUpPage from '~/pages/users/SignUpPage';
 import config from '~/configs';
-import OrderPage from '~/pages/OrderPage';
+import OrderPage from '~/pages/users/OrderPage';
 import HeaderLayout from '~/layouts/HeaderLayout/';
-import PaymentPage from '~/pages/PaymentPage';
+import PaymentPage from '~/pages/users/PaymentPage';
 import FooterLayout from '~/layouts/FooterLayout';
-import AddressPage from '~/pages/AddressPage';
-import PurchasePage from '~/pages/PurchasePage';
-import CreateProductAdminPage from '~/pages/CreateProductAdminPage';
-import ProductAdminPage from '~/pages/ProductAdminPage';
+import AddressPage from '~/pages/users/AddressPage';
+import PurchasePage from '~/pages/users/PurchasePage';
+import CreateProductAdminPage from '~/pages/admin/CreateProductAdminPage';
+import ProductAdminPage from '~/pages/admin/ProductAdminPage';
 import AdminLayout from '~/layouts/AdminLayout/AdminLayout';
+import UserAdminPage from '~/pages/admin/UserAminPage';
+import OrderAdminPage from '~/pages/admin/OrderAdminPage';
 
 export const routes = [
     { path: config.routes.home, component: HomePage, layout: DefaultLayout },
@@ -49,6 +51,18 @@ export const routes = [
     {
         path: config.routes.productAdmin,
         component: ProductAdminPage,
+        layout: AdminLayout,
+        isAdmin: true,
+    },
+    {
+        path: config.routes.userAdmin,
+        component: UserAdminPage,
+        layout: AdminLayout,
+        isAdmin: true,
+    },
+    {
+        path: config.routes.orderAdmin,
+        component: OrderAdminPage,
         layout: AdminLayout,
         isAdmin: true,
     },

@@ -32,7 +32,7 @@ function ProductAdminPage() {
     };
 
     const handleRemoveProductDelete = (id) => {
-        setListProductDelete(listProduct.filter((curentId) => curentId === id));
+        setListProductDelete(listProduct.filter((curentId) => curentId !== id));
     };
 
     const handleCheckAll = (e) => {

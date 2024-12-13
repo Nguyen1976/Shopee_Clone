@@ -597,6 +597,10 @@ video {
   right: 0px;
 }
 
+.right-4 {
+  right: 1rem;
+}
+
 .right-5 {
   right: 1.25rem;
 }
@@ -621,28 +625,16 @@ video {
   top: 3.5rem;
 }
 
+.top-2 {
+  top: 0.5rem;
+}
+
 .top-32 {
   top: 8rem;
 }
 
 .top-5 {
   top: 1.25rem;
-}
-
-.top-2 {
-  top: 0.5rem;
-}
-
-.right-2 {
-  right: 0.5rem;
-}
-
-.right-3 {
-  right: 0.75rem;
-}
-
-.right-4 {
-  right: 1rem;
 }
 
 .z-10 {
@@ -962,6 +954,10 @@ video {
   height: 1px;
 }
 
+.h-\[30px\] {
+  height: 30px;
+}
+
 .h-\[50px\] {
   height: 50px;
 }
@@ -980,6 +976,10 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-16 {
+  height: 4rem;
 }
 
 .min-h-16 {
@@ -1118,6 +1118,10 @@ video {
   width: 100vw;
 }
 
+.w-16 {
+  width: 4rem;
+}
+
 .max-w-72 {
   max-width: 18rem;
 }
@@ -1136,6 +1140,12 @@ video {
 
 .grow {
   flex-grow: 1;
+}
+
+.border-spacing-1 {
+  --tw-border-spacing-x: 0.25rem;
+  --tw-border-spacing-y: 0.25rem;
+  border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
 }
 
 .origin-top {
@@ -1436,6 +1446,11 @@ video {
 
 .rounded-sm {
   border-radius: 0.125rem;
+}
+
+.rounded-s-full {
+  border-start-start-radius: 9999px;
+  border-end-start-radius: 9999px;
 }
 
 .border {

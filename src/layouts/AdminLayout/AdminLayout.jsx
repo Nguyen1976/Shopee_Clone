@@ -13,9 +13,19 @@ import config from '~/configs';
 
 function AdminLayout({ children }) {
     const [productActive, setProductActive] = useState(false);
+    const [userActive, setUserActive] = useState(false);
+    const [orderActive, setOrderActive] = useState(false);
 
     const handleActiveProduct = () => {
         setProductActive(!productActive);
+    };
+
+    const handleActiveUser = () => {
+        setUserActive(!userActive);
+    };
+
+    const handleActiveOrder = () => {
+        setOrderActive(!orderActive);
     };
 
     return (
@@ -25,9 +35,23 @@ function AdminLayout({ children }) {
             </div>
             <aside className="bg-white w-[177px] fixed top-14 left-0 z-10 overflow-y-scroll h-screen scrollbar scrollbar-y shadow-xl">
                 <ul className="mt-5 text-zinc-400 font-bold px-2">
-                    <li className="flex gap-1 items-center mt-5">
-                        <span>Quản Lý Người Dùng</span>
-                        <FontAwesomeIcon icon={faChevronDown} />
+                    <li className="mt-5 select-none cursor-pointer">
+                        <div
+                            className="flex gap-1 items-center"
+                            onClick={handleActiveUser}
+                        >
+                            <span>Quản Lý Người Dùng</span>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </div>
+                        <ul
+                            className={`${userActive ? 'opacity-100  h-[30px]' : 'opacity-0 h-0 none'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
+                        >
+                            <li>
+                                <Link to={config.routes.userAdmin}>
+                                    Tất cả người dùng
+                                </Link>
+                            </li>
+                        </ul>
                     </li>
                     <li className="mt-5 select-none cursor-pointer">
                         <div
@@ -38,7 +62,7 @@ function AdminLayout({ children }) {
                             <FontAwesomeIcon icon={faChevronDown} />
                         </div>
                         <ul
-                            className={`${productActive ? 'opacity-100  h-[50px]' : 'opacity-0 h-0'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
+                            className={`${productActive ? 'opacity-100  h-[50px]' : 'opacity-0 h-0 none'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
                         >
                             <li>
                                 <Link to={config.routes.productAdmin}>
@@ -52,9 +76,23 @@ function AdminLayout({ children }) {
                             </li>
                         </ul>
                     </li>
-                    <li className="flex gap-1 items-center mt-5">
-                        <span>Quản Lý Đơn Hàng</span>
-                        <FontAwesomeIcon icon={faChevronDown} />
+                    <li className="mt-5 select-none cursor-pointer">
+                        <div
+                            className="flex gap-1 items-center"
+                            onClick={handleActiveOrder}
+                        >
+                            <span>Quản Lý Sản phẩm</span>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </div>
+                        <ul
+                            className={`${orderActive ? 'opacity-100  h-[50px]' : 'opacity-0 h-0 none'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
+                        >
+                            <li>
+                                <Link to={config.routes.orderAdmin}>
+                                    Tất cả đơn mua
+                                </Link>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </aside>

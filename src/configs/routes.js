@@ -8,8 +8,10 @@ const routes = {
     productDetail: '/product-detail/:id',
     order: '/order',
     payment: '/payment',
-    createProductAdmin: '/admin/product-add',
     productAdmin: '/admin/product',
+    createProductAdmin: '/admin/product/add',
+    userAdmin: '/admin/user',
+    orderAdmin: '/admin/order',
 };
 
 export default routes;
