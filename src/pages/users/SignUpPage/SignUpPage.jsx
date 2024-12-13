@@ -81,6 +81,7 @@ function SignUpPage() {
                             isError={!isNameValid}
                             onBlur={handleValidName}
                             placeholder={'Name'}
+                            value={name}
                             message={name ? 'Tên không hợp lệ' : 'Hãy nhập tên'}
                         />
                     </div>
@@ -90,6 +91,7 @@ function SignUpPage() {
                             isError={!isEmailValid}
                             onBlur={handleValidEmail}
                             placeholder={'Email'}
+                            value={email}
                             message={
                                 email ? 'Email không hợp lệ' : 'Hãy nhập email'
                             }
@@ -101,6 +103,7 @@ function SignUpPage() {
                             isError={!isPasswordValid}
                             onBlur={handleValidPassword}
                             type="password"
+                            value={password}
                             placeholder={'Mật khẩu'}
                             message={
                                 password
@@ -115,6 +118,7 @@ function SignUpPage() {
                             isError={!isConfirmPasswordValid}
                             onBlur={handleValidConfirmPassword}
                             type="password"
+                            value={confirmPassword}
                             placeholder="Xác nhận mật khẩu"
                             message={'Mật khẩu không khớp'}
                         />

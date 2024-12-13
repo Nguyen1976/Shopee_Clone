@@ -15,6 +15,7 @@ function AdminLayout({ children }) {
     const [productActive, setProductActive] = useState(false);
     const [userActive, setUserActive] = useState(false);
     const [orderActive, setOrderActive] = useState(false);
+    const [messageActive, setMessageActive] = useState(false);
 
     const handleActiveProduct = () => {
         setProductActive(!productActive);
@@ -26,6 +27,10 @@ function AdminLayout({ children }) {
 
     const handleActiveOrder = () => {
         setOrderActive(!orderActive);
+    };
+
+    const handleActiveMessage = () => {
+        setMessageActive(!messageActive);
     };
 
     return (
@@ -85,11 +90,29 @@ function AdminLayout({ children }) {
                             <FontAwesomeIcon icon={faChevronDown} />
                         </div>
                         <ul
-                            className={`${orderActive ? 'opacity-100  h-[50px]' : 'opacity-0 h-0 none'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
+                            className={`${orderActive ? 'opacity-100  h-[30px]' : 'opacity-0 h-0 none'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
                         >
                             <li>
                                 <Link to={config.routes.orderAdmin}>
                                     Tất cả đơn mua
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li className="mt-5 select-none cursor-pointer">
+                        <div
+                            className="flex gap-1 items-center"
+                            onClick={handleActiveMessage}
+                        >
+                            <span>Quản Tin Nhắn</span>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </div>
+                        <ul
+                            className={`${messageActive ? 'opacity-100  h-[50px]' : 'opacity-0 h-0 none'} text-sm font-medium mt-2 transition-all duration-300 ml-2`}
+                        >
+                            <li>
+                                <Link to={config.routes.notifyAdmin}>
+                                    Thông báo
                                 </Link>
                             </li>
                         </ul>

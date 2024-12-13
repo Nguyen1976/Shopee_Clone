@@ -19,3 +19,9 @@ export const cancelOrder = async (userId, orderItems, orderId) => {
     });
     return res.data;
 };
+
+//admin
+export const getAllOrder = async () => {
+    const res = await axiosJWT.get(`/order/get-all-order`);
+    return res.data;
+};

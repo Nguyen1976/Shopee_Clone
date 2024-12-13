@@ -4,7 +4,7 @@ import {
     faFacebook,
     faSquareInstagram,
 } from '@fortawesome/free-brands-svg-icons';
-import { faBell, faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
+import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faEarthAsia } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ import config from '~/configs';
 import images from '~/assets/images';
 import Image from '~/components/Image';
 import { useToast } from '~/context';
+import Notify from './Notify';
 
 function TopHeader() {
     const [name, setName] = useState('');
@@ -106,48 +107,7 @@ function TopHeader() {
                 </div>
             </div>
             <div className="flex gap-4">
-                <div>
-                    <Tooltip
-                        funcRender={() => (
-                            <div className="w-full flex flex-col justify-center items-center">
-                                <div className="w-1/3 py-16">
-                                    <img src={images.notNotify} alt="" />
-                                </div>
-                                <div className="text-sm text-black py-5">
-                                    Đăng nhập để xem thông báo
-                                </div>
-                                <div className="w-full flex justify-between items-center">
-                                    <div
-                                        className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
-                                        onClick={() =>
-                                            navigate(config.routes.signUp)
-                                        }
-                                    >
-                                        Đăng ký
-                                    </div>
-                                    <div
-                                        className="w-1/2 text-black bg-[#f5f5f5] p-2 hover:bg-[#e8e8e8] hover:text-primary text-center"
-                                        onClick={() =>
-                                            navigate(config.routes.signIn)
-                                        }
-                                    >
-                                        Đăng nhập
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                        top={35}
-                        right={0}
-                        width={320}
-                        afterArrow={true}
-                        scaleTopRight={true}
-                    >
-                        <a className="hover:opacity-50" href="/">
-                            <FontAwesomeIcon icon={faBell} />
-                            <span className="pl-1">Thông báo</span>
-                        </a>
-                    </Tooltip>
-                </div>
+                <Notify />
                 <div className="hover:opacity-50">
                     <a href="/">
                         <FontAwesomeIcon icon={faCircleQuestion} />
@@ -179,7 +139,7 @@ function TopHeader() {
                         </a>
                     </Tooltip>
                 </div>
-                {name && avatar ? (
+                {name ? (
                     <Tooltip
                         funcRender={() => (
                             <div className="w-full">
