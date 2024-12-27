@@ -3,16 +3,12 @@ import axios from 'axios';
 import { axiosJWT } from './axiosJWT';
 
 export const getDetailsUser = async (id) => {
-    try {
-        const res = await axiosJWT.get(`/user/get-details/${id}`);
+    const res = await axiosJWT.get(`/user/get-details/${id}`);
 
-        if (res.status === 200) {
-            return res.data;
-        } else {
-            throw new Error('Unable to fetch user details');
-        }
-    } catch (error) {
-        console.error('Error getting user details:', error);
+    if (res.status === 200) {
+        return res.data;
+    } else {
+        throw new Error('Unable to fetch user details');
     }
 };
 
@@ -25,7 +21,7 @@ export const signUpUser = async (data) => {
 };
 
 export const signInUser = async (data) => {
-    const res = await axios.post(
+    const res = await axiosJWT.post(
         `${process.env.REACT_APP_API_URL}/user/sign-in`,
         data
     );
@@ -64,16 +60,10 @@ export const searchUsers = async (name) => {
     return res.data;
 };
 
-export const refreshToken = async (refreshToken) => {
+export const refreshToken = async () => {
     try {
-        const { data } = await axios.post(
-            `${process.env.REACT_APP_API_URL}/user/refresh-token`,
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${refreshToken}`, // Thay "token" bằng "Authorization" để tuân theo chuẩn.
-                },
-            }
+        const { data } = await axiosJWT.post(
+            `${process.env.REACT_APP_API_URL}/user/refresh-token`
         );
         return data; // Trả về dữ liệu từ API.
     } catch (error) {

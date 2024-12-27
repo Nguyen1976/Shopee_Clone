@@ -34,17 +34,15 @@ function SignInPage() {
         setIsPasswordValid(isValidPassword(password));
     };
 
-    const handleLoadInfoUser = async (data, accessToken, refreshToken) => {
+    const handleLoadInfoUser = async (data, accessToken) => {
         if (accessToken) {
             localStorage.setItem('access_token', accessToken);
         }
-        if (refreshToken) {
-            localStorage.setItem('refresh_token', refreshToken);
+        console.log(data);
+        if (data.id) {
+            dispatch(updateUser({ _id: data.id }));
         }
-        if (data.user._id) {
-            dispatch(updateUser({ _id: data.user._id }));
-        }
-        if (data.user.isAdmin) {
+        if (data.isAdmin) {
             navigate(config.routes.productAdmin);
         } else {
             navigate(config.routes.home);
@@ -61,11 +59,7 @@ function SignInPage() {
                     password,
                 });
                 if (data) {
-                    await handleLoadInfoUser(
-                        data,
-                        data.access_token,
-                        data.refresh_token
-                    );
+                    await handleLoadInfoUser(data, data.access_token);
                 }
             } catch (error) {
                 console.error(error);
